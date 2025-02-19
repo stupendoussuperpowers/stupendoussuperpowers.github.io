@@ -1,0 +1,19 @@
+.scrollable {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  margin-left: 20px;
+  height: 70vh;
+}
+
+.window {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.portrait {
+  display: flex;
+  align-items: center;
+  height: 70vh;
+}
