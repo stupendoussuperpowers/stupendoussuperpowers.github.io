@@ -3,6 +3,8 @@ import path from 'path';
 import matter from 'gray-matter';
 import MarkdownIt from 'markdown-it';
 
+import './post.css';
+
 const md = new MarkdownIt();
 
 export async function generateStaticParams() {
@@ -33,7 +35,7 @@ export default async function BlogPost({ params }: { params: PageProps }) {
 
     const htmlContent = md.render(content);
 
-    return <div>
+    return <div className='window-post'>
         <h1>{data.title}</h1>
         <h2>{data.date}</h2>
         <div dangerouslySetInnerHTML={{ __html: htmlContent }} />

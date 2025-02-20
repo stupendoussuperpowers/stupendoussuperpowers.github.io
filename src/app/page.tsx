@@ -19,7 +19,7 @@ export default function Home() {
         </p>
         <p>
           I&apos;m a graduate student in CS at NYU, with a focus on Systems. Over the past years, I&apos;ve worked on building
-          scalable and resilient distributed systems. I&apos;m deeply interested in the cloud, virtualization, web technologies and building
+          scalable and resilient distributed systems. I&apos;m deeply interested in operating systems, cloud, virtualization, web technologies and building
           data intensive applications which can leverage AI.
         </p>
         <p>
