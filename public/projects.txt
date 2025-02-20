@@ -1,0 +1,4 @@
+Sitanshuk/Talk2Doc===Talk2Data is a centralized platform designed to simplify the way college students interact with their academic and professional data. It combines multiple sources like Notion and Gmail to track job applications, and uses LLMs with RAG to allow querying custom notes.
+stupendoussuperpowers/mta-ridership===NYC Subway Traffic & Rideship Pattern Prediction.
+stupendoussuperpowers/trunk===POSIX tail which allows grep on live logs using --follow.
+stupendoussuperpowers/gilbert===Google App Engine replica for development workflows.

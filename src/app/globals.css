@@ -23,14 +23,14 @@
   font-size: 16px;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --text-color: #fff;
     --text-color-alt: #aaa;
     --background-color: #000;
     --background-color-alt: #111;
   }
-}
+}*/
 
 * {
   box-sizing: border-box;
@@ -56,7 +56,7 @@ body {
   width: 100%;
   margin: 0;
   padding: var(--line-height) 0ch;
-  max-width: calc(min(98ch, round(down, 100%, 1ch)));
+  max-width: calc(min(110ch, round(down, 100%, 1ch)));
   line-height: var(--line-height);
   overflow-x: hidden;
 }
@@ -146,7 +146,7 @@ table {
   top: calc(var(--line-height) / 2);
   width: calc(round(down, 100%, 1ch));
   border-collapse: collapse;
-  margin: 0 0 calc(var(--line-height) * 0.5);
+  margin: 0 0 calc(var(--line-height) * 2);
 }
 
 th,
@@ -174,13 +174,13 @@ th {
 }
 
 .header {
-  margin-bottom: calc(var(--line-height) * 2);
+  margin-bottom: calc(var(--line-height) * 1);
 }
 .header h1 {
   margin: 0;
 }
 .header tr td:last-child {
-  text-align: right;
+  /*text-align: right;*/
 }
 
 p {

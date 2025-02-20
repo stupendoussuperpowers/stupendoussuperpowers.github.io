@@ -1,0 +1,13 @@
+.p-title {
+  display: flex;
+  flex-direction: row;
+}
+
+.slug {
+  margin-top: 0px;
+  margin-left: 10px;
+}
+
+.p-card {
+  margin-bottom: 19px;
+}
