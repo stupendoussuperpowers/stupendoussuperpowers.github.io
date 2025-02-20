@@ -2,3 +2,5 @@ Sitanshuk/Talk2Doc===Talk2Data is a centralized platform designed to simplify th
 stupendoussuperpowers/mta-ridership===NYC Subway Traffic & Rideship Pattern Prediction.
 stupendoussuperpowers/trunk===POSIX tail which allows grep on live logs using --follow.
 stupendoussuperpowers/gilbert===Google App Engine replica for development workflows.
+stupendoussuperpowers/rustle===Playground for exploring packet captures using pcap syscalls
+swadhinroutray/hawkeye-2020===Bi-annual scavenger hunt for IECSE.

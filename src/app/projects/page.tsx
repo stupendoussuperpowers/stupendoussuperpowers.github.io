@@ -25,7 +25,7 @@ const getStaticProps = async () => {
 
     const projectLists = await Promise.all(projectFile.split('\n').map(async (line: string) => {
         const [slug, content] = line.split('===', 2);
-        const [__author, title] = slug.split('/', 2);
+        const title = slug.split('/', 2)[1];
 
         if (content == undefined) return null;
 
@@ -39,7 +39,6 @@ const getStaticProps = async () => {
 
         const languages = Object.keys(l_json).join(',');
 
-        console.log({ slug, content, title, __author, readme });
         return {
             title: title,
             slug: slug,

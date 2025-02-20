@@ -19,8 +19,9 @@ export default function RootLayout({
         <Header />
         {children}
         {/*<div className="debug-grid"></div>*/}
+
+        <Footer />
       </body>
-      <Footer />
     </html>
   );
 }
