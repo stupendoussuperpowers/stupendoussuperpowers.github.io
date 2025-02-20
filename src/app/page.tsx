@@ -18,8 +18,8 @@ export default function Home() {
           Come one, come all to my corner of the internet!
         </p>
         <p>
-          I'm a graduate student in CS at NYU, with a focus on Systems. Over the past years, I've worked on building
-          scalable and resilient distributed systems. I'm deeply interested in the cloud, virtualization, web technologies and building
+          I&apos;m a graduate student in CS at NYU, with a focus on Systems. Over the past years, I&apos;ve worked on building
+          scalable and resilient distributed systems. I&apos;m deeply interested in the cloud, virtualization, web technologies and building
           data intensive applications which can leverage AI.
         </p>
         <p>
