@@ -5,6 +5,14 @@ import MarkdownIt from 'markdown-it';
 
 const md = new MarkdownIt();
 
+export async function generateStaticParams() {
+    const posts = await fs.promises.readdir(path.join(process.cwd(), '/src/posts/'));
+
+    return posts.map((post) => ({
+        slug: post,
+    }));
+}
+
 const fetchPostContent = async (slug: string) => {
     const postPath = path.join(process.cwd(), '/src/posts/', `${slug}.md`);
     const postContent = await fs.promises.readFile(postPath, 'utf-8');
