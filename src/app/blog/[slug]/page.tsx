@@ -9,7 +9,7 @@ export async function generateStaticParams() {
     const posts = await fs.promises.readdir(path.join(process.cwd(), '/src/posts/'));
 
     return posts.map((post) => ({
-        slug: post,
+        slug: post.replace(/\.md$/, ''),
     }));
 }
 
