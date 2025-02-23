@@ -1,29 +1,14 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import MarkdownIt from 'markdown-it';
-
 import './post.css';
-
-const md = new MarkdownIt();
+import { readIndex, readEntry, PostEntry } from '@/utils';
 
 export async function generateStaticParams() {
-    const posts = await fs.promises.readdir(path.join(process.cwd(), '/src/posts/'));
+    const allArticles = await readIndex();
 
-    return posts.map((post) => ({
-        slug: post.replace(/\.md$/, ''),
-    }));
-}
-
-const fetchPostContent = async (slug: string) => {
-    const postPath = path.join(process.cwd(), '/src/posts/', `${slug}.md`);
-    const postContent = await fs.promises.readFile(postPath, 'utf-8');
-
-    const { data, content } = matter(postContent);
-
-    console.log({ data, postPath, slug });
-
-    return { data, content };
+    allArticles.map((article) => {
+        return {
+            slug: article.slug
+        }
+    });
 }
 
 type PageProps = Promise<{ slug: string }>;
@@ -31,13 +16,11 @@ type PageProps = Promise<{ slug: string }>;
 export default async function BlogPost({ params }: { params: PageProps }) {
     const { slug } = await params;
 
-    const { data, content } = await fetchPostContent(slug);
-
-    const htmlContent = md.render(content);
+    const postData: PostEntry = await readEntry(slug);
 
     return <div className='window-post'>
-        <h1>{data.title}</h1>
-        <h2>{data.date}</h2>
-        <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+        <h1>{postData.title}</h1>
+        <h2>{postData.date}</h2>
+        <div dangerouslySetInnerHTML={{ __html: postData.htmlContent }} />
     </div>
 }

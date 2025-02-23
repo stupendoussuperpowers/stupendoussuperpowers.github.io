@@ -1,23 +1,11 @@
-import { BlogData, BlogListItem } from '@/components/BlogListItem';
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import { BlogListItem } from '@/components/BlogListItem';
 import './blog.css';
 
+import { readIndex, IndexEntry } from '@/utils';
+
 const getStaticProps = async () => {
-    const postPath = path.join(process.cwd(), '/src/posts');
-    const articleNames = await fs.promises.readdir(postPath);
-
-    return Promise.all(articleNames.map(async (file) => {
-        const fileContent = await fs.promises.readFile(path.join(postPath, file), 'utf-8');
-        const { data, content } = matter(fileContent);
-
-        return {
-            data: data,
-            content: content,
-            slug: file
-        }
-    }));
+    const indexEntries: IndexEntry[] = await readIndex();
+    return indexEntries;
 }
 
 export default async function Blog() {
@@ -29,14 +17,10 @@ export default async function Blog() {
         <ul>
             {
                 articles.map((article) => {
-
-                    const props: BlogData = { slug: article.slug, title: article.data.title, tag: article.data.tag, date: article.data.date };
-                    console.log(props);
-                    return <li key={article.data.title}>
-                        <BlogListItem {...props} />
+                    return <li key={article.date}>
+                        <BlogListItem {...article} />
                     </li>
-                }
-                )
+                })
             }
         </ul>
     </div>

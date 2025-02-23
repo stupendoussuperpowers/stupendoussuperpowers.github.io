@@ -1,14 +1,8 @@
 import './project.css';
 import Link from 'next/link';
+import { IndexEntry } from '@/utils';
 
-export type BlogData = {
-    title: string,
-    tag: string,
-    date: string,
-    slug: string,
-}
-
-export const BlogListItem: React.FC<BlogData> = ({ title, tag, date, slug }) => {
+export const BlogListItem: React.FC<IndexEntry> = ({ title, blurb, date, slug }) => {
 
     return (<div className='p-card'>
         <div className='p-title'>
@@ -19,6 +13,6 @@ export const BlogListItem: React.FC<BlogData> = ({ title, tag, date, slug }) => 
                 {date}
             </div>
         </div>
-        <div>{tag}</div>
+        <div>{blurb}</div>
     </div >);
 }
