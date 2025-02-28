@@ -1,17 +1,9 @@
 import './project.css';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
-
-export type ProjectData = {
-    title: string,
-    content: string,
-    slug: string,
-    readme: string,
-    languages: string,
-};
+import React from 'react';
 
 export const Project: React.FC<ProjectData> = ({ title, content, slug, readme, languages }) => {
-
     return (<div className='p-card'>
         <div className='p-title'>
             <b>{title}</b>

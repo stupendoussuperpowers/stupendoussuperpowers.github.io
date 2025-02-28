@@ -2,11 +2,25 @@
 import { use, useState, useEffect, KeyboardEvent, MouseEvent, ChangeEvent } from 'react';
 import '../custom.css';
 import MarkdownIt from 'markdown-it';
-import { BlockNode, IndexEntry } from '@/utils/index';
+import React from 'react';
 
 const md = MarkdownIt();
 
 type PageProps = Promise<{ slug: string }>;
+
+/*
+ * Workflow for writepad. 
+ *
+ * [ view all existing posts | drafts ]
+ * [ click new ]
+ *    - new slug is generated as a draft. 
+ *    - 'save' saves to draft version.
+ *    - 'publish' pushes to regular posts. remove draft_
+ * [ view existing post ]
+ *    - is draft: keep draft jump to previous steps
+ *    - exists: create a draft version jump to previous steps.
+ * */
+
 
 export default function WritePad({ params }: { params: PageProps }) {
 
@@ -152,5 +166,3 @@ const Editable: React.FC<{ value: string | undefined, setValue: (event: ChangeEv
   } /> : size == 'h1' ? <h1 onClick={() => setEditing(true)} onInput={setValue}>{value}</h1 >
     : <h2 onClick={() => setEditing(true)} onInput={setValue}>{value}</h2>
 }
-
-

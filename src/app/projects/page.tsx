@@ -1,5 +1,6 @@
-import { Project, ProjectData } from '@/components/Project';
+import { Project } from '../../components/Project';
 
+import React from 'react';
 import fs from 'fs';
 import path from 'path';
 

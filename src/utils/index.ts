@@ -1,12 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 
-export type Ok<T> = { ok: true, value: T };
-export type Err<T> = { ok: false, error: T };
-export type Result<T, E> = Ok<T> | Err<E>;
+const Ok = <T>(value: T): Ok<T> => ({ ok: true, value });
+const Err = <E>(error: E): Err<E> => ({ ok: false, error });
 
-export const Ok = <T>(value: T): Ok<T> => ({ ok: true, value });
-export const Err = <E>(error: E): Err<E> => ({ ok: false, error });
 
 
 
@@ -40,25 +37,6 @@ export const Err = <E>(error: E): Err<E> => ({ ok: false, error });
  *
  * */
 
-
-export type BlockNode = {
-	rawText: string,
-	renderText: string,
-	isEditing: boolean,
-	id: string,
-}
-
-export type IndexEntry = {
-	slug: string,
-	date: string,
-	title: string,
-	blurb: string
-}
-
-export type PostEntry = {
-	index: IndexEntry,
-	content: BlockNode[]
-}
 
 export const ReadIndex = async (): Promise<IndexEntry[]> => {
 	const fileData = await fs.promises.readFile(path.join(process.cwd(), '/src/posts/indexdb.json'), 'utf-8');

@@ -1,5 +1,6 @@
 import './post.css';
-import { ReadIndex, ReadEntry } from '@/utils';
+import { ReadIndex, ReadEntry } from '../../../utils';
+import React from 'react';
 
 export async function generateStaticParams() {
     const allArticles = await ReadIndex();
@@ -9,8 +10,6 @@ export async function generateStaticParams() {
         }
     });
 }
-
-
 
 type PageProps = Promise<{ slug: string }>;
 

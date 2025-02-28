@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import React from 'react';
 
 export const metadata: Metadata = {
   title: "Sanchit Sahay",
@@ -18,8 +19,7 @@ export default function RootLayout({
       <body className='debug'>
         <Header />
         {children}
-        {/*<div className="debug-grid"></div>*/}
-
+        <div className="debug-grid"></div>
         <Footer />
       </body>
     </html>

@@ -1,7 +1,8 @@
 'use client';
-import { IndexEntry, PostEntry } from '@/utils';
+import { useState, useEffect } from 'react';
 import './custom.css';
-import { BlockNode } from '@/utils';
+import { BlogListItem } from '../../components/BlogListItem';
+import React from 'react';
 
 const DefaultNewBlock: BlockNode = {
   id: `id_${Math.random() * 100000000}`,
@@ -24,6 +25,17 @@ const DefaultNewPost: PostEntry = {
 
 export default function WritePad() {
 
+  const [posts, setPosts] = useState<IndexEntry[] | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const p = await fetch('/api/readindex');
+      const pj = await p.json();
+
+      setPosts(pj)
+    })()
+  }, []);
+
   const newPost = async () => {
     await fetch('/api/addentry', {
       method: 'POST',
@@ -37,8 +49,11 @@ export default function WritePad() {
     <div className='titlebar'>
       <h1>Posts.</h1>
       <button onClick={newPost}>New Post</button>
+      {
+        posts?.map(ind =>
+          <BlogListItem key={ind.slug} {...ind} />
+        )
+      }
     </div>
   </>;
 }
-
-

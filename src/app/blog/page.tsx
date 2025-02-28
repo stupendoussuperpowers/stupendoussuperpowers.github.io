@@ -1,7 +1,8 @@
-import { BlogListItem } from '@/components/BlogListItem';
+import { BlogListItem } from '../../components/BlogListItem';
 import './blog.css';
+import React from 'react';
 
-import { ReadIndex, IndexEntry } from '@/utils';
+import { ReadIndex } from '../../utils';
 
 const getStaticProps = async () => {
     const indexEntries: IndexEntry[] = await ReadIndex();
