@@ -1,9 +1,52 @@
-import MarkdownIt from 'markdown-it';
 import fs from 'fs';
-import matter from 'gray-matter';
 import path from 'path';
 
-const md = MarkdownIt();
+export type Ok<T> = { ok: true, value: T };
+export type Err<T> = { ok: false, error: T };
+export type Result<T, E> = Ok<T> | Err<E>;
+
+export const Ok = <T>(value: T): Ok<T> => ({ ok: true, value });
+export const Err = <E>(error: E): Err<E> => ({ ok: false, error });
+
+
+
+/*
+ * Structure of the DB:
+ * Index: stores slug, date, blurb and title
+ *
+ * ReadIndex()
+ * - Load filedb
+ * - Iterate over entries
+ * - Return entries
+ * 
+ * WriteIndex(slug, ...index)
+ * - Load filedb
+ * - Find entry of slug
+ * - Update slug with rest of the index.
+ *
+ * ReadPost(slug)
+ * - Load filedb
+ * - find slug 
+ * - return PostEntry
+ *
+ * AddOrUpdatePost(slug, content)
+ * - load filedb
+ * - if slug exists, update existing file and index
+ * - if slug doesnt exist, create new entry, new file
+ *
+ * DeletePost()
+ * - load filedb
+ * - find slug, delete entry, delete file.
+ *
+ * */
+
+
+export type BlockNode = {
+	rawText: string,
+	renderText: string,
+	isEditing: boolean,
+	id: string,
+}
 
 export type IndexEntry = {
 	slug: string,
@@ -13,49 +56,50 @@ export type IndexEntry = {
 }
 
 export type PostEntry = {
-	title: string,
-	date: string,
-	htmlContent: string,
+	index: IndexEntry,
+	content: BlockNode[]
 }
 
-// Read post indexes 
-export const readIndex = async (): Promise<IndexEntry[]> => {
-	const filePath = path.join(process.cwd(), '/src/posts/filedb');
-	const fileData = await fs.promises.readFile(filePath, 'utf-8');
+export const ReadIndex = async (): Promise<IndexEntry[]> => {
+	const fileData = await fs.promises.readFile(path.join(process.cwd(), '/src/posts/indexdb.json'), 'utf-8');
+	const indexJson = await JSON.parse(fileData);
 
-	return fileData.toString().split("\n").map((line: string) => {
-		const rawIndex = line.split("|");
-		return {
-			slug: rawIndex[0],
-			date: rawIndex[1],
-			title: rawIndex[2],
-			blurb: rawIndex[3]
-		};
-	});
-
+	return indexJson.map((entry: IndexEntry) => entry);
 }
 
-// Add entry 
-export const addEntry = async (content: string, title: string, date: string, blurb: string) => {
-	const genSlug = title.toLowerCase().split(" ").join("-");
 
-	const indexPath = path.join(process.cwd(), '/src/posts/filedb');
-	await fs.promises.appendFile(indexPath, `${genSlug.replace(/\.md$/, '')}|${date}|${title}|${blurb}`);
+export const AddEntry = async (index: IndexEntry, content: BlockNode[]): Promise<boolean> => {
+	const indexJson = await ReadIndex();
 
-	const postPath = path.join(process.cwd(), `/src/posts/${genSlug}.md`);
-	await fs.promises.writeFile(postPath, content);
+	// Write to path
+	const entryPath = path.join(process.cwd(), `/src/posts/${index.slug}`);
+	await fs.promises.writeFile(entryPath, JSON.stringify(content));
+
+	// Update or add index entry. 
+	const idx = indexJson.findIndex(x => x.slug == index.slug);
+
+	if (idx != -1) indexJson.push(index);
+	else indexJson[idx] = index;
+
+	return true;
 }
 
 // Read entry
-export const readEntry = async (slug: string): Promise<BlogPost> => {
-	const filePath = path.join(process.cwd(), `/src/posts/${slug}.md`);
+
+export const ReadEntry = async (slug: string): Promise<Result<PostEntry, boolean>> => {
+	const filePath = path.join(process.cwd(), `/src/posts/${slug}`);
 	const fileData = await fs.promises.readFile(filePath, 'utf-8');
 
-	const { data, content } = matter(fileData);
+	const entryJson = JSON.parse(fileData);
 
-	return {
-		title: data.title,
-		date: data.date,
-		htmlContent: md.render(content),
-	}
+	const indexJson = await ReadIndex();
+	const indexEntry = indexJson.find(x => x.slug == slug);
+
+	if (!indexEntry) return Err<boolean>(false);
+
+	return Ok<PostEntry>({
+		index: indexEntry,
+		content: entryJson
+	});
 }
+

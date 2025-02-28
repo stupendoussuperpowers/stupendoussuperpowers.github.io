@@ -1,63 +1,44 @@
 'use client';
-import { useState, KeyboardEvent, ChangeEvent, FormEventHandler, FormEvent } from 'react';
+import { IndexEntry, PostEntry } from '@/utils';
+import './custom.css';
+import { BlockNode } from '@/utils';
 
-import MarkdownIt from 'markdown-it';
-
-const md = MarkdownIt();
-
-type BlockNode = {
-  rawText: string,
-  renderText: string,
+const DefaultNewBlock: BlockNode = {
+  id: `id_${Math.random() * 100000000}`,
+  rawText: 'Add something here...',
+  renderText: '<p>Add something here...</p>',
+  isEditing: false
 }
+
+const DefaultNewIndex: IndexEntry = {
+  slug: `article-${Math.random() * 400}-${Math.random() * 400}-${Math.random() * 400}-${Math.random() * 400}-`,
+  title: 'What this about?',
+  date: '1st January 1970',
+  blurb: "What's this reaaalllly about?"
+}
+
+const DefaultNewPost: PostEntry = {
+  index: DefaultNewIndex,
+  content: [DefaultNewBlock]
+};
 
 export default function WritePad() {
 
-  const [blocks, setBlocks] = useState<BlockNode[]>([]);
-  const [title, setTitle] = useState<string>('This is the title...');
-
-  const handleNextBlock = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key == 'Enter') {
-      const rawText = (event.target as HTMLInputElement).value;
-      const display = md.render((event.target as HTMLInputElement).value);
-
-      setBlocks((prev) => [...prev, { rawText, renderText: display }]);
-    }
-  }
-
-  const handleTitle = (event: FormEvent<HTMLDivElement>) => {
-    setTitle(`${event.currentTarget.textContent}`);
-  }
-
-  const handleBlockEdit = (event: FormEvent<HTMLDivElement>) => {
-
-    const rawData = event.currentTarget.getAttribute('data-raw');
-
-    event.currentTarget.setHTMLUnsafe(`${rawData}`);
-  }
-
-  const handleBlockBlur = (event: FormEvent<HTMLDivElement>, index: number) => {
-    setBlocks(prev => {
-      const newBlocks = [...prev];
-      newBlocks[index] = { rawText: event.currentTarget.innerText, renderText: md.render(event.currentTarget.innerText) };
-      return newBlocks;
+  const newPost = async () => {
+    await fetch('/api/addentry', {
+      method: 'POST',
+      body: JSON.stringify({ ...DefaultNewPost })
     });
-  }
+
+    location.href = `/writepad/drafts-${DefaultNewIndex.slug}`;
+  };
 
   return <>
-    <div className='window-post'>
-      <h1 onChange={handleTitle} contentEditable={true}>{title}</h1>
-      <h2>01/01/1970</h2>
-      {
-        blocks.map((block: BlockNode, index: number) => {
-          return <div key={index}
-            data-raw={block.rawText}
-            onBlur={(event) => handleBlockBlur(event, index)}
-            onClick={handleBlockEdit}
-            contentEditable={true}
-            dangerouslySetInnerHTML={{ __html: block.renderText }} />
-        })
-      }
+    <div className='titlebar'>
+      <h1>Posts.</h1>
+      <button onClick={newPost}>New Post</button>
     </div>
-    <input placeholder="New Text Here..." onKeyDown={handleNextBlock} />
   </>;
 }
+
+

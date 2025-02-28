@@ -1,0 +1,21 @@
+textarea {
+  width: 100%;
+  height: fit-content;
+  overflow-y: 'hidden';
+  resize: 'vertical'
+}
+
+.titlebar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.titlebutton {
+  margin-left: 5px;
+}
+
+.gap {
+  margin-bottom: 5px;
+}
