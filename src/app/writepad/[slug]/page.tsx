@@ -29,8 +29,6 @@ export default function WritePad({ params }: { params: PageProps }) {
   const { slug } = use(params);
 
   const [blocks, setBlocks] = useState<BlockNode[]>([]);
-  const [hovers, setHovers] = useState<boolean[]>()
-
   const [index, setIndex] = useState<IndexEntry>({
     title: 'Loading',
     date: 'Loading',
@@ -184,6 +182,12 @@ export default function WritePad({ params }: { params: PageProps }) {
             <textarea onChange={changeNextBlock} onKeyDown={handleNextBlock} />
         }
       </div>
+      <div className="blog-cymk">
+        <div className="c box"></div>
+        <div className="m box"></div>
+        <div className="y box"></div>
+        <div className="k box"></div>
+      </div>
     </div>
   </>;
 }
@@ -196,6 +200,10 @@ const BlockDisplay = ({ block, handleEnter, actualEdit, startEdit }) => {
   useEffect(() => {
     if (block.isEditing) {
       textareaRef.current?.focus();
+      if (textareaRef.current) {
+        textareaRef.current.style.height = 'auto';
+        textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+      }
     }
   }, [block.isEditing]);
 

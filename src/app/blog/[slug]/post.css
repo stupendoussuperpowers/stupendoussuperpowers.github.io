@@ -1,4 +1,11 @@
 .window-post {
   height: fit-content;
   min-height: 65vh;
+  margin-bottom: 50px;
+}
+
+.blog-cymk {
+  display: flex;
+  margin-top: 50px;
+  flex-direction: row;
 }

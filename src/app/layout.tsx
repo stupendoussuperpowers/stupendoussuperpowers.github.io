@@ -29,12 +29,6 @@ export default function RootLayout({
           <div className="y box"></div>
           <div className="k box"></div>
         </div>
-        <div className="cmyk end">
-          <div className="c box"></div>
-          <div className="m box"></div>
-          <div className="y box"></div>
-          <div className="k box"></div>
-        </div>
       </body>
     </html>
   );

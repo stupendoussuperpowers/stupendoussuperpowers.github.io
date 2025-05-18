@@ -22,7 +22,14 @@ export default async function BlogPost({ params }: { params: PageProps }) {
         return <div className='window-post'>
             <h1>{postData.value.index.title}</h1>
             <h2>{postData.value.index.date}</h2>
-            <div dangerouslySetInnerHTML={{ __html: postData.value.content.map(x => x.renderText) }} />
+            <div dangerouslySetInnerHTML={{ __html: postData.value.content.map(x => x.renderText).join("") }} />
+
+            <div className="blog-cymk">
+                <div className="c box"></div>
+                <div className="m box"></div>
+                <div className="y box"></div>
+                <div className="k box"></div>
+            </div>
         </div>;
     } else {
         return <div>Page not found. </div>

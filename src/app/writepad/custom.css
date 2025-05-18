@@ -52,3 +52,11 @@ textarea {
   height: fit-content;
 }
 
+.window-post {
+  margin-bottom: 50px;
+}
+
+.blog-cymk {
+  display: flex;
+  flex-direction: row;
+}
