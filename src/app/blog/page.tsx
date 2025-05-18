@@ -5,7 +5,7 @@ import React from 'react';
 import { ReadIndex } from '../../utils';
 
 const getStaticProps = async () => {
-    const indexEntries: IndexEntry[] = await ReadIndex();
+    const indexEntries: IndexEntry[] = await ReadIndex(true);
     return indexEntries;
 }
 
@@ -14,16 +14,18 @@ export default async function Blog() {
 
     return <div className='window-blog'>
         <h1>Blog.</h1>
-        <ul>
-            {
-                articles.map((article) => {
-                    return <li key={article.date}>
-                        <BlogListItem {...article} />
-                    </li>
-                })
-            }
-        </ul>
+        {
+            articles.length > 0 ?
+                <ul>
+                    {
+                        articles.map((article) => {
+                            return <li key={article.date}>
+                                <BlogListItem {...article} />
+                            </li>
+                        })
+                    }
+                </ul> :
+                <div>No posts to show.</div>
+        }
     </div>
 }
-
-

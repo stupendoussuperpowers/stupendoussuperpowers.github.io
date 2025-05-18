@@ -1,10 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
-const Ok = <T>(value: T): Ok<T> => ({ ok: true, value });
-const Err = <E>(error: E): Err<E> => ({ ok: false, error });
-
-
+export const Ok = <T>(value: T): Ok<T> => ({ ok: true, value });
+export const Err = <E>(error: E): Err<E> => ({ ok: false, error });
 
 
 /*
@@ -36,34 +34,51 @@ const Err = <E>(error: E): Err<E> => ({ ok: false, error });
  * - find slug, delete entry, delete file.
  *
  * */
+export const randomUUID = () => {
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		const r = Math.random() * 16 | 0;
+		const v = c === 'x' ? r : (r & 0x3 | 0x8);
+		return v.toString(16);
+	});
+}
 
-
-export const ReadIndex = async (): Promise<IndexEntry[]> => {
+export const ReadIndex = async (published?: boolean | null): Promise<IndexEntry[]> => {
 	const fileData = await fs.promises.readFile(path.join(process.cwd(), '/src/posts/indexdb.json'), 'utf-8');
 	const indexJson = await JSON.parse(fileData);
+
+	if (published) {
+		return indexJson.filter((entry: IndexEntry) => entry.draft == false);
+	}
 
 	return indexJson.map((entry: IndexEntry) => entry);
 }
 
+export const WriteIndex = async (index: IndexEntry[]): Promise<boolean> => {
+	await fs.promises.writeFile(path.join(process.cwd(), '/src/posts/indexdb.json'), JSON.stringify(index));
+	return true;
+}
 
 export const AddEntry = async (index: IndexEntry, content: BlockNode[]): Promise<boolean> => {
 	const indexJson = await ReadIndex();
+
+	// Add current timestamp
+	const updatedIndex = { ...index, date: (new Date()).toString() };
 
 	// Write to path
 	const entryPath = path.join(process.cwd(), `/src/posts/${index.slug}`);
 	await fs.promises.writeFile(entryPath, JSON.stringify(content));
 
-	// Update or add index entry. 
+	// Update or add index entry.
 	const idx = indexJson.findIndex(x => x.slug == index.slug);
+	if (idx == -1) indexJson.push(updatedIndex);
+	else indexJson[idx] = updatedIndex;
 
-	if (idx != -1) indexJson.push(index);
-	else indexJson[idx] = index;
+	await WriteIndex(indexJson);
 
 	return true;
 }
 
 // Read entry
-
 export const ReadEntry = async (slug: string): Promise<Result<PostEntry, boolean>> => {
 	const filePath = path.join(process.cwd(), `/src/posts/${slug}`);
 	const fileData = await fs.promises.readFile(filePath, 'utf-8');

@@ -56,9 +56,20 @@ body {
   width: 100%;
   margin: 0;
   padding: var(--line-height) 0ch;
-  max-width: calc(min(110ch, round(down, 100%, 1ch)));
   line-height: var(--line-height);
   overflow-x: hidden;
+  min-height: 100vh;
+  justify-items: center;
+}
+
+.actualbody {
+  width: calc(min(95ch, round(down, 100%, 1ch)));
+}
+
+footer {
+  position: absolute;
+  bottom: 15px;
+  margin-top: 15px;
 }
 
 @media screen and (max-width: 480px) {
@@ -504,4 +515,54 @@ label input {
 
 .debug-toggle-label {
   text-align: right;
+}
+
+.cmyk {
+  display: flex;
+  flex-direction: column;
+}
+
+.box {
+  width: 20px;
+  height: 20px;
+  margin: 0.5vh;
+}
+
+.c {
+  background-color: cyan;
+}
+
+.m {
+  background-color: magenta;
+}
+
+.y {
+  background-color: yellow;
+}
+
+.k {
+  background-color: black;
+}
+
+.start {
+  position: absolute;
+  top: 2vh;
+  left: 2vw;
+}
+
+.end {
+  position: absolute;
+  top: 80vh;
+  left: 96vw;
+}
+
+@media only screen and (max-width: 990px) {
+  .cmyk {
+    display: none;
+  }
+}
+
+textarea {
+  border: 0px solid black;
+  background: rgba(250,250,250,1);
 }

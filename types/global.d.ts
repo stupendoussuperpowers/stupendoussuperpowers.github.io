@@ -10,6 +10,7 @@ declare global {
     slug: string,
     date: string,
     title: string,
+    draft: boolean
     blurb: string
   }
 

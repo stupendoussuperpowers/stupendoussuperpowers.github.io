@@ -37,9 +37,9 @@ export default function Home() {
         </p>
         <p>
           [Languages] Python, Javascript, Rust, C/C++, Go, Java <br />
-          [Virtualization/Cloud] Docker, Kubernetes, VMware, AWS, GCP, Azure
-          [Frameworks] React.js, Node.js, pandas, numpy, tensorflow, keras, Spark
-          [Misc.] MySQL, Postgres, Redis, MongoDB, Distributed Systems, Operating Systems, Languages
+          [Virtualization/Cloud] Docker, Kubernetes, VMware, AWS, GCP, Azure <br />
+          [Frameworks] React.js, Node.js, pandas, numpy, tensorflow, keras, Spark<br />
+          [Misc.] MySQL, Postgres, Redis, MongoDB, Distributed Systems, Operating Systems, Languages<br />
         </p>
 
       </div>

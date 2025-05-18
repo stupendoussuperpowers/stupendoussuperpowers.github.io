@@ -17,10 +17,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className='debug'>
-        <Header />
-        {children}
-        <div className="debug-grid"></div>
-        <Footer />
+        <div className='actualbody'>
+          <Header />
+          {children}
+          {/* <div className="debug-grid"></div> */}
+          <Footer />
+        </div>
+        <div className="cmyk start">
+          <div className="c box"></div>
+          <div className="m box"></div>
+          <div className="y box"></div>
+          <div className="k box"></div>
+        </div>
+        <div className="cmyk end">
+          <div className="c box"></div>
+          <div className="m box"></div>
+          <div className="y box"></div>
+          <div className="k box"></div>
+        </div>
       </body>
     </html>
   );

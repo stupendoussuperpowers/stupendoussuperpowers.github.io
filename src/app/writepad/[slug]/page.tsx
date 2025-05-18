@@ -1,8 +1,10 @@
 'use client';
-import { use, useState, useEffect, KeyboardEvent, MouseEvent, ChangeEvent } from 'react';
+import { use, useState, useEffect, KeyboardEvent, MouseEvent, ChangeEvent, useRef } from 'react';
 import '../custom.css';
 import MarkdownIt from 'markdown-it';
 import React from 'react';
+import { FaCaretUp, FaCaretDown } from 'react-icons/fa';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
 
 const md = MarkdownIt();
 
@@ -26,23 +28,32 @@ export default function WritePad({ params }: { params: PageProps }) {
 
   const { slug } = use(params);
 
+  const [blocks, setBlocks] = useState<BlockNode[]>([]);
+  const [hovers, setHovers] = useState<boolean[]>()
+
+  const [index, setIndex] = useState<IndexEntry>({
+    title: 'Loading',
+    date: 'Loading',
+    blurb: 'Loading',
+    slug,
+    draft: true,
+  });
+
   useEffect(() => {
     (async () => {
       const b = await fetch(`/api/readentry/${slug}`);
       const c = await b.json();
 
+      console.log({ c });
       setBlocks(c.content);
       setIndex(c.index);
     })();
   }, [slug]);
 
-  const [blocks, setBlocks] = useState<BlockNode[]>([]);
-  const [index, setIndex] = useState<IndexEntry | null>(null);
-
-
   const [newValue, setNewValue] = useState<string>('Type...');
 
   const handleNextBlock = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    console.log(event.key);
     if (event.key == 'Enter' && event.shiftKey) {
       const rawText = (event.target as HTMLTextAreaElement).value;
       const display = md.render((event.target as HTMLTextAreaElement).value);
@@ -51,8 +62,20 @@ export default function WritePad({ params }: { params: PageProps }) {
 
       setNewValue('');
       setBlocks((prev) => [...prev, { id, rawText, renderText: display, isEditing: false }]);
-
     }
+  }
+
+  const handleInsertion = (index: number, position = 'after') => {
+    console.log('[handleNewBlock] ', index, position);
+    console.log('[handleNewBlock] ', blocks.length, blocks);
+    const pos = position == 'after' ? index + 1 : index;
+    setBlocks((prev) => {
+      return position != 'delete' ? [
+        ...prev.slice(0, pos),
+        { id: `id_${(Math.random() * 1000000).toString()}`, rawText: 'Edit...', renderText: 'Edit...', isEditing: false },
+        ...prev.slice(pos)
+      ] : [...prev.slice(0, pos), ...prev.slice(pos + 1)];
+    });
   }
 
   const handleTitle = (event: ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +83,8 @@ export default function WritePad({ params }: { params: PageProps }) {
       title: (event.target as HTMLInputElement).value,
       date: prev ? prev.date : '',
       blurb: prev ? prev.blurb : '',
-      slug: prev ? prev.slug : ''
+      slug: prev ? prev.slug : '',
+      draft: prev ? prev.draft : true
     }));
   }
 
@@ -68,19 +92,22 @@ export default function WritePad({ params }: { params: PageProps }) {
     setIndex((prev) => ({
       blurb: (event.target as HTMLInputElement).value,
       date: prev ? prev.date : '',
-      title: prev ? prev.blurb : '',
-      slug: prev ? prev.slug : ''
+      title: prev ? prev.title : '',
+      slug: prev ? prev.slug : '',
+      draft: prev ? prev.draft : true
     }));
   }
 
   const actualEdit = (event: ChangeEvent<HTMLTextAreaElement>, id: string) => {
+    event.target.style.height = 'auto';
+    event.target.style.height = event.target.scrollHeight.toString() + "px";
+
     const block = blocks.map(x => {
       if (x.id == id) {
         x.rawText = (event.target as HTMLTextAreaElement).value;
       }
       return x;
     });
-
     setBlocks([...block]);
   };
 
@@ -91,7 +118,6 @@ export default function WritePad({ params }: { params: PageProps }) {
       }
       return x;
     });
-
     setBlocks([...block]);
   };
 
@@ -104,65 +130,102 @@ export default function WritePad({ params }: { params: PageProps }) {
         }
         return x;
       });
-
       setBlocks([...block]);
     }
   };
 
   const changeNextBlock = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    event.target.style.height = 'inherit';
+    event.target.style.height = event.target.scrollHeight.toString() + "px";
     setNewValue((event.target as HTMLTextAreaElement).value);
   }
 
   const savePost = async (draft: boolean) => {
+    console.log('Saving...', { blocks, index, draft });
     const result = await fetch('/api/addentry', {
       method: 'post',
       body: JSON.stringify({
         content: blocks,
-        index: index,
-        draft: draft,
+        index: { ...index, draft }
       })
     });
-
     console.log({ result });
   };
 
   return <>
     <div className='window-post'>
       <div className='titlebar'>
-        <Editable size='h1' value={index?.title} setValue={handleTitle} />
-        <Editable size='h2' value={index?.blurb} setValue={handleBlurb} />
+        <div>
+          <Editable size='h1' value={index?.title} setValue={handleTitle} />
+          <Editable size='h2' value={index?.blurb} setValue={handleBlurb} />
+        </div>
         <div>
           <button className='titlebutton' onClick={() => savePost(true)}>Save</button>
           <button className='titlebutton' onClick={() => savePost(false)}>Publish</button>
         </div>
       </div>
-      {
-        blocks.map((block: BlockNode, index: number) => {
-          return block.isEditing ? <textarea
-            className='gap'
-            value={block.rawText}
-            key={block.id}
-            onKeyDown={(e) => handleEnter(e, block.id)}
-            onChange={(e) => actualEdit(e, block.id)} />
-            :
-            <div key={index}
-              className='gap'
-              onClick={(e) => startEdit(e, block.id)}
-              dangerouslySetInnerHTML={{ __html: block.renderText }} />
-        })
-      }
+      <div className='prosebox'>
+        {
+          blocks.length > 0 ? blocks.map((block: BlockNode, index: number) =>
+            <div key={index} className='block-display'>
+              <BlockDisplay
+                block={block}
+                actualEdit={actualEdit}
+                handleEnter={handleEnter}
+                startEdit={startEdit} />
+              {block.isEditing ?
+                <div className='ctrlpanel'>
+                  <button className='controls' onClick={() => handleInsertion(index, 'before')} ><FaCaretUp /></button>
+                  <button className='controls' onClick={() => handleInsertion(index, 'delete')}><RiDeleteBin6Fill /></button>
+                  <button className='controls' onClick={() => handleInsertion(index, 'after')}><FaCaretDown /></button>
+                </div> : <></>}
+            </div>
+          ) :
+            <textarea onChange={changeNextBlock} onKeyDown={handleNextBlock} />
+        }
+      </div>
     </div>
-    <textarea value={newValue} onKeyDown={handleNextBlock} onChange={changeNextBlock} />
   </>;
+}
+
+
+const BlockDisplay = ({ block, handleEnter, actualEdit, startEdit }) => {
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (block.isEditing) {
+      textareaRef.current?.focus();
+    }
+  }, [block.isEditing]);
+
+  return <div
+    style={{ width: '100%' }}
+    onClick={(e) => startEdit(e, block.id)}
+  >
+    {
+      block.isEditing ? <textarea
+        ref={textareaRef}
+        className='gap.prose'
+        value={block.rawText}
+        key={block.id}
+        onKeyDown={(e) => handleEnter(e, block.id)}
+        onChange={(e) => actualEdit(e, block.id)} />
+        :
+        <div
+          className='gap'
+          dangerouslySetInnerHTML={{ __html: block.renderText }} />
+    }
+  </div>;
 }
 
 const Editable: React.FC<{ value: string | undefined, setValue: (event: ChangeEvent<HTMLInputElement>) => void, size: string }> = ({ value, setValue, size }) => {
   const [editing, setEditing] = useState<boolean>(false);
 
-  return editing ? <input value={value} onChange={setValue} onKeyDown={
+  return editing ? <p contentEditable={true} onChange={setValue} onKeyDown={
     (e) => {
       if (e.key == 'Enter' && e.shiftKey) setEditing(false);
     }
-  } /> : size == 'h1' ? <h1 onClick={() => setEditing(true)} onInput={setValue}>{value}</h1 >
-    : <h2 onClick={() => setEditing(true)} onInput={setValue}>{value}</h2>
+  }>{value}</p> : size == 'h1' ? <h1 onClick={() => setEditing(true)} onInput={setValue}>{value}</h1 >
+    : <div onClick={() => setEditing(true)} onInput={setValue}>{value}</div>
 }

@@ -4,35 +4,37 @@ import './custom.css';
 import { BlogListItem } from '../../components/BlogListItem';
 import React from 'react';
 
-const DefaultNewBlock: BlockNode = {
-  id: `id_${Math.random() * 100000000}`,
-  rawText: 'Add something here...',
-  renderText: '<p>Add something here...</p>',
-  isEditing: false
+const randomUUID = () => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
 }
 
 const DefaultNewIndex: IndexEntry = {
-  slug: `article-${Math.random() * 400}-${Math.random() * 400}-${Math.random() * 400}-${Math.random() * 400}-`,
+  slug: `article-${randomUUID()}`,
   title: 'What this about?',
   date: '1st January 1970',
+  draft: true,
   blurb: "What's this reaaalllly about?"
 }
 
 const DefaultNewPost: PostEntry = {
   index: DefaultNewIndex,
-  content: [DefaultNewBlock]
+  content: []
 };
 
 export default function WritePad() {
 
-  const [posts, setPosts] = useState<IndexEntry[] | null>(null);
+  const [posts, setPosts] = useState<IndexEntry[]>([]);
 
   useEffect(() => {
     (async () => {
       const p = await fetch('/api/readindex');
       const pj = await p.json();
-
-      setPosts(pj)
+      console.log({ pj });
+      setPosts(pj.posts)
     })()
   }, []);
 
@@ -42,17 +44,19 @@ export default function WritePad() {
       body: JSON.stringify({ ...DefaultNewPost })
     });
 
-    location.href = `/writepad/drafts-${DefaultNewIndex.slug}`;
+    location.href = `/writepad/${DefaultNewIndex.slug}`;
   };
 
   return <>
     <div className='titlebar'>
       <h1>Posts.</h1>
       <button onClick={newPost}>New Post</button>
+    </div>
+    <div>
       {
-        posts?.map(ind =>
-          <BlogListItem key={ind.slug} {...ind} />
-        )
+        posts.length > 0 ? posts.map(ind =>
+          <BlogListItem key={ind.slug} {...ind} writepad={true} />
+        ) : <>No posts or drafts to report.</>
       }
     </div>
   </>;

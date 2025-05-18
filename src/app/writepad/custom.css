@@ -2,7 +2,31 @@ textarea {
   width: 100%;
   height: fit-content;
   overflow-y: 'hidden';
-  resize: 'vertical'
+  resize: 'vertical';
+  font-size: 15px;
+}
+
+.ctrlpanel {
+  display: flex;
+  height: fit-content;
+  flex-direction: row;
+  position: absolute;
+  gap: 2px;
+  top: 2px;
+  right: 2px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.controls {
+  height: fit-content;
+  border: 1px solid black;
+  padding: 0px;
+}
+
+.proseblock {
+  display: flex;
+  flex-direction: column;
 }
 
 .titlebar {
@@ -19,3 +43,12 @@ textarea {
 .gap {
   margin-bottom: 5px;
 }
+
+.block-display {
+  display: flex; 
+  flex-direction: row;
+  width: 100%;
+  position: relative;
+  height: fit-content;
+}
+

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { PostEntry, ReadEntry } from "@/utils";
+import { ReadEntry } from "../../../utils";
 
 export default async function POST(req: NextApiRequest, res: NextApiResponse<PostEntry | boolean>) {
 	const { slug } = req.query;

@@ -6,13 +6,12 @@ type BlogListProps = IndexEntry & {
     writepad?: boolean
 }
 
-export const BlogListItem: React.FC<BlogListProps> = ({ title, blurb, date, slug, writepad }) => {
-    const isDraft = slug.includes('drafts_');
+export const BlogListItem: React.FC<BlogListProps> = ({ draft, title, blurb, date, slug, writepad }) => {
 
     return (<div className='p-card'>
         <div className='p-title'>
             <Link href={`/${writepad ? 'writepad' : 'blog'}/${slug.replace(/\.md$/, '')}`}>
-                <b>{isDraft ? '[DRAFT]' : ''}{title}</b>
+                <b>{draft ? '[DRAFT] ' : ''}{title}</b>
             </Link>
             <div className='slug'>
                 {date}

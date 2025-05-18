@@ -1,6 +1,11 @@
 .window {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: 10px;
+  gap: 20px;
   align-items: center;
 }
+
+.scrollable {
+  margin-top: 5px;
+}
+
