@@ -27,7 +27,7 @@ declare global {
     title: string,
     content: string,
     slug: string,
-    readme: string,
+    report: string,
     languages: string,
   };
 
