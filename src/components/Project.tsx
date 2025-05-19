@@ -1,27 +1,26 @@
 import './project.css';
 import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 
-export const Project: React.FC<ProjectData> = ({ title, content, slug, readme, languages }) => {
+export const Project: React.FC<ProjectData> = ({ title, content, slug, report, languages }) => {
     return (<div className='p-card'>
         <div className='p-title'>
-            <b>{title}</b>
+            <b style={{ fontSize: 'large' }}>{title}</b>
             <div className='slug'>
                 <Link href={`https://github.com/${slug}`}>
                     {slug}
                 </Link>
+
             </div>
+            <div className='slug'>
+                {report ?
+                    <Link href={report}>Report</Link> : <></>}
+            </div>
+
         </div>
-        <div>[{languages}]</div>
-        <div>{content}</div>
-        <div>
-            <details>
-                <summary> README.md</summary>
-                <ReactMarkdown>
-                    {readme}
-                </ReactMarkdown>
-            </details>
-        </div>
-    </div>);
+        <div style={{ fontSize: 'small' }}>[{languages}]</div>
+        <ReactMarkdown>{content}</ReactMarkdown>
+        <hr />
+    </div >);
 }

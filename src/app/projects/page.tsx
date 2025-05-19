@@ -8,6 +8,7 @@ export default async function ProjectsPage() {
     const projects = await getStaticProps();
     return <div>
         <h1>Projects.</h1>
+        <br />
         <ul>
             {
                 projects.map((element: ProjectData) => {
@@ -17,6 +18,7 @@ export default async function ProjectsPage() {
                 })
             }
         </ul>
+        <br />
     </div>;
 }
 
@@ -25,15 +27,10 @@ const getStaticProps = async () => {
     const projectFile = await fs.promises.readFile(filePath, 'utf-8');
 
     const projectLists = await Promise.all(projectFile.split('\n').map(async (line: string) => {
-        const [slug, content] = line.split('===', 2);
+        const [slug, content, report] = line.split('===', 3);
         const title = slug.split('/', 2)[1];
 
         if (content == undefined) return null;
-
-        const readme_fetch = await fetch(`https://api.github.com/repos/${slug}/contents/README.md`);
-        const readme_json = await readme_fetch.json();
-
-        const readme = atob(readme_json.content);
 
         const language = await fetch(`https://api.github.com/repos/${slug}/languages`);
         const l_json = await language.json();
@@ -44,7 +41,7 @@ const getStaticProps = async () => {
             title: title,
             slug: slug,
             content: content,
-            readme: readme,
+            report: report,
             languages: languages,
         };
     }));

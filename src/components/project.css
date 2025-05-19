@@ -11,3 +11,8 @@
 .p-card {
   margin-bottom: 19px;
 }
+
+summary {
+  font-size: 14px;
+  padding: 0px;
+}
