@@ -5,6 +5,8 @@
   "homepage": "https://stupendoussuperpowers.github.io/",
   "scripts": {
     "dev": "next dev",
+    "prebuild": "zip -r public/writepad.zip src/app/writepad && rm -rf src/app/writepad", 
+    "postbuild": "unzip public/writepad.zip -d . && rm public/writepad.zip",
     "build": "next build",
     "start": "next start"
   },
@@ -13,6 +15,7 @@
     "gray-matter": "^4.0.3",
     "markdown-it": "^14.1.0",
     "next": "15.1.7",
+    "null-loader": "^4.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
