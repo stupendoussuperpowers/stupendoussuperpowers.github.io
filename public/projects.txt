@@ -1,6 +1,6 @@
-stupendoussuperpowers/wise-bloom-filters===Course project on improving Learned Bloom Filters.===[Report](https://github.com/stupendoussuperpowers/wise-bloom-filters/blob/main/Improving_Learned_Bloom_Filters.pdf)
-Sitanshuk/Talk2Doc===Talk2Data is a centralized platform designed to simplify the way college students interact with their academic and professional data. It combines multiple sources like Notion and Gmail to track job applications, and uses LLMs with RAG to allow querying custom notes.===[Report](https://github.com/Sitanshuk/Talk2Doc/blob/master/Talk2Data.pdf) 
-stupendoussuperpowers/mta-ridership===NYC Subway Traffic & Rideship Pattern Prediction.===[Report](https://github.com/stupendoussuperpowers/mta-ridership/blob/main/NYC_Subway_Transit_Ridership_Prediction.pdf)
+stupendoussuperpowers/wise-bloom-filters===Course project on improving Learned Bloom Filters.===https://github.com/stupendoussuperpowers/wise-bloom-filters/blob/main/Improving_Learned_Bloom_Filters.pdf
+Sitanshuk/Talk2Doc===Talk2Data is a centralized platform designed to simplify the way college students interact with their academic and professional data. It combines multiple sources like Notion and Gmail to track job applications, and uses LLMs with RAG to allow querying custom notes.===https://github.com/Sitanshuk/Talk2Doc/blob/master/Talk2Data.pdf 
+stupendoussuperpowers/mta-ridership===NYC Subway Traffic & Rideship Pattern Prediction.===https://github.com/stupendoussuperpowers/mta-ridership/blob/main/NYC_Subway_Transit_Ridership_Prediction.pdf
 stupendoussuperpowers/trunk===POSIX tail which allows grep on live logs using --follow.
 stupendoussuperpowers/gilbert===Google App Engine replica for development workflows.
 stupendoussuperpowers/rustle===Playground for exploring packet captures using pcap syscalls
