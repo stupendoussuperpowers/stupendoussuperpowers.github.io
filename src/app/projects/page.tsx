@@ -35,7 +35,9 @@ const getStaticProps = async () => {
         const language = await fetch(`https://api.github.com/repos/${slug}/languages`);
         const l_json = await language.json();
 
-        const languages = Object.keys(l_json).join(',');
+        const filter = ["Objective-C", "Makefile", "Rich Text Format", "Roff", "Objective-C++"];
+
+        const languages = Object.keys(l_json).filter(a => !filter.includes(a)).join(',');
 
         return {
             title: title,
