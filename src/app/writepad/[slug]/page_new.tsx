@@ -1,14 +1,29 @@
 'use client';
-import { use, useEffect, useState, KeyboardEventHandler, MouseEventHandler, useRef } from 'react';
+import { use, useEffect, useState, KeyboardEvent, KeyboardEventHandler, ChangeEventHandler, MouseEventHandler, ChangeEvent, useRef } from 'react';
 import '../custom.css';
 import MarkdownIt from 'markdown-it';
 import React from 'react';
+import { FaCaretUp, FaCaretDown } from 'react-icons/fa';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
 import { Controller, useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
 
 const md = MarkdownIt();
 
+type IndexEntry = {
+	title: string;
+	blurb: string;
+	date?: string;
+	slug?: string;
+	draft?: boolean;
+};
+
 type PageProps = Promise<{ slug: string }>;
+
+type BlockNode = {
+	id: string;
+	rawText: string;
+	renderText: string;
+};
 
 type BlogEntry = IndexEntry & {
 	blocks: BlockNode[]
@@ -31,30 +46,17 @@ export default function WritePad({ params }: { params: PageProps }) {
 
 	const { slug } = use(params);
 
-	const { handleSubmit, control, watch, reset,
+	const { handleSubmit, control, setValue, watch,
 		formState: { isSubmitting, isSubmitted } }
 		= useForm<BlogEntry>({
 			defaultValues: async () => {
 				const b = await fetch(`/api/readentry/${slug}`);
 				const c = await b.json();
-				console.log('default values');
 				return { ...c.index, blocks: c.content };
-			},
-			shouldUnregister: false,
+			}
 		});
 
 	const { fields, remove, insert } = useFieldArray({ name: "blocks", control });
-
-	useEffect(() => {
-		(async () => {
-			const b = await fetch(`/api/readentry/${slug}`);
-			const c = await b.json();
-			console.log('reset', { ...c.index, blocks: c.content });
-			reset({ ...c.index, blocks: c.content });
-		})();
-	}, [isSubmitted, slug, reset]);
-
-	const [editingIndex, setEditingIndex] = useState<number>(-1);
 
 	const watchFieldArray = watch("blocks");
 	const controlledFields = fields.map((field, index) => {
@@ -64,7 +66,10 @@ export default function WritePad({ params }: { params: PageProps }) {
 		}
 	});
 
-	const onSubmit: SubmitHandler<BlogEntry> = async (data) => {
+	// Local state for which block is being edited (by index)
+	const [editingBlockIndex, setEditingBlockIndex] = useState<number | null>(0); // Start with first block editable
+
+	const onSubmit: SubmitHandler<BlogEntry> = async (data,) => {
 		const result = await fetch('/api/addentry', {
 			method: 'post',
 			body: JSON.stringify({
@@ -81,8 +86,44 @@ export default function WritePad({ params }: { params: PageProps }) {
 		console.log(result);
 	};
 
+	const actualEdit = (e: ChangeEvent<HTMLTextAreaElement>, index: number) => {
+		const newRawText = e.target.value;
+		const newRenderText = md.render(newRawText);
+		setValue(`blocks.${index}.rawText`, newRawText);
+		setValue(`blocks.${index}.renderText`, newRenderText);
+	}
+
+	const handleEnter = (e: KeyboardEvent<HTMLTextAreaElement>, index: number) => {
+		if (!e.shiftKey && e.key === "Enter") {
+			const caretPos = e.currentTarget.selectionStart;
+			const paraStr = e.currentTarget.value;
+
+			const [pre, post] = [paraStr.slice(0, caretPos), paraStr.slice(caretPos)];
+
+			const newBlock = {
+				id: `id_${(Math.random() * 1000000).toString()}`,
+				rawText: post,
+				renderText: md.render(post),
+			};
+
+			e.currentTarget.value = pre;
+
+			setValue(`blocks.${index}.rawText`, pre);
+			setValue(`blocks.${index}.renderText`, md.render(pre));
+			insert(index + 1, newBlock);
+			setEditingBlockIndex(index + 1);
+		}
+	};
+
 	const titleRef = useRef<HTMLHeadingElement>(null);
 	const blurbRef = useRef<HTMLHeadingElement>(null);
+
+	// If fields change (e.g. after async load), reset editingBlockIndex to first block
+	useEffect(() => {
+		if (fields.length > 0) {
+			setEditingBlockIndex(0);
+		}
+	}, [fields.length]);
 
 	return <>
 		<form onSubmit={handleSubmit(onSubmit)}>
@@ -118,9 +159,7 @@ export default function WritePad({ params }: { params: PageProps }) {
 						/>
 					</div>
 					<div>
-						<button type="submit" className='titlebutton'>
-							{isSubmitting ? "Saving..." : isSubmitted ? "Saved" : "Save"}
-						</button>
+						<button type="submit" className='titlebutton'>Save</button>
 					</div>
 				</div>
 				<div className='prosebox'>
@@ -132,44 +171,14 @@ export default function WritePad({ params }: { params: PageProps }) {
 								control={control}
 								render={({ field: formField }) => (
 									<NewBlockDisplay
-										startEdit={() => setEditingIndex(index)}
-										endEdit={() => setEditingIndex(-1)}
 										id={formField.value.id}
-										isEditing={editingIndex == index}
+										editing={editingBlockIndex === index}
 										rawText={formField.value.rawText}
 										renderText={formField.value.renderText}
-										actualEdit={(content: string) => {
-											formField.onChange({
-												...formField.value,
-												rawText: content,
-												renderText: md.render(content),
-											});
-										}}
-										handleEnter={(e) => {
-											if (!e.shiftKey && e.key === "Enter") {
-												const caretPos = e.currentTarget.selectionStart;
-												const paraStr = e.currentTarget.value;
-
-												const [pre, post] = [paraStr.slice(0, caretPos), paraStr.slice(caretPos)];
-
-												console.log({ pre, post });
-
-												const newBlock: BlockNode = {
-													id: `id_${(Math.random() * 1000000).toString()}`,
-													rawText: post,
-													renderText: md.render(post),
-												};
-
-												setEditingIndex(index + 1);
-												formField.onChange({
-													...formField,
-													rawText: pre,
-													renderText: md.render(pre),
-												});
-												insert(index + 1, newBlock);
-											}
-
-										}}
+										startEdit={() => setEditingBlockIndex(index)}
+										endEdit={() => setEditingBlockIndex(null)}
+										actualEdit={(e) => actualEdit(e, index)}
+										handleEnter={(e) => handleEnter(e, index)}
 										remove={() => remove(index)}
 									/>
 								)}
@@ -190,19 +199,19 @@ export default function WritePad({ params }: { params: PageProps }) {
 
 interface NewBlockDisplayProps {
 	id: string,
-	isEditing: boolean,
+	editing: boolean,
 	rawText: string,
 	renderText: string,
 	startEdit: () => void,
 	endEdit: () => void,
-	actualEdit: (content: string) => void,
+	actualEdit: ChangeEventHandler<HTMLTextAreaElement>,
 	remove: () => void,
 	handleEnter: KeyboardEventHandler<HTMLTextAreaElement>,
 };
 
 const NewBlockDisplay: React.FC<NewBlockDisplayProps> = ({
 	id,
-	isEditing,
+	editing,
 	rawText,
 	renderText,
 	startEdit,
@@ -212,18 +221,19 @@ const NewBlockDisplay: React.FC<NewBlockDisplayProps> = ({
 	remove,
 }) => {
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
+
 	useEffect(() => {
-		if (isEditing) {
+		if (editing) {
 			textareaRef.current?.focus();
 			if (textareaRef.current) {
 				textareaRef.current.style.height = 'auto';
 				textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
 			}
 		}
-	}, [isEditing]);
+	}, [editing]);
 
-	const handleClick: MouseEventHandler<HTMLDivElement> = () => {
-		if (!isEditing) {
+	const handleClick: MouseEventHandler<HTMLDivElement> = (_) => {
+		if (!editing) {
 			startEdit();
 		}
 	};
@@ -232,7 +242,7 @@ const NewBlockDisplay: React.FC<NewBlockDisplayProps> = ({
 		style={{ width: '100%' }}
 	>
 		{
-			isEditing ? <div style={{
+			editing ? <div style={{
 				position: "relative",
 				width: "100%"
 			}}
@@ -244,7 +254,7 @@ const NewBlockDisplay: React.FC<NewBlockDisplayProps> = ({
 					value={rawText}
 					key={id}
 					onKeyDown={handleEnter}
-					onChange={(e) => actualEdit(e.currentTarget.value)} />
+					onChange={actualEdit} />
 				<div className="ctrlpanel">
 					<button className='controls' onClick={remove}><RiDeleteBin6Fill /></button>
 				</div>
@@ -256,4 +266,4 @@ const NewBlockDisplay: React.FC<NewBlockDisplayProps> = ({
 					dangerouslySetInnerHTML={{ __html: renderText.length == 0 ? "Start typing..." : renderText }} />
 		}
 	</div >;
-}
+} 

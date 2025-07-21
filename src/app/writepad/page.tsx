@@ -23,7 +23,6 @@ const DefaultNewIndex: IndexEntry = {
 const DefaultNewPost: PostEntry = {
 	index: DefaultNewIndex,
 	content: [{
-		isEditing: false,
 		rawText: 'Get started...',
 		renderText: 'Get started...',
 		id: `id_${(Math.random() * 1000000).toString()}`
