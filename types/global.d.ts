@@ -1,35 +1,34 @@
 declare global {
-  type BlockNode = {
-    rawText: string,
-    renderText: string,
-    isEditing: boolean,
-    id: string,
-  }
+	type BlockNode = {
+		rawText: string,
+		renderText: string,
+		id: string,
+	}
 
-  type IndexEntry = {
-    slug: string,
-    date: string,
-    title: string,
-    draft: boolean
-    blurb: string
-  }
+	type IndexEntry = {
+		slug: string,
+		date: string,
+		title: string,
+		draft: boolean
+		blurb: string
+	}
 
-  type PostEntry = {
-    index: IndexEntry,
-    content: BlockNode[]
-  }
+	type PostEntry = {
+		index: IndexEntry,
+		content: BlockNode[]
+	}
 
-  type Ok<T> = { ok: true, value: T };
-  type Err<T> = { ok: false, error: T };
-  type Result<T, E> = Ok<T> | Err<E>;
+	type Ok<T> = { ok: true, value: T };
+	type Err<T> = { ok: false, error: T };
+	type Result<T, E> = Ok<T> | Err<E>;
 
-  type ProjectData = {
-    title: string,
-    content: string,
-    slug: string,
-    report: string,
-    languages: string,
-  };
+	type ProjectData = {
+		title: string,
+		content: string,
+		slug: string,
+		report: string,
+		languages: string,
+	};
 
 }
 

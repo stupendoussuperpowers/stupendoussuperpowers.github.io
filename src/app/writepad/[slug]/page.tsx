@@ -1,14 +1,19 @@
 'use client';
-import { use, useState, useEffect, KeyboardEvent, MouseEvent, ChangeEvent, useRef } from 'react';
+import { use, useEffect, KeyboardEvent, KeyboardEventHandler, ChangeEventHandler, MouseEventHandler, ChangeEvent, useRef } from 'react';
 import '../custom.css';
 import MarkdownIt from 'markdown-it';
 import React from 'react';
 import { FaCaretUp, FaCaretDown } from 'react-icons/fa';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { Controller, useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
 
 const md = MarkdownIt();
 
 type PageProps = Promise<{ slug: string }>;
+
+type BlogEntry = IndexEntry & {
+	blocks: BlockNode[]
+};
 
 /*
  * Workflow for writepad. 
@@ -26,214 +31,228 @@ type PageProps = Promise<{ slug: string }>;
 
 export default function WritePad({ params }: { params: PageProps }) {
 
-  const { slug } = use(params);
+	const { slug } = use(params);
 
-  const [blocks, setBlocks] = useState<BlockNode[]>([]);
-  const [index, setIndex] = useState<IndexEntry>({
-    title: 'Loading',
-    date: 'Loading',
-    blurb: 'Loading',
-    slug,
-    draft: true,
-  });
+	const { handleSubmit, control, setValue, watch, reset, formState: { isSubmitting, isSubmitted } } = useForm<BlogEntry>({
+		defaultValues: async () => {
+			const b = await fetch(`/api/readentry/${slug}`);
+			const c = await b.json();
+			console.log({ ...c.index, blocks: c.content });
+			return { ...c.index, blocks: c.content };
+		}
+	});
 
-  useEffect(() => {
-    (async () => {
-      const b = await fetch(`/api/readentry/${slug}`);
-      const c = await b.json();
+	const { fields, remove, insert } = useFieldArray({ name: "blocks", control });
 
-      console.log({ c });
-      setBlocks(c.content);
-      setIndex(c.index);
-    })();
-  }, [slug]);
+	const watchFieldArray = watch("blocks");
+	const controlledFields = fields.map((field, index) => {
+		return {
+			...field,
+			...watchFieldArray[index]
+		}
+	});
 
-  const [newValue, setNewValue] = useState<string>('Type...');
+	console.log(fields);
+	console.log(controlledFields);
 
-  const handleNextBlock = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    console.log(event.key);
-    if (event.key == 'Enter' && event.shiftKey) {
-      const rawText = (event.target as HTMLTextAreaElement).value;
-      const display = md.render((event.target as HTMLTextAreaElement).value);
+	const onSubmit: SubmitHandler<BlogEntry> = async (data) => {
+		const result = await fetch('/api/addentry', {
+			method: 'post',
+			body: JSON.stringify({
+				content: data.blocks,
+				index: {
+					title: data.title,
+					blurb: data.blurb,
+					date: data.date,
+					slug: data.slug,
+					draft: true
+				}
+			})
+		});
+		console.log(result);
+		console.log("resetting");
+		reset();
+	};
 
-      const id = 'id_' + (Math.random() * 1000000).toString();
+	const actualEdit = (e: ChangeEvent<HTMLTextAreaElement>, index: number) => {
+		const newRawText = e.target.value;
+		const newRenderText = md.render(newRawText);
+		setValue(`blocks.${index}.rawText`, newRawText);
+		setValue(`blocks.${index}.renderText`, newRenderText);
+	}
 
-      setNewValue('');
-      setBlocks((prev) => [...prev, { id, rawText, renderText: display, isEditing: false }]);
-    }
-  }
+	const handleEnter = (e: KeyboardEvent<HTMLTextAreaElement>, index: number) => {
+		console.log(e.currentTarget.selectionStart);
 
-  const handleInsertion = (index: number, position = 'after') => {
-    console.log('[handleNewBlock] ', index, position);
-    console.log('[handleNewBlock] ', blocks.length, blocks);
-    const pos = position == 'after' ? index + 1 : index;
-    setBlocks((prev) => {
-      return position != 'delete' ? [
-        ...prev.slice(0, pos),
-        { id: `id_${(Math.random() * 1000000).toString()}`, rawText: 'Edit...', renderText: 'Edit...', isEditing: false },
-        ...prev.slice(pos)
-      ] : [...prev.slice(0, pos), ...prev.slice(pos + 1)];
-    });
-  }
+		if (!e.shiftKey && e.key === "Enter") {
+			const caretPos = e.currentTarget.selectionStart;
+			const paraStr = e.currentTarget.value;
 
-  const handleTitle = (event: ChangeEvent<HTMLInputElement>) => {
-    setIndex((prev) => ({
-      title: (event.target as HTMLInputElement).value,
-      date: prev ? prev.date : '',
-      blurb: prev ? prev.blurb : '',
-      slug: prev ? prev.slug : '',
-      draft: prev ? prev.draft : true
-    }));
-  }
+			const [pre, post] = [paraStr.slice(0, caretPos), paraStr.slice(caretPos)];
 
-  const handleBlurb = (event: ChangeEvent<HTMLInputElement>) => {
-    setIndex((prev) => ({
-      blurb: (event.target as HTMLInputElement).value,
-      date: prev ? prev.date : '',
-      title: prev ? prev.title : '',
-      slug: prev ? prev.slug : '',
-      draft: prev ? prev.draft : true
-    }));
-  }
+			console.log({ pre, post });
 
-  const actualEdit = (event: ChangeEvent<HTMLTextAreaElement>, id: string) => {
-    event.target.style.height = 'auto';
-    event.target.style.height = event.target.scrollHeight.toString() + "px";
+			const newBlock = {
+				id: `id_${(Math.random() * 1000000).toString()}`,
+				rawText: post,
+				renderText: md.render(post),
+				isEditing: true
+			};
 
-    const block = blocks.map(x => {
-      if (x.id == id) {
-        x.rawText = (event.target as HTMLTextAreaElement).value;
-      }
-      return x;
-    });
-    setBlocks([...block]);
-  };
+			e.currentTarget.value = pre;
 
-  const startEdit = (_: MouseEvent<HTMLDivElement>, id: string) => {
-    const block = blocks.map(x => {
-      if (x.id == id) {
-        x.isEditing = true;
-      }
-      return x;
-    });
-    setBlocks([...block]);
-  };
+			setValue(`blocks.${index}.isEditing`, false);
+			setValue(`blocks.${index}.rawText`, pre);
+			setValue(`blocks.${index}.renderText`, md.render(pre));
+			insert(index + 1, newBlock);
+		}
+	};
 
-  const handleEnter = (event: KeyboardEvent<HTMLTextAreaElement>, id: string) => {
-    if (event.shiftKey && event.key == "Enter") {
-      const block = blocks.map((x) => {
-        if (x.id == id) {
-          x.isEditing = false;
-          x.renderText = md.render(x.rawText);
-        }
-        return x;
-      });
-      setBlocks([...block]);
-    }
-  };
+	const titleRef = useRef<HTMLHeadingElement>(null);
+	const blurbRef = useRef<HTMLHeadingElement>(null);
 
-  const changeNextBlock = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    event.target.style.height = 'inherit';
-    event.target.style.height = event.target.scrollHeight.toString() + "px";
-    setNewValue((event.target as HTMLTextAreaElement).value);
-  }
-
-  const savePost = async (draft: boolean) => {
-    console.log('Saving...', { blocks, index, draft });
-    const result = await fetch('/api/addentry', {
-      method: 'post',
-      body: JSON.stringify({
-        content: blocks,
-        index: { ...index, draft }
-      })
-    });
-    console.log({ result });
-  };
-
-  return <>
-    <div className='window-post'>
-      <div className='titlebar'>
-        <div>
-          <Editable size='h1' value={index?.title} setValue={handleTitle} />
-          <Editable size='h2' value={index?.blurb} setValue={handleBlurb} />
-        </div>
-        <div>
-          <button className='titlebutton' onClick={() => savePost(true)}>Save</button>
-          <button className='titlebutton' onClick={() => savePost(false)}>Publish</button>
-        </div>
-      </div>
-      <div className='prosebox'>
-        {
-          blocks.length > 0 ? blocks.map((block: BlockNode, index: number) =>
-            <div key={index} className='block-display'>
-              <BlockDisplay
-                block={block}
-                actualEdit={actualEdit}
-                handleEnter={handleEnter}
-                startEdit={startEdit} />
-              {block.isEditing ?
-                <div className='ctrlpanel'>
-                  <button className='controls' onClick={() => handleInsertion(index, 'before')} ><FaCaretUp /></button>
-                  <button className='controls' onClick={() => handleInsertion(index, 'delete')}><RiDeleteBin6Fill /></button>
-                  <button className='controls' onClick={() => handleInsertion(index, 'after')}><FaCaretDown /></button>
-                </div> : <></>}
-            </div>
-          ) :
-            <textarea onChange={changeNextBlock} onKeyDown={handleNextBlock} />
-        }
-      </div>
-      <div className="blog-cymk">
-        <div className="c box"></div>
-        <div className="m box"></div>
-        <div className="y box"></div>
-        <div className="k box"></div>
-      </div>
-    </div>
-  </>;
+	return <>
+		<form onSubmit={handleSubmit(onSubmit)}>
+			<div className='window-post'>
+				<div className='titlebar'>
+					<div>
+						<Controller
+							control={control}
+							name="title"
+							render={({ field: { onChange, value } }) => {
+								if (titleRef.current && !titleRef.current.textContent)
+									titleRef.current.textContent = value;
+								return < h1
+									contentEditable
+									onInput={(e) => onChange(e.currentTarget.textContent)}
+									ref={titleRef}
+								>
+								</h1>;
+							}}
+						/>
+						<Controller
+							control={control}
+							name="blurb"
+							render={({ field: { onChange, value } }) => {
+								if (blurbRef.current && !blurbRef.current.textContent)
+									blurbRef.current.textContent = value;
+								return <div
+									contentEditable
+									onInput={(e) => onChange(e.currentTarget.textContent)}
+									ref={blurbRef}
+								></div>;
+							}}
+						/>
+					</div>
+					<div>
+						<button type="submit" className='titlebutton'>Save</button>
+					</div>
+				</div>
+				<div className='prosebox'>
+					{
+						controlledFields.map((field, index) => {
+							return <Controller
+								key={field.id}
+								name={`blocks.${index}`}
+								control={control}
+								render={({ field: formField }) => (
+									<NewBlockDisplay
+										startEdit={() => setValue(`blocks.${index}.isEditing`, true)}
+										endEdit={() => setValue(`blocks.${index}.isEditing`, false)}
+										id={formField.value.id}
+										isEditing={formField.value.isEditing}
+										rawText={formField.value.rawText}
+										renderText={formField.value.renderText}
+										actualEdit={(e) => actualEdit(e, index)}
+										handleEnter={(e) => handleEnter(e, index)}
+										remove={() => remove(index)}
+									/>
+								)}
+							/>;
+						})
+					}
+				</div>
+				<div className="blog-cymk">
+					<div className="c box"></div>
+					<div className="m box"></div>
+					<div className="y box"></div>
+					<div className="k box"></div>
+				</div>
+			</div >
+		</form>
+	</>;
 }
 
+interface NewBlockDisplayProps {
+	id: string,
+	isEditing: boolean,
+	rawText: string,
+	renderText: string,
+	startEdit: () => void,
+	endEdit: () => void,
+	actualEdit: ChangeEventHandler<HTMLTextAreaElement>,
+	remove: () => void,
+	handleEnter: KeyboardEventHandler<HTMLTextAreaElement>,
+};
 
-const BlockDisplay = ({ block, handleEnter, actualEdit, startEdit }) => {
+const NewBlockDisplay: React.FC<NewBlockDisplayProps> = ({
+	id,
+	isEditing,
+	rawText,
+	renderText,
+	startEdit,
+	endEdit,
+	actualEdit,
+	handleEnter,
+	remove,
+}) => {
+	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+	useEffect(() => {
+		console.log({ isEditing });
+		if (isEditing) {
+			textareaRef.current?.focus();
+			if (textareaRef.current) {
+				textareaRef.current.style.height = 'auto';
+				textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+			}
+		}
+	}, [isEditing]);
 
-  useEffect(() => {
-    if (block.isEditing) {
-      textareaRef.current?.focus();
-      if (textareaRef.current) {
-        textareaRef.current.style.height = 'auto';
-        textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-      }
-    }
-  }, [block.isEditing]);
+	const handleClick: MouseEventHandler<HTMLDivElement> = (_) => {
+		console.log('clicked!', isEditing);
+		if (!isEditing) {
+			startEdit();
+		}
+	};
 
-  return <div
-    style={{ width: '100%' }}
-    onClick={(e) => startEdit(e, block.id)}
-  >
-    {
-      block.isEditing ? <textarea
-        ref={textareaRef}
-        className='gap.prose'
-        value={block.rawText}
-        key={block.id}
-        onKeyDown={(e) => handleEnter(e, block.id)}
-        onChange={(e) => actualEdit(e, block.id)} />
-        :
-        <div
-          className='gap'
-          dangerouslySetInnerHTML={{ __html: block.renderText }} />
-    }
-  </div>;
-}
+	return <div
+		style={{ width: '100%' }}
+	>
+		{
+			isEditing ? <div style={{
+				position: "relative",
+				width: "100%"
+			}}
+				onBlur={endEdit}
+			>
+				<textarea
+					ref={textareaRef}
+					className='gap prose'
+					value={rawText}
+					key={id}
 
-const Editable: React.FC<{ value: string | undefined, setValue: (event: ChangeEvent<HTMLInputElement>) => void, size: string }> = ({ value, setValue, size }) => {
-  const [editing, setEditing] = useState<boolean>(false);
-
-  return editing ? <p contentEditable={true} onChange={setValue} onKeyDown={
-    (e) => {
-      if (e.key == 'Enter' && e.shiftKey) setEditing(false);
-    }
-  }>{value}</p> : size == 'h1' ? <h1 onClick={() => setEditing(true)} onInput={setValue}>{value}</h1 >
-    : <div onClick={() => setEditing(true)} onInput={setValue}>{value}</div>
+					onKeyDown={handleEnter}
+					onChange={actualEdit} />
+				<div className="ctrlpanel">
+					<button className='controls' onClick={remove}><RiDeleteBin6Fill /></button>
+				</div>
+			</div>
+				:
+				<div
+					className='gap'
+					onClick={handleClick}
+					dangerouslySetInnerHTML={{ __html: renderText.length == 0 ? "Start typing..." : renderText }} />
+		}
+	</div >;
 }
