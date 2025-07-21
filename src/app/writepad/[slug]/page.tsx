@@ -5,6 +5,7 @@ import MarkdownIt from 'markdown-it';
 import React from 'react';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
 import { Controller, useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
+import Image from 'next/image';
 
 const md = MarkdownIt();
 
@@ -31,7 +32,7 @@ export default function WritePad({ params }: { params: PageProps }) {
 
 	const { slug } = use(params);
 
-	const { handleSubmit, control, watch, reset,
+	const { handleSubmit, register, control, watch, reset,
 		formState: { isSubmitting, isSubmitted } }
 		= useForm<BlogEntry>({
 			defaultValues: async () => {
@@ -56,6 +57,8 @@ export default function WritePad({ params }: { params: PageProps }) {
 
 	const [editingIndex, setEditingIndex] = useState<number>(-1);
 
+	const formFieldWatched = watch();
+
 	const watchFieldArray = watch("blocks");
 	const controlledFields = fields.map((field, index) => {
 		return {
@@ -74,6 +77,7 @@ export default function WritePad({ params }: { params: PageProps }) {
 					blurb: data.blurb,
 					date: data.date,
 					slug: data.slug,
+					headerImage: data.headerImage,
 					draft: true
 				}
 			})
