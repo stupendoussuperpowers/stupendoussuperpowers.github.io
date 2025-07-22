@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import formidable from 'formidable';
-import fs from 'fs';
 import path from 'path';
 
 export const config = {
@@ -27,15 +26,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			return res.status(500).json({ error: 'File Parsing Error' });
 		}
 
-		const file = files.file as formidable.File;
-		console.log(file, Array.isArray(file));
+		//	const file = files.file as formidable.File;
+		//	console.log(file, Array.isArray(file));
 
-		if (!file[0] /*|| Array.isArray(file)*/)
-			return res.status(400).json({ error: "Invalid File Format" });
+		//	if (!file[0] /*|| Array.isArray(file)*/)
+		//			return res.status(400).json({ error: "Invalid File Format" });
 
-		const filename = path.basename(file[0].filepath);
+		//	const filename = path.basename(file[0].filepath);
 
-		return res.status(200).json({ message: "Upload successful", filename })
+		return res.status(200).json({ message: "Upload successful", filename: "filename" })
 
 	});
 }
