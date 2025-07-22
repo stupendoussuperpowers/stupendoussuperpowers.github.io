@@ -3,11 +3,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { ReadIndex } from '@/utils';
+import { Metadata } from 'next';
 
 const getStaticProps = async () => {
 	const indexEntries: IndexEntry[] = await ReadIndex(true);
 	console.log({ indexEntries });
 	return indexEntries;
+}
+
+export async function generateMetadata(
+): Promise<Metadata> {
+	return {
+		title: 'Home / Sanchit Sahay'
+	}
 }
 
 export default async function Home() {
