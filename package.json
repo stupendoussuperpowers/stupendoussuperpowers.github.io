@@ -11,6 +11,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "formidable": "^3.5.4",
     "fs": "^0.0.1-security",
     "gray-matter": "^4.0.3",
     "markdown-it": "^14.1.0",

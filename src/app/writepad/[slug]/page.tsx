@@ -6,6 +6,7 @@ import {
 	KeyboardEventHandler,
 	MouseEventHandler,
 	useRef,
+	ChangeEvent,
 } from "react";
 import "../custom.css";
 import MarkdownIt from "markdown-it";
@@ -17,6 +18,7 @@ import {
 	SubmitHandler,
 	useFieldArray,
 } from "react-hook-form";
+import Image from "next/image";
 
 const md = MarkdownIt();
 
@@ -92,6 +94,32 @@ export default function WritePad({ params }: { params: PageProps }) {
 		};
 	});
 
+	const headerImage = watch("headerImage");
+
+	const { onChange, ...rest } = register('headerImage');
+
+	const uploadHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+		console.log('here?');
+		const file = e.target.files?.[0];
+		if (!file) return;
+
+		const formData = new FormData();
+		formData.append('file', file);
+
+		const res = await fetch('/api/upload-header', {
+			method: 'POST',
+			body: formData,
+		});
+
+		const json = await res.json();
+		console.log(json, json.message, json.filename);
+
+		if (res.ok && json.filename) {
+			onChange(json.filename);
+		}
+	}
+
+
 	const onSubmit: SubmitHandler<BlogEntry> = async (data) => {
 		const result = await fetch("/api/addentry", {
 			method: "post",
@@ -100,11 +128,10 @@ export default function WritePad({ params }: { params: PageProps }) {
 				index: {
 					title: data.title,
 					blurb: data.blurb,
-					date: data.date,
-					slug: data.slug,
-					headerImage: data.headerImage,
-					publish: data.publish,
 					pinned: data.pinned,
+					publish: data.publish,
+					date: data.date,
+					lastModified: data.lastModified
 				},
 			}),
 		});
@@ -162,6 +189,21 @@ export default function WritePad({ params }: { params: PageProps }) {
 								{isSubmitting ? "Saving..." : isSubmitted ? "Saved" : "Save"}
 							</button>
 						</div>
+					</div>
+					<div className='header-image'>
+						<input type="hidden" {...rest} name="headerImage" />
+
+						{
+							headerImage ? <Image
+								src={`/${headerImage}`}
+								width={1200}
+								height={400}
+								alt="header image"
+							/> : <>
+							</>
+						}
+
+						<input type="file" accept="image/*" onChange={uploadHandler} {...rest} />
 					</div>
 					<div className="prosebox">
 						{controlledFields.map((field, index) => {
