@@ -57,8 +57,6 @@ export default function WritePad({ params }: { params: PageProps }) {
 
 	const [editingIndex, setEditingIndex] = useState<number>(-1);
 
-	const formFieldWatched = watch();
-
 	const watchFieldArray = watch("blocks");
 	const controlledFields = fields.map((field, index) => {
 		return {
@@ -78,7 +76,8 @@ export default function WritePad({ params }: { params: PageProps }) {
 					date: data.date,
 					slug: data.slug,
 					headerImage: data.headerImage,
-					draft: true
+					publish: data.publish,
+					pinned: data.pinned,
 				}
 			})
 		});
@@ -120,6 +119,10 @@ export default function WritePad({ params }: { params: PageProps }) {
 								></div>;
 							}}
 						/>
+					</div>
+					<div>
+						<input type="checkbox" {...register("publish")} /> <span> Publish? </span>
+						<input type="checkbox" {...register("pinned")} /> <span> Pin? </span>
 					</div>
 					<div>
 						<button type="submit" className='titlebutton'>
@@ -219,12 +222,13 @@ const NewBlockDisplay: React.FC<NewBlockDisplayProps> = ({
 	useEffect(() => {
 		if (isEditing) {
 			textareaRef.current?.focus();
-			if (textareaRef.current) {
-				textareaRef.current.style.height = 'auto';
-				textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-			}
+
 		}
-	}, [isEditing]);
+		if (textareaRef.current) {
+			textareaRef.current.style.height = 'auto';
+			textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+		}
+	}, [isEditing, rawText]);
 
 	const handleClick: MouseEventHandler<HTMLDivElement> = () => {
 		if (!isEditing) {

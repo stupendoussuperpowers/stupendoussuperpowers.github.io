@@ -8,10 +8,12 @@ declare global {
 	type IndexEntry = {
 		slug: string,
 		date: string,
+		lastModified: string,
 		title: string,
-		draft: boolean,
+		publish: boolean,
 		blurb: string,
 		headerImage: string | null,
+		pinned: boolean,
 	}
 
 	type PostEntry = {

@@ -2,6 +2,7 @@ import './post.css';
 import { ReadIndex, ReadEntry } from '../../../utils';
 import React from 'react';
 import Image from 'next/image';
+import { Metadata } from 'next';
 
 export async function generateStaticParams() {
 	const allArticles = await ReadIndex();
@@ -13,6 +14,22 @@ export async function generateStaticParams() {
 }
 
 type PageProps = Promise<{ slug: string }>;
+
+export async function generateMetadata(
+	{ params }: { params: PageProps },
+): Promise<Metadata> {
+
+	const { slug } = await params;
+	console.log(params, slug);
+
+	const postData = await ReadEntry(slug);
+
+	return {
+		title: postData.ok ? postData.value.index.title : "Blog / Sanchit Sahay",
+		description: postData.ok ? postData.value.index.blurb : "",
+	}
+}
+
 
 export default async function BlogPost({ params }: { params: PageProps }) {
 	const { slug } = await params;
@@ -38,6 +55,7 @@ export default async function BlogPost({ params }: { params: PageProps }) {
 			<div dangerouslySetInnerHTML={{ __html: postData.value.content.map(x => x.renderText).join("") }} />
 
 			<div className="blog-cymk">
+				<div>Last modified on: {postData.value.index.lastModified}   </div>
 				<div className="c box"></div>
 				<div className="m box"></div>
 				<div className="y box"></div>

@@ -47,10 +47,12 @@ export const ReadIndex = async (published?: boolean | null): Promise<IndexEntry[
 	const indexJson = await JSON.parse(fileData);
 
 	if (published) {
-		return indexJson.filter((entry: IndexEntry) => entry.draft == false);
+		return indexJson.filter((entry: IndexEntry) => entry.publish)
+			.sort((a: IndexEntry, b: IndexEntry) => (new Date(b.date).getTime()) - (new Date(a.date).getTime()));
 	}
 
-	return indexJson.map((entry: IndexEntry) => entry);
+	return indexJson.map((entry: IndexEntry) => entry)
+		.sort((a: IndexEntry, b: IndexEntry) => (new Date(b.date).getTime()) - (new Date(a.date).getTime()));
 }
 
 export const WriteIndex = async (index: IndexEntry[]): Promise<boolean> => {
@@ -62,7 +64,7 @@ export const AddEntry = async (index: IndexEntry, content: BlockNode[]): Promise
 	const indexJson = await ReadIndex();
 
 	// Add current timestamp
-	const updatedIndex = { ...index, date: (new Date()).toString() };
+	const updatedIndex = { ...index, lastModified: (new Date()).toString() };
 
 	// Write to path
 	const entryPath = path.join(process.cwd(), `/src/posts/${index.slug}`);

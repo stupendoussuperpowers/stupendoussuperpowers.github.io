@@ -16,7 +16,10 @@ const DefaultNewIndex: IndexEntry = {
 	slug: `article-${randomUUID()}`,
 	title: 'What this about?',
 	date: '1st January 1970',
-	draft: true,
+	lastModified: '1st January 1970',
+	publish: true,
+	pinned: false,
+	headerImage: null,
 	blurb: "What's this reaaalllly about?"
 }
 
