@@ -6,6 +6,7 @@ import { ReadIndex } from '../../utils';
 
 const getStaticProps = async () => {
 	const indexEntries: IndexEntry[] = await ReadIndex(true);
+	console.log(indexEntries);
 	return indexEntries;
 }
 
@@ -26,7 +27,7 @@ export default async function Blog() {
 				<ul>
 					{
 						articles.map((article) => {
-							return <li key={article.date}>
+							return <li key={article.slug}>
 								<BlogListItem {...article} />
 							</li>
 						})

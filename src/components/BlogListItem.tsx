@@ -7,6 +7,7 @@ type BlogListProps = IndexEntry & {
 }
 
 export const BlogListItem: React.FC<BlogListProps> = ({ publish, title, blurb, date, slug, writepad }) => {
+	console.log(publish, title, blurb, date, slug, writepad);
 	return (<div className='p-card'>
 		<div className='p-title'>
 			<Link href={`/${writepad ? 'writepad' : 'blog'}/${slug.replace(/\.md$/, '')}`}>

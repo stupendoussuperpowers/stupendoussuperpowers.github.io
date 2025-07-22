@@ -121,6 +121,19 @@ export default function WritePad({ params }: { params: PageProps }) {
 
 
 	const onSubmit: SubmitHandler<BlogEntry> = async (data) => {
+
+		console.log({
+			content: data.blocks,
+			index: {
+				title: data.title,
+				blurb: data.blurb,
+				pinned: data.pinned,
+				slug: slug,
+				publish: data.publish,
+				date: data.date,
+				lastModified: data.lastModified
+			},
+		});
 		const result = await fetch("/api/addentry", {
 			method: "post",
 			body: JSON.stringify({
@@ -128,6 +141,7 @@ export default function WritePad({ params }: { params: PageProps }) {
 				index: {
 					title: data.title,
 					blurb: data.blurb,
+					slug: slug,
 					pinned: data.pinned,
 					publish: data.publish,
 					date: data.date,
