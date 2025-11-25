@@ -48,7 +48,7 @@ export default async function BlogPost({ params }: { params: PageProps }) {
 							src={`/${postData.value.index.headerImage}`}
 							width={1200}
 							height={400}
-							alt={'portrait'}
+							alt={'headerimage'}
 						/> : <> </>
 				}
 			</div>

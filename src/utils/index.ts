@@ -65,6 +65,7 @@ export const AddEntry = async (index: IndexEntry, content: BlockNode[]): Promise
 
 	// Add current timestamp
 	const updatedIndex = { ...index, lastModified: (new Date()).toString() };
+	console.log("Last Modified: ", new Date(), (new Date()).toString());
 
 	// Write to path
 	const entryPath = path.join(process.cwd(), `/src/posts/${index.slug}`);
