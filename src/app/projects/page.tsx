@@ -7,21 +7,29 @@ import { Metadata } from 'next';
 
 export default async function ProjectsPage() {
 	const projects = await getStaticProps();
-	return <div>
+
+	const tags = [...new Set(projects.map(p => p.tag))].filter(x => x);
+	console.log({ tags });
+
+	return <div style={{ marginBottom: '80px' }}>
 		<h1>Projects.</h1>
-		<br />
-		<ul>
-			{
-				projects.map((element: ProjectData) => {
-					return <li key={element.slug}>
-						<Project {...element} />
-					</li>
-				})
-			}
-		</ul>
-		<br />
+		{
+			tags.map((t: string) => {
+				return <>
+					<div className="p-tag">{t.toUpperCase()}</div>
+					{
+						projects.filter((x: ProjectData) => x.tag === t)
+							.map((element: ProjectData) => {
+								return <li key={element.link}>
+									<Project {...element} />
+								</li>
+							})}
+				</>
+			})
+		}
 	</div>;
 }
+
 
 export async function generateMetadata(
 ): Promise<Metadata> {
@@ -34,27 +42,35 @@ const getStaticProps = async () => {
 	const filePath = path.join(process.cwd(), 'public', 'projects.txt');
 	const projectFile = await fs.promises.readFile(filePath, 'utf-8');
 
-	const projectLists = await Promise.all(projectFile.split('\n').map(async (line: string) => {
-		const [slug, content, report] = line.split('===', 3);
-		const title = slug.split('/', 2)[1];
+	const projectLists = await Promise.all(projectFile.split("\n")
+		.filter(x => x != "")
+		.map(async (line: string) => {
+			const [title, link, content, report, tag] = line.split("===");
+			console.log(line.split("==="));
 
-		if (content == undefined) return null;
+			const project: ProjectData = {
+				title, link, content, report, tag
+			};
 
-		const language = await fetch(`https://api.github.com/repos/${slug}/languages`);
-		const l_json = await language.json();
+			if (!project.link.includes("https://")) {
+				const language = await fetch(`https://api.github.com/repos/${project.link}/languages`);
+				const l_json = await language.json();
+				console.log({ l_json });
+				const filter = ["Objective-C", "Makefile", "Rich Text Format", "Roff", "Objective-C++"];
 
-		const filter = ["Objective-C", "Makefile", "Rich Text Format", "Roff", "Objective-C++"];
+				//				const l_json = { "C": 100, "Rust": 100, "Whatever": 100, "Third": 100 };
+				project.languages = Object.keys(l_json).filter(a => !filter.includes(a)).splice(0, 5).join(',');
+				project.link = `https://github.com/${project.link}`;
+			}
 
-		const languages = Object.keys(l_json).filter(a => !filter.includes(a)).join(',');
+			if (report == ".") {
+				project.report = null
+			}
 
-		return {
-			title: title,
-			slug: slug,
-			content: content,
-			report: report,
-			languages: languages,
-		};
-	}));
+			console.log(project);
+			return project;
+
+		}));
 
 	return projectLists.filter((x) => x != null);
 }

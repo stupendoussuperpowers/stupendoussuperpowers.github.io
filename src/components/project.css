@@ -5,13 +5,25 @@
   align-items: center;
 }
 
+.p-tag {
+ font-size: 20px;
+ margin-bottom: 20px;
+ text-decoration: underline;
+ font-weight: bold;
+}
+
 .slug {
   margin-top: 0px;
   margin-left: 10px;
+  margin-right: 0px;
+}
+
+.content {
+  margin-top: 5px;
 }
 
 .p-card {
-  margin-bottom: 19px;
+  margin-bottom: 10px;
 }
 
 summary {
