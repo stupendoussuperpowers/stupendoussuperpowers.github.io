@@ -27,7 +27,7 @@ export default async function Blog() {
 				<ul>
 					{
 						articles.map((article) => {
-							return <li key={article.slug}>
+							return <li key={article.slug} className={article.pinned ? 'pin' : ''}>
 								<BlogListItem {...article} />
 							</li>
 						})
