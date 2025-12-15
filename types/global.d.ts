@@ -34,6 +34,14 @@ declare global {
 		languages?: string | null;
 		tag: string;
 	}
+
+	type Book = {
+		title: string;
+		author: string;
+		rating?: number | undefined;
+		dateRead: string;
+		reviewLink: string;
+	};
 }
 
 export { };

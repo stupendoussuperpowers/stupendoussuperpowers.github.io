@@ -2,6 +2,7 @@ import { BlogListItem } from '../../components/BlogListItem';
 import './blog.css';
 import React from 'react';
 import { Metadata } from 'next';
+import Link from 'next/link';
 import { ReadIndex } from '../../utils';
 
 const getStaticProps = async () => {
@@ -22,6 +23,9 @@ export default async function Blog() {
 
 	return <div className='window-blog'>
 		<h1>Blog.</h1>
+		<div style={{ margin: '10px 0px 30px 0px' }}>
+			<Link href="/booksline" > Check out the books I&apos;ve been reading. </Link>
+		</div>
 		{
 			articles.length > 0 ?
 				<ul>

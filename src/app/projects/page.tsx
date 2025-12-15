@@ -11,12 +11,12 @@ export default async function ProjectsPage() {
 	const tags = [...new Set(projects.map(p => p.tag))].filter(x => x);
 	console.log({ tags });
 
-	return <div style={{ marginBottom: '80px' }}>
+	return <div style={{ marginBottom: '80px', width: '100%' }}>
 		<h1>Projects.</h1>
 		{
 			tags.map((t: string) => {
 				return <>
-					<div className="p-tag">{t.toUpperCase()}</div>
+					<div key={t} className="p-tag">{t.toUpperCase()}</div>
 					{
 						projects.filter((x: ProjectData) => x.tag === t)
 							.map((element: ProjectData) => {

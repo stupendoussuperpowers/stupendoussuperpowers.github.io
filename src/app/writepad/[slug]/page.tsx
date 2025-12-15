@@ -96,44 +96,7 @@ export default function WritePad({ params }: { params: PageProps }) {
 
 	const headerImage = watch("headerImage");
 
-	const { onChange, ...rest } = register('headerImage');
-
-	const uploadHandler = async (e: ChangeEvent<HTMLInputElement>) => {
-		console.log('here?');
-		const file = e.target.files?.[0];
-		if (!file) return;
-
-		const formData = new FormData();
-		formData.append('file', file);
-
-		const res = await fetch('/api/upload-header', {
-			method: 'POST',
-			body: formData,
-		});
-
-		const json = await res.json();
-		console.log(json, json.message, json.filename);
-
-		if (res.ok && json.filename) {
-			onChange(json.filename);
-		}
-	}
-
-
 	const onSubmit: SubmitHandler<BlogEntry> = async (data) => {
-
-		console.log({
-			content: data.blocks,
-			index: {
-				title: data.title,
-				blurb: data.blurb,
-				pinned: data.pinned,
-				slug: slug,
-				publish: data.publish,
-				date: data.date,
-				lastModified: data.lastModified
-			},
-		});
 		const result = await fetch("/api/addentry", {
 			method: "post",
 			body: JSON.stringify({
@@ -145,6 +108,7 @@ export default function WritePad({ params }: { params: PageProps }) {
 					pinned: data.pinned,
 					publish: data.publish,
 					date: data.date,
+					headerImage: data.headerImage,
 					lastModified: data.lastModified
 				},
 			}),
@@ -217,7 +181,21 @@ export default function WritePad({ params }: { params: PageProps }) {
 							</>
 						}
 
-						<input type="file" accept="image/*" onChange={uploadHandler} {...rest} />
+						<Controller
+							name="headerImage"
+							control={control}
+
+							render={({ field: { onChange, value, ...field } }) => (
+								<input
+									type="file"
+									accept="image/*"
+									{...field}
+									onChange={(e) => {
+										const file = e.target.files?.[0];
+										onChange(file ? file.name : "");
+									}} />
+							)}
+						/>
 					</div>
 					<div className="prosebox">
 						{controlledFields.map((field, index) => {

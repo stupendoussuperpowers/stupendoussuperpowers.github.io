@@ -59,9 +59,9 @@ body {
   line-height: var(--line-height);
   overflow-x: hidden;
   overflow-y: scroll;
-  min-height: 100vh;
-  display: grid;
-  justify-items: center;
+  min-height: 100vh; 
+  display: flex;
+  justify-content: center;
 }
 
 .actualbody {
@@ -71,7 +71,7 @@ body {
 footer {
   position: absolute;
   bottom: 15px;
-  margin-top: 15px;
+  margin-top: 0px;
 }
 
 @media screen and (max-width: 480px) {
