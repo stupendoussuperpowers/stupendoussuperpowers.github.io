@@ -59,6 +59,8 @@ export async function scrapeBooks(url: string) {
 	const html = await res.text();
 	const $ = cheerio.load(html);
 
+	console.log(html);
+
 	const books: Book[] = [];
 
 	$("#books tbody tr").each((_, row) => {
@@ -72,7 +74,6 @@ export async function scrapeBooks(url: string) {
 		const dateRead = $(row).find("td.date_read .date_read_value").text();
 
 		const reviewLink = $(row).find("td.actions a").attr("href");
-		console.log(reviewLink);
 
 		books.push({
 			title,
