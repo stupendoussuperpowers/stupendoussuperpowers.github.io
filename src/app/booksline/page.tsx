@@ -62,7 +62,7 @@ export default async function Blog() {
 		<div>
 			<h1>Book Reviews!</h1>
 			<Link target="_blank" href="https://www.goodreads.com/review/list/8159704?shelf=read">
-				Complete list on Goodreads!
+				Complete list on Goodreads
 			</Link>
 			<table style={{ width: "100%", border: "0px", marginTop: "20px" }}>
 				<tbody>
