@@ -558,7 +558,7 @@ label input {
   left: 96vw;
 }
 
-@media only screen and (max-width: 990px) {
+@media only screen and (max-width: 1040px) {
   .cmyk {
     display: none;
   }

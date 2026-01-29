@@ -5,6 +5,8 @@ import fs from 'fs';
 import path from 'path';
 import { Metadata } from 'next';
 
+import { myCustomFont } from '@/ui/font';
+
 export default async function ProjectsPage() {
 	const projects = await getStaticProps();
 

@@ -39,5 +39,5 @@ export default async function Blog() {
 				</ul> :
 				<div>No posts to show.</div>
 		}
-	</div>
+	</div >
 }

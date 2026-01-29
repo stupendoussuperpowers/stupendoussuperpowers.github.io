@@ -1,4 +1,6 @@
 import * as cheerio from "cheerio";
+import fs from "fs/promises";
+import path from "path";
 
 function getYearMonth(dateStr: string) {
 	if (!dateStr) return null;
@@ -32,7 +34,7 @@ function groupBooks(books: Book[]) {
 	return grouped;
 }
 
-function getStars(blurb: string) {
+function getStars(blurb: string | undefined) {
 	const ratingMap: Record<string, number> = {
 		"it was amazing": 5,
 		"really liked it": 4,
@@ -41,7 +43,7 @@ function getStars(blurb: string) {
 		"did not like": 1,
 	};
 
-	return ratingMap[blurb];
+	return blurb ? ratingMap[blurb] : null;
 }
 
 export async function scrapeBooks(url: string) {
@@ -56,10 +58,10 @@ export async function scrapeBooks(url: string) {
 		throw new Error(`Failed to fetch: ${res.status}`);
 	}
 
-	const html = await res.text();
+	const filePath = path.join(process.cwd(), "assets", "Books.html");
+	const html = await fs.readFile(filePath, "utf8");
+	// const html = await res.text();
 	const $ = cheerio.load(html);
-
-	console.log(html);
 
 	const books: Book[] = [];
 
@@ -69,16 +71,17 @@ export async function scrapeBooks(url: string) {
 
 		if (!title) return;
 
-		const ratingText = $(row).find("td.rating .staticStars").text();
+		const ratingText = $(row).find("td.rating .value .stars").attr("data-rating") ?? "0";
 
 		const dateRead = $(row).find("td.date_read .date_read_value").text();
 
-		const reviewLink = $(row).find("td.actions a").attr("href");
+		const reviewLink = $(row).find("td.actions .value .viewLinkWrapper a").attr("href");
+		console.log({ reviewLink });
 
 		books.push({
 			title,
 			author,
-			rating: getStars(ratingText),
+			rating: parseInt(ratingText) ?? 0,
 			dateRead,
 			reviewLink: `https://goodreads.com/${reviewLink}`
 		});

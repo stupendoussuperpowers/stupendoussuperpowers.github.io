@@ -4,6 +4,8 @@ import React from 'react';
 import Image from 'next/image';
 import { Metadata } from 'next';
 
+import { myCustomFont } from '@/ui/font';
+
 export async function generateStaticParams() {
 	const allArticles = await ReadIndex();
 	return allArticles.map((article) => {
@@ -38,16 +40,18 @@ export default async function BlogPost({ params }: { params: PageProps }) {
 
 	if (postData.ok) {
 		return <div className='window-post'>
-			<h1>{postData.value.index.title}</h1>
+			<div className={myCustomFont.className}
+				style={{ fontSize: "40px" }}
+			>{postData.value.index.title}</div>
 			<div>{postData.value.index.blurb}</div>
-			<h2>{postData.value.index.date}</h2>
+			<h4>{postData.value.index.date}</h4>
 			<div className="header-image">
 				{
 					postData.value.index.headerImage ?
 						<Image
 							src={`/${postData.value.index.headerImage}`}
-							width={1200}
-							height={400}
+							width={800}
+							height={300}
 							alt={'headerimage'}
 						/> : <> </>
 				}

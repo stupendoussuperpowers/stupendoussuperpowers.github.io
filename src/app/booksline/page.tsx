@@ -31,7 +31,8 @@ const getStaticProps = async () => {
 
 	const books2 = await scrapeBooks(url_p2);
 
-	return mergeBooks(books, books2);
+	return books2;
+	// return mergeBooks(books, books2);
 }
 
 export async function generateMetadata(
@@ -52,11 +53,15 @@ const stars = (rating: number | undefined) => {
 }
 
 const getMonth = (index: number) => {
-	return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][index];
+	return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", ""][index];
 }
 
 export default async function Blog() {
 	const _books = await getStaticProps(); // assume returns { books: Book[] }
+
+	console.log(_books);
+
+	const years = Object.keys(_books).map(Number);
 
 	return (
 		<div>
@@ -67,23 +72,29 @@ export default async function Blog() {
 			<table style={{ width: "100%", border: "0px", marginTop: "20px" }}>
 				<tbody>
 					{/* Work out a better way to do this... Basically, sort by reverse Year + Month, skip empty months*/}
-					{Array.from({ length: Object.keys(_books).length }, (_, i) => new Date().getFullYear() - i).map((year) => {
-						const months = Array.from({ length: 12 }, (_, i) => i);
+					{Array.from(
+						{ length: Math.max(...years) - Math.min(...years) },
+						(_, i) => Math.max(...years) - i
+					).map((year) => {
+						console.log(year);
+						const months = Array.from({ length: 13 }, (_, i) => i);
 						return months.toReversed().map((month, idx) => {
 							const monthBooks = _books[year]?.[month];
 							return (
 								<tr key={`${year}-${month}`}>
-									<td style={{ border: "0px", fontWeight: "bold" }}>{idx === 0 ? year : ""}</td>
+									<td style={{ border: "0px", fontWeight: "bold" }}>{idx === 0 && year != 2026 ? year + 1 : ""}</td>
 									<td style={{ border: "0px" }}>
 										{monthBooks ? getMonth(month) : ""}
 									</td>
 									<td style={{ border: "0px" }}>
-										{monthBooks ? monthBooks.map((b) => <>
-											<div key={b.title}>
-												<Link target="_blank" href={b.reviewLink}>{b.title}</Link> {stars(b.rating)}
-											</div >
-											<div style={{ margin: '0px', padding: '0px' }}>by <i>{b.author}</i></div>
-										</>) : ""}
+										{monthBooks ? monthBooks.map((b) => {
+											console.log({ b }); return (<>
+												<div key={b.title}>
+													<Link target="_blank" href={b.reviewLink}>{b.title}</Link> {stars(b.rating)}
+												</div >
+												<div style={{ margin: '0px', padding: '0px' }}>by <i>{b.author}</i></div>
+											</>);
+										}) : ""}
 									</td>
 								</tr>
 							);
