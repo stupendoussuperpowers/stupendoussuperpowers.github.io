@@ -3,33 +3,8 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import { scrapeBooks } from '@/utils/scrape';
 
-type BookRecord = Record<number, Record<number, Book[]>>;
-
-function mergeBooks(a: BookRecord, b: BookRecord): BookRecord {
-	const out = structuredClone(a);
-
-	for (const [yearStr, months] of Object.entries(b)) {
-		const year = Number(yearStr);
-		out[year] ??= {};
-
-		for (const [monthStr, books] of Object.entries(months)) {
-			const month = Number(monthStr);
-			out[year][month] ??= [];
-			out[year][month].push(...books);
-		}
-	}
-
-	return out;
-}
-
-
 const getStaticProps = async () => {
-	const url = "https://www.goodreads.com/review/list/8159704-sanchit-sahay";
-	const books: Record<number, Record<number, Book[]>> = await scrapeBooks(url);
-
-	const url_p2 = "https://www.goodreads.com/review/list/8159704?order=d&page=2&shelf=read&sort=date_read";
-
-	const books2 = await scrapeBooks(url_p2);
+	const books2 = await scrapeBooks("");
 
 	return books2;
 	// return mergeBooks(books, books2);

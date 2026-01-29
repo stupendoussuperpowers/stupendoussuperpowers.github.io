@@ -34,18 +34,6 @@ function groupBooks(books: Book[]) {
 	return grouped;
 }
 
-function getStars(blurb: string | undefined) {
-	const ratingMap: Record<string, number> = {
-		"it was amazing": 5,
-		"really liked it": 4,
-		"liked it": 3,
-		"it was ok": 2,
-		"did not like": 1,
-	};
-
-	return blurb ? ratingMap[blurb] : null;
-}
-
 export async function scrapeBooks(url: string) {
 	const res = await fetch(url, {
 		headers: {
