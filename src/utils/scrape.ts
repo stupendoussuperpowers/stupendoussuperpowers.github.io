@@ -35,17 +35,7 @@ function groupBooks(books: Book[]) {
 }
 
 export async function scrapeBooks(url: string) {
-	const res = await fetch(url, {
-		headers: {
-			"User-Agent": "Mozilla/5.0",
-			"Accept-Language": "en-US,en;q=0.9",
-		},
-	});
-
-	if (!res.ok) {
-		throw new Error(`Failed to fetch: ${res.status}`);
-	}
-
+	console.log({ url });
 	const filePath = path.join(process.cwd(), "assets", "Books.html");
 	const html = await fs.readFile(filePath, "utf8");
 	// const html = await res.text();
