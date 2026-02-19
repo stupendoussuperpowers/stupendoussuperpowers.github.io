@@ -8,7 +8,9 @@ import { Metadata } from 'next';
 const getStaticProps = async () => {
 	const indexEntries: IndexEntry[] = await ReadIndex(true);
 
-	return indexEntries;
+	const news = ["Catch our talk, <a href=\"https://pretalx.com/pycon-us-2026/talk/review/EXT7GNNVKHHSPW8CAYGK7MMWGSAX9VYJ\">Asleep at the Wheel @ PyCon US 2026!</a>"];
+
+	return { articles: indexEntries.filter(x => x.pinned), news };
 }
 
 export async function generateMetadata(
@@ -19,7 +21,7 @@ export async function generateMetadata(
 }
 
 export default async function Home() {
-	const articles = (await getStaticProps()).filter(x => x.pinned);
+	const { articles, news } = (await getStaticProps());
 
 	return (
 		<>
@@ -34,6 +36,10 @@ export default async function Home() {
 				</div>
 				<div className='scrollable'>
 					<p>
+						<b><u>NEWS</u>  </b>
+						{news.map(x => <span key="{x}" dangerouslySetInnerHTML={{ __html: x }}></span>)}
+					</p>
+					<p>
 						Come one, come all to my corner of the internet!
 					</p>
 					<p>
@@ -43,7 +49,7 @@ export default async function Home() {
 						Areas of interest include distributed systems, operating systems, cloud, virtualization, and web technologies.
 					</p>
 					<p>
-						Take a look at my recent <Link href="/projects">Projects</Link>, or head over to my <Link href="/blog">Blog</Link>, get started with one of my posts here:
+						Check out some of my <Link href="/blog">blogs</Link> here:
 					</p>
 					<ul>
 						{
@@ -56,7 +62,7 @@ export default async function Home() {
 						}
 					</ul>
 				</div>
-			</div>
+			</div >
 			<hr />
 			<p>
 				[2024-Pres] <b>New York University</b>, MS Computer Science <br />
