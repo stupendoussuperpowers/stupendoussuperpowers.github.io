@@ -24,7 +24,7 @@ export default async function Blog() {
 	return <div className='window-blog'>
 		<h1>Blog.</h1>
 		<div style={{ margin: '10px 0px 30px 0px' }}>
-			<Link href="/booksline" > Check out the books I&apos;ve been reading. </Link>
+			<Link href="/blog/books" > Check out the books I&apos;ve been reading. </Link>
 		</div>
 		{
 			articles.length > 0 ?

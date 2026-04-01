@@ -1,13 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
 import { Metadata } from 'next';
-import { scrapeBooks } from '@/utils/scrape';
+import { myCustomFont } from '@/ui/font';
+import path from 'path';
+import fs from 'fs';
+
 
 const getStaticProps = async () => {
-	const books2 = await scrapeBooks("");
+	const filePath = path.join(process.cwd(), 'assets', 'books.json');
 
-	return books2;
-	// return mergeBooks(books, books2);
+	const jsonData = fs.readFileSync(filePath, 'utf-8');
+	const data = JSON.parse(jsonData);
+
+	return groupBooks(data);
 }
 
 export async function generateMetadata(
@@ -31,16 +36,61 @@ const getMonth = (index: number) => {
 	return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", ""][index];
 }
 
+function getYearMonth(dateStr: string) {
+	if (!dateStr) return null;
+
+	const date = new Date(dateStr);
+
+	return {
+		year: date.getFullYear(),
+		month: date.getMonth()
+	}
+}
+
+function groupBooks(books: Book[]) {
+	const grouped: Record<number, Record<number, Book[]>> = {};
+
+	for (const book of books) {
+		if (!book.dateRead) continue;
+
+		const ym = getYearMonth(book.dateRead);
+		if (!ym) continue;
+
+		const { year, month } = ym;
+
+
+		if (!grouped[year]) grouped[year] = {};
+		if (!grouped[year][month]) grouped[year][month] = [];
+
+		grouped[year][month].push(book);
+	}
+
+	return grouped;
+}
+
 export default async function Blog() {
 	const _books = await getStaticProps(); // assume returns { books: Book[] }
 
-	console.log(_books);
+	/*
+	 {
+		title: 'Let It Snow',
+		author: 'Green, John',
+		rating: 0,
+		dateRead: 'Jan 2019',
+		reviewLink: 'https://goodreads.com//review/show/4506097080',
+		year: 2008,
+		countryOfOrigin: 'United States',
+		isoCode: 'USA'
+		}
+    */
 
 	const years = Object.keys(_books).map(Number);
 
 	return (
 		<div>
-			<h1>Book Reviews!</h1>
+			<div className={myCustomFont.className}
+				style={{ fontSize: "40px", marginBottom: "20px" }}
+			>Book Reviews!</div>
 			<Link target="_blank" href="https://www.goodreads.com/review/list/8159704?shelf=read">
 				Complete list on Goodreads
 			</Link>
@@ -61,7 +111,7 @@ export default async function Blog() {
 									<td style={{ border: "0px" }}>
 										{monthBooks ? getMonth(month) : ""}
 									</td>
-									<td style={{ border: "0px" }}>
+									<td key={idx} style={{ border: "0px" }}>
 										{monthBooks ? monthBooks.map((b) => {
 											console.log({ b }); return (<>
 												<div key={b.title}>

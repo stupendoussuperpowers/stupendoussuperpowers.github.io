@@ -8,7 +8,7 @@ import { Metadata } from 'next';
 const getStaticProps = async () => {
 	const indexEntries: IndexEntry[] = await ReadIndex(true);
 
-	const news = ["Catch our talk, <a href=\"https://pretalx.com/pycon-us-2026/talk/review/EXT7GNNVKHHSPW8CAYGK7MMWGSAX9VYJ\">Asleep at the Wheel @ PyCon US 2026!</a>"];
+	const news = ["Catch our talk, <a href=\"https://us.pycon.org/2026/schedule/presentation/116\">Asleep at the Wheel @ PyCon US 2026!</a>"];
 
 	return { articles: indexEntries.filter(x => x.pinned), news };
 }
