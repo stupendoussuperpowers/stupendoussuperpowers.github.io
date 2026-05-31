@@ -6,7 +6,6 @@ import {
 	KeyboardEventHandler,
 	MouseEventHandler,
 	useRef,
-	ChangeEvent,
 } from "react";
 import "../custom.css";
 import MarkdownIt from "markdown-it";
@@ -186,16 +185,20 @@ export default function WritePad({ params }: { params: PageProps }) {
 							name="headerImage"
 							control={control}
 
-							render={({ field: { onChange, value, ...field } }) => (
-								<input
-									type="file"
-									accept="image/*"
-									{...field}
-									onChange={(e) => {
-										const file = e.target.files?.[0];
-										onChange(file ? file.name : "");
-									}} />
-							)}
+							render={({ field }) => {
+								const fieldProps = { ...field, value: undefined };
+
+								return (
+									<input
+										type="file"
+										accept="image/*"
+										{...fieldProps}
+										onChange={(e) => {
+											const file = e.target.files?.[0];
+											field.onChange(file ? file.name : "");
+										}} />
+								);
+							}}
 						/>
 					</div>
 					<div className="prosebox">

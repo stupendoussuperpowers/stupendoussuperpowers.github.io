@@ -115,12 +115,6 @@ const getModeInterpretation = (modeValue: number) => {
 		modeValue & modeFlags.S_ISVTX ? "sticky" : null,
 	].filter(Boolean).join(", ");
 
-	const writeAccess = [
-		modeValue & modeFlags.S_IWUSR ? "owner" : null,
-		modeValue & modeFlags.S_IWGRP ? "group" : null,
-		modeValue & modeFlags.S_IWOTH ? "other" : null,
-	].filter(Boolean).join(", ");
-
 	return [
 		["File type", fileType ? fileType.label : "-"],
 		["Special behavior", specialBits || "None"],
