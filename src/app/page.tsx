@@ -1,14 +1,14 @@
 import './custom.css';
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { ReadIndex } from '@/utils';
 import { Metadata } from 'next';
+import Image from 'next/image';
 
 const getStaticProps = async () => {
 	const indexEntries: IndexEntry[] = await ReadIndex(true);
 
-	const news = ["Catch our talk, <a href=\"https://us.pycon.org/2026/schedule/presentation/116\">Asleep at the Wheel @ PyCon US 2026!</a>"];
+	const news = ["Catch our talk, <a href=\"https://us.pycon.org/2026/schedule/presentation/116\">Asleep at the Wheel @ PyCon US 2026!</a><br/>"];
 
 	return { articles: indexEntries.filter(x => x.pinned), news };
 }
@@ -26,30 +26,26 @@ export default async function Home() {
 	return (
 		<>
 			<div className='window'>
-				<div className='portrait'>
-					<Image src='/mt_washington.jpg'
-						width={150}
-						height={350}
+				<div>
+					<Image
+						src='/mt_washington.jpg'
+						className='window-portrait'
+						width={200}
+						height={200}
 						alt='portrait'
-						style={{ objectFit: "cover" }}
 					/>
+					<figcaption>Mt. Washington, 2025</figcaption>
 				</div>
 				<div className='scrollable'>
+					It was the best of webpages, it was the worst of webpages.
 					<p>
-						<b><u>NEWS</u>  </b>
-						{news.map(x => <span key="{x}" dangerouslySetInnerHTML={{ __html: x }}></span>)}
+						I&apos;m an incoming Computer Science PhD student at NYU starting Fall 2026, and a current member of the <Link href="https://ssl.engineering.nyu.edu/">Secure Systems Lab</Link> working on software supply-chain security and operating systems research.
 					</p>
 					<p>
-						Come one, come all to my corner of the internet!
+						In my previous roles, I&apos;ve worked closely on building systems that enhance virtualization and cloud infrastructure, and on improving developer tooling.
 					</p>
 					<p>
-						I&apos;m a graduate student in CS at NYU, working with the <Link href="https://ssl.engineering.nyu.edu/">Secure Systems Lab</Link>.
-					</p>
-					<p>
-						Areas of interest include distributed systems, operating systems, cloud, virtualization, and web technologies.
-					</p>
-					<p>
-						Check out some of my <Link href="/blog">blogs</Link> here:
+						Check out some of my <Link href="/blog">Pocket Litter</Link> here:
 					</p>
 					<ul>
 						{
@@ -61,18 +57,66 @@ export default async function Home() {
 							))
 						}
 					</ul>
+					<table>
+						<tbody className="timeline">
+							<tr>
+								<td>[2024-2026]</td>
+								<td>
+									<b>New York University </b>
+								</td>
+								<td>
+									{/*Ph.D. Computer Science<br />*/}
+									M.S. Computer Science
+								</td>
+							</tr>
+
+							<tr>
+								<td>[2022-2024]</td>
+								<td>
+									<b>Commvault Systems </b>
+								</td>
+								<td>
+									Virtualization
+								</td>
+							</tr>
+
+							<tr>
+								<td>[2021-2021]</td>
+								<td>
+									<b>LegalAI </b>
+								</td>
+								<td>
+									Web & DevOps Intern
+								</td>
+							</tr>
+
+							<tr>
+								<td>[2018-2022]</td>
+								<td>
+									<b>Manipal Institute of Technology </b>
+								</td>
+								<td>
+									B.Tech (IT)
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-			</div >
+			</div>
 			<hr />
-			<p>
-				[2024-Pres] <b>New York University</b>, MS Computer Science <br />
+			<table className="news-box">
+				<tbody>
+					{
+						news.map((x, idx) => <tr key={idx}>
+							<td>{idx == 0 ? <b><u>NEWS</u></b> : <></>}</td>
+							<td>
+								<span dangerouslySetInnerHTML={{ __html: x }}></span>
+							</td>
+						</tr>)
+					}
+				</tbody>
+			</table>
 
-				[2022-2024] <b>Commvault Systems</b>, Virtual Server Agent team. <br />
-
-				[2021-2021] <b>LegalAI</b>, Fullstack Web & DevOps Intern. <br />
-
-				[2018-2022] <b>Manipal Institute of Technology</b>, B.Tech (IT)
-			</p>
 		</>
 	);
 }

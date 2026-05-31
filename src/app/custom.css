@@ -1,11 +1,40 @@
 .window {
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 20px;
-  align-items: center;
+  grid-template-columns: 1fr 3fr;
+  gap: 10px;
+  align-items: start;
 }
 
 .scrollable {
-  margin-top: 5px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
+.timeline td {
+  border: 0px;
+  margin: 0px;
+  padding: 2.5px;
+  margin-bottom: 0px;
+  vertical-align: top;
+}
+
+.window-portrait {
+  width: 200px;
+  height: auto;
+}
+
+.no-margin {
+  margin-top: 0px;
+}
+
+.news-box td {
+  border: 0px;
+  margin: 0px;
+  padding: 2.5px;
+  margin-bottom: 0px;
+  vertical-align: top;
+}
+
+hr {
+  margin: 0px;
+}

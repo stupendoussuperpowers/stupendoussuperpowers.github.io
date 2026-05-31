@@ -6,3 +6,7 @@
 .pin {
   list-style-type: "* ";
 }
+
+.pocket-litter-intro {
+  margin-bottom: calc(var(--line-height) * 2);
+}

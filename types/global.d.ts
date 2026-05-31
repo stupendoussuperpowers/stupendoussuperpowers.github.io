@@ -14,6 +14,8 @@ declare global {
 		blurb: string;
 		headerImage: string | null;
 		pinned: boolean;
+		href?: string;
+		entryType?: string;
 	};
 
 	type PostEntry = {

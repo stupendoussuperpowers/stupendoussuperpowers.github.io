@@ -16,6 +16,7 @@
   margin-top: 0px;
   margin-left: 10px;
   margin-right: 0px;
+  opacity: 70%;
 }
 
 .content {
@@ -23,7 +24,7 @@
 }
 
 .p-card {
-  margin-bottom: 10px;
+  margin-bottom: 40px;
 }
 
 summary {

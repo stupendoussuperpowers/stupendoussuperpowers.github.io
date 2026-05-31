@@ -1,0 +1,126 @@
+.mode-bits-control-row {
+  display: flex;
+  align-items: center;
+  gap: 2ch;
+  flex-wrap: wrap;
+}
+
+.mode-bits-control-row > * {
+  margin-top: 0;
+}
+
+.mode-bits-control-row input[type="text"],
+.mode-bits-control-row > input {
+  width: 16ch;
+}
+
+.mode-bits-base-options {
+  display: flex;
+  align-items: center;
+  gap: 2ch;
+  margin-top: 0;
+}
+
+.mode-bits-base-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5ch;
+  margin-top: 0;
+}
+
+.mode-bits-base-option > * {
+  margin-top: 0;
+}
+
+.mode-bits-row {
+  display: grid;
+  grid-template-columns: repeat(16, minmax(2.25rem, 1fr));
+  gap: 0.5ch;
+  width: 100%;
+  margin-top: var(--line-height);
+  align-items: stretch;
+}
+
+.mode-bit-button {
+  min-height: calc(var(--line-height) * 2);
+  margin-top: 0;
+  text-align: center;
+  font-weight: var(--font-weight-bold);
+  transition: opacity 120ms ease, background-color 120ms ease;
+}
+
+.mode-bit-group-label {
+  margin-top: 0;
+  text-align: center;
+  border-top: var(--border-thickness) solid var(--text-color);
+  padding-top: calc(var(--line-height) / 2);
+  font-weight: var(--font-weight-bold);
+}
+
+.mode-bit-group-toggle {
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-color);
+  font-family: inherit;
+  font-size: inherit;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.mode-bit-group-toggle:hover {
+  background: var(--background-color-alt);
+}
+
+.mode-bit-button-off {
+  opacity: 0.35;
+  color: var(--text-color-alt);
+  background: var(--background-color-alt);
+}
+
+.mode-bit-button-on {
+  opacity: 1;
+}
+
+.mode-bits-details {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: 2ch;
+  margin-top: calc(var(--line-height) * 2);
+}
+
+.mode-bits-details > * {
+  margin-top: 0;
+}
+
+.mode-bits-details h2 {
+  margin-top: 0;
+}
+
+.mode-bits-table {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.mode-bits-table th:first-child,
+.mode-bits-table td:first-child {
+  width: 18ch;
+}
+
+.mode-bits-table code {
+  white-space: nowrap;
+}
+
+.mode-helper-row-pass > * {
+  background: #e8f5e9;
+}
+
+.mode-helper-row-fail > * {
+  background: #fbe9e7;
+}
+
+@media screen and (max-width: 760px) {
+  .mode-bits-details {
+    grid-template-columns: 1fr;
+  }
+}

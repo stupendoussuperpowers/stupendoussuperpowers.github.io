@@ -19,6 +19,7 @@ import {
 	useFieldArray,
 } from "react-hook-form";
 import Image from "next/image";
+import { myCustomFont } from "@/ui/font";
 
 const md = MarkdownIt();
 
@@ -132,11 +133,12 @@ export default function WritePad({ params }: { params: PageProps }) {
 									if (titleRef.current && !titleRef.current.textContent)
 										titleRef.current.textContent = value;
 									return (
-										<h1
+										<div className={myCustomFont.className}
+											style={{ fontSize: "40px" }}
 											contentEditable
 											onInput={(e) => onChange(e.currentTarget.textContent)}
 											ref={titleRef}
-										></h1>
+										></div>
 									);
 								}}
 							/>
@@ -156,20 +158,19 @@ export default function WritePad({ params }: { params: PageProps }) {
 								}}
 							/>
 						</div>
-						<div>
-							<input type="checkbox" {...register("publish")} />{" "}
-							<span> Publish? </span>
-							<input type="checkbox" {...register("pinned")} />{" "}
-							<span> Pin? </span>
-						</div>
-						<div>
-							<button type="submit" className="titlebutton">
-								{isSubmitting ? "Saving..." : isSubmitted ? "Saved" : "Save"}
-							</button>
-						</div>
+
+					</div>
+					<div>
+						<input type="checkbox" {...register("publish")} />{" "}
+						<span> Publish? </span>
+						<input type="checkbox" {...register("pinned")} />{" "}
+						<span> Pin? </span>
+						<button type="submit" className="titlebutton">
+							{isSubmitting ? "Saving..." : isSubmitted ? "Saved" : "Save"}
+						</button>
 					</div>
 					<div className='header-image'>
-						<input type="hidden" {...rest} name="headerImage" />
+						<input type="hidden" {...reset} name="headerImage" />
 
 						{
 							headerImage ? <Image

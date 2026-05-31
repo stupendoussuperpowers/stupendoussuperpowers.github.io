@@ -8,7 +8,7 @@ import { myCustomFont } from '@/ui/font';
 
 export async function generateStaticParams() {
 	const allArticles = await ReadIndex();
-	return allArticles.map((article) => {
+	return allArticles.filter((article) => !article.href).map((article) => {
 		return {
 			slug: article.slug
 		}
@@ -27,7 +27,7 @@ export async function generateMetadata(
 	const postData = await ReadEntry(slug);
 
 	return {
-		title: postData.ok ? postData.value.index.title : "Blog / Sanchit Sahay",
+		title: postData.ok ? postData.value.index.title : "Pocket Litter / Sanchit Sahay",
 		description: postData.ok ? postData.value.index.blurb : "",
 	}
 }

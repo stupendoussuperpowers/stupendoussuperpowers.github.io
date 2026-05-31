@@ -3,20 +3,23 @@ import React from 'react';
 import Link from 'next/link';
 
 type BlogListProps = IndexEntry & {
-	writepad?: boolean
+	writepad?: boolean;
+	href?: string;
+	entryType?: string;
 }
 
-export const BlogListItem: React.FC<BlogListProps> = ({ publish, title, blurb, date, slug, writepad }) => {
-	console.log(publish, title, blurb, date, slug, writepad);
+export const BlogListItem: React.FC<BlogListProps> = ({ publish, title, blurb, date, slug, writepad, href, entryType }) => {
+	const linkHref = href ?? `/${writepad ? 'writepad' : 'blog'}/${slug.replace(/\.md$/, '')}`;
+
 	return (<div className='p-card'>
 		<div className='p-title'>
-			<Link href={`/${writepad ? 'writepad' : 'blog'}/${slug.replace(/\.md$/, '')}`}>
+			<Link href={linkHref}>
 				<b>{!publish ? '[DRAFT] ' : ''}{title}</b>
 			</Link>
 			<div className='slug'>
-				{date}
+				{entryType ? `${entryType} / ` : ''}{date}
 			</div>
 		</div>
-		<div>{blurb}</div>
+		<div style={{ marginTop: "calc(var(--line-height) / 2)" }}>{blurb}</div>
 	</div >);
 }

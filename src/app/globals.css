@@ -70,7 +70,7 @@ body {
 
 footer {
   position: absolute;
-  bottom: 15px;
+  bottom: 0px;
   margin-top: 0px;
 }
 
@@ -142,6 +142,12 @@ strong {
 }
 em {
   font-style: italic;
+}
+
+code {
+  color: var(--text-color);
+  font-weight: var(--font-weight-medium);
+  padding: 0 0.35ch;
 }
 
 sub {
@@ -254,6 +260,10 @@ figure pre {
 pre,
 code {
   font-family: var(--font-family);
+}
+
+pre {
+  opacity: 50%;
 }
 
 code {

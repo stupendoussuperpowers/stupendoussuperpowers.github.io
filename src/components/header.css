@@ -1,6 +1,6 @@
 .title {
   margin-top: 0.2em;
-  margin-bottom: 0.4em;
+  margin-bottom: 0.2em;
 }
 
 .name {
@@ -13,9 +13,15 @@
 }
 
 .links {
-  margin-bottom: 37px;
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 50px;
 }
 
-td {
+.header-table td {
   align-content: center;
+}
+
+.header-table {
+  margin: 0px;
 }

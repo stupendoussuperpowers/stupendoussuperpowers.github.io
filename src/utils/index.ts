@@ -56,7 +56,7 @@ export const ReadIndex = async (published?: boolean | null): Promise<IndexEntry[
 }
 
 export const WriteIndex = async (index: IndexEntry[]): Promise<boolean> => {
-	await fs.promises.writeFile(path.join(process.cwd(), '/src/posts/indexdb.json'), JSON.stringify(index));
+	await fs.promises.writeFile(path.join(process.cwd(), '/src/posts/indexdb.json'), `${JSON.stringify(index, null, 2)}\n`);
 	return true;
 }
 
@@ -98,4 +98,3 @@ export const ReadEntry = async (slug: string): Promise<Result<PostEntry, boolean
 		content: entryJson
 	});
 }
-

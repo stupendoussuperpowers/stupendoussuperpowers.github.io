@@ -1,1 +1,76 @@
-[{"title":"SBOMit // KubeCon","blurb":"Creating better SBOMs // Presenting a talk at KubeCon","slug":"article-1c7df458-4c91-443a-b50a-7563591386b3","pinned":true,"publish":true,"date":"Sun Nov 23 2025 23:28:20 GMT-0500 (Eastern Standard Time)","lastModified":"Tue Nov 25 2025 01:52:31 GMT-0500 (Eastern Standard Time)", "headerImage":"SBOMit_combo.png"},{"title":"Porting HFS+ To FreeBSD","blurb":"A Monkey With A Typewriter Writes An FS.","slug":"article-b9624368-f572-4d68-9ead-29daeb0e250f","pinned":true,"publish":true,"date":"Mon Jul 21 2025 22:29:32 GMT-0400 (Eastern Daylight Time)","lastModified":"Sun Nov 23 2025 23:54:40 GMT-0500 (Eastern Standard Time)","headerImage":"hfs.png"},{"title":"about:<this-site>","blurb":"Flashbacks of the web, and personal projects","slug":"article-e6e5a71f-2154-496c-b1ec-887abf38ea6f","pinned":false,"publish":true,"date":"Sun May 18 2025 18:52:35 GMT-0400 (Eastern Daylight Time)","lastModified":"Tue Nov 25 2025 01:50:41 GMT-0500 (Eastern Standard Time)"}]
+[
+  {
+    "title": "Books Timeline",
+    "blurb": "A timeline of the books I have been reading.",
+    "slug": "books",
+    "href": "/blog/books",
+    "entryType": "List",
+    "date": "2026",
+    "lastModified": "2026",
+    "publish": true,
+    "headerImage": null,
+    "pinned": true
+  },
+  {
+    "title": "stat(2) mode visualizer.",
+    "blurb": "An interactive Linux/Unix stat(2) mode bit visualizer for file types, permissions, and special flags.",
+    "slug": "mode_bits",
+    "href": "/blog/mode_bits",
+    "entryType": "Tool",
+    "date": "2026",
+    "lastModified": "2026",
+    "publish": true,
+    "headerImage": null,
+    "pinned": true
+  },
+  {
+    "title": "SBOMit // KubeCon",
+    "blurb": "Creating better SBOMs // Presenting a talk at KubeCon",
+    "slug": "article-1c7df458-4c91-443a-b50a-7563591386b3",
+    "pinned": false,
+    "publish": true,
+    "date": "Sun Nov 23 2025 23:28:20 GMT-0500 (Eastern Standard Time)",
+    "lastModified": "Tue Nov 25 2025 01:52:31 GMT-0500 (Eastern Standard Time)",
+    "headerImage": "SBOMit_combo.png"
+  },
+  {
+    "title": "Porting HFS+ To FreeBSD",
+    "blurb": "A Monkey With A Typewriter Writes An FS.",
+    "slug": "article-b9624368-f572-4d68-9ead-29daeb0e250f",
+    "pinned": true,
+    "publish": true,
+    "date": "Mon Jul 21 2025 22:29:32 GMT-0400 (Eastern Daylight Time)",
+    "lastModified": "Sun Nov 23 2025 23:54:40 GMT-0500 (Eastern Standard Time)",
+    "headerImage": "hfs.png"
+  },
+  {
+    "title": "about:<this-site>",
+    "blurb": "Flashbacks of the web, and personal projects",
+    "slug": "article-e6e5a71f-2154-496c-b1ec-887abf38ea6f",
+    "pinned": false,
+    "publish": true,
+    "date": "Sun May 18 2025 18:52:35 GMT-0400 (Eastern Daylight Time)",
+    "lastModified": "Tue Nov 25 2025 01:50:41 GMT-0500 (Eastern Standard Time)",
+    "headerImage": null
+  },
+  {
+    "title": "Can't Believe It's Not Kernel Space",
+    "blurb": "Userspace syscall monitoring, kernel extensions, and more using Lind-Wasm",
+    "slug": "article-253c4dd6-756d-4a35-95aa-3f4f2d2a66dc",
+    "pinned": false,
+    "publish": false,
+    "date": "1st January 1970",
+    "headerImage": null,
+    "lastModified": "Wed Apr 01 2026 21:58:00 GMT-0400 (Eastern Daylight Time)"
+  },
+  {
+    "title": "Hindsight is 20/26",
+    "blurb": "On graduating and turning 26.",
+    "slug": "article-7af988fd-9951-44f1-820f-87acddc149de",
+    "pinned": false,
+    "publish": false,
+    "date": "1st January 1970",
+    "headerImage": null,
+    "lastModified": "Thu May 21 2026 21:29:43 GMT-0400 (Eastern Daylight Time)"
+  }
+]

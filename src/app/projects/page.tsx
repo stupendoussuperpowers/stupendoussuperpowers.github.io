@@ -5,6 +5,8 @@ import fs from 'fs';
 import path from 'path';
 import { Metadata } from 'next';
 
+import { myCustomFont } from '@/ui/font';
+
 export default async function ProjectsPage() {
 	const projects = await getStaticProps();
 
@@ -12,7 +14,9 @@ export default async function ProjectsPage() {
 	console.log({ tags });
 
 	return <div style={{ marginBottom: '80px', width: '100%' }}>
-		<h1>Projects.</h1>
+		<div className={myCustomFont.className}
+			style={{ fontSize: "40px", marginBottom: "40px" }}
+		>Projects</div>
 		{
 			tags.map((t: string) => {
 				return <>

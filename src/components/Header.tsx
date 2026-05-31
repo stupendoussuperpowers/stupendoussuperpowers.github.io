@@ -6,7 +6,7 @@ import { myCustomFont } from '@/ui/font';
 
 export default function Header() {
 	return <>
-		<table>
+		<table className='header-table'>
 			<tbody>
 				<tr>
 					<td>
@@ -22,16 +22,15 @@ export default function Header() {
 						<Link href="/projects">Projects</Link>
 					</td>
 					<td>
-						<Link href="/blog">Blog</Link>
+						<Link href="/blog">Pocket Litter</Link>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 		<div className='links'>
 			<span className='nav'><Link href="https://github.com/stupendoussuperpowers">github.com/stupendoussuperpowers</Link></span>
-			<span className='nav'><Link href="mailto:s.sahay@nyu.edu">Email</Link></span>
 			<span className='nav'><Link href="/sanchit_sahay.pdf" download={true}>CV/Resume</Link></span>
+			<span className='nav'>s.sahay[at]nyu[dot]edu</span>
 		</div>
 	</>
 }
-
