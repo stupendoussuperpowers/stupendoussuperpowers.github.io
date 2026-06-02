@@ -111,7 +111,7 @@ export default async function Blog() {
 									<td style={{ border: "0px" }}>
 										{monthBooks ? getMonth(month) : ""}
 									</td>
-									<td key={idx} style={{ border: "0px" }}>
+									<td key={`${month}-${idx}`} style={{ border: "0px", marginTop: "10px" }}>
 										{monthBooks ? monthBooks.map((b) => {
 											console.log({ b }); return (<>
 												<div key={b.title}>
