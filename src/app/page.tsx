@@ -26,7 +26,7 @@ export default async function Home() {
 	return (
 		<>
 			<div className='window'>
-				<div>
+				<div className="portrait">
 					<Image
 						src='/mt_washington.jpg'
 						className='window-portrait'
@@ -63,8 +63,10 @@ export default async function Home() {
 								<td>[2024-2026]</td>
 								<td>
 									<b>New York University </b>
+									<div className="mobile"> {/*Ph.D. Computer Science<br />*/}
+										M.S. Computer Science </div>
 								</td>
-								<td>
+								<td className="full">
 									{/*Ph.D. Computer Science<br />*/}
 									M.S. Computer Science
 								</td>
@@ -74,8 +76,11 @@ export default async function Home() {
 								<td>[2022-2024]</td>
 								<td>
 									<b>Commvault Systems </b>
+									<div className="mobile">
+										Virtualization
+									</div>
 								</td>
-								<td>
+								<td className="full">
 									Virtualization
 								</td>
 							</tr>
@@ -84,8 +89,11 @@ export default async function Home() {
 								<td>[2021-2021]</td>
 								<td>
 									<b>LegalAI </b>
+									<div className="mobile">
+										Web & DevOps Intern
+									</div>
 								</td>
-								<td>
+								<td className="full">
 									Web & DevOps Intern
 								</td>
 							</tr>
@@ -94,8 +102,11 @@ export default async function Home() {
 								<td>[2018-2022]</td>
 								<td>
 									<b>Manipal Institute of Technology </b>
+									<div className="mobile">
+										B.Tech (IT)
+									</div>
 								</td>
-								<td>
+								<td className="full">
 									B.Tech (IT)
 								</td>
 							</tr>

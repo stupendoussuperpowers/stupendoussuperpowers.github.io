@@ -1,6 +1,7 @@
 import './project.css';
 import React from 'react';
 import Link from 'next/link';
+import { formatBlogTimestamp } from '@/utils';
 
 type BlogListProps = IndexEntry & {
 	writepad?: boolean;
@@ -17,7 +18,7 @@ export const BlogListItem: React.FC<BlogListProps> = ({ publish, title, blurb, d
 				<b>{!publish ? '[DRAFT] ' : ''}{title}</b>
 			</Link>
 			<div className='slug'>
-				{entryType ? `${entryType} / ` : ''}{date}
+				{entryType ? `${entryType} / ` : ''}{formatBlogTimestamp(date)}
 			</div>
 		</div>
 		<div style={{ marginTop: "calc(var(--line-height) / 2)" }}>{blurb}</div>

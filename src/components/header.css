@@ -8,11 +8,13 @@
 }
 
 .nav {
-  margin-top: 10px;
-  margin-right: 20px;
+  margin-top: 0;
 }
 
 .links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
   position: relative;
   margin-top: 20px;
   margin-bottom: 50px;
@@ -24,4 +26,29 @@
 
 .header-table {
   margin: 0px;
+}
+
+@media screen and (max-width: 787px) {
+  .header-table tr {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .header-table td {
+    display: block;
+    flex: 1 1 0;
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .header-table td:first-child {
+    flex: 0 0 100%;
+    text-align: center;
+    border-bottom: 0px;
+  }
+
+  .header-table h1 {
+    overflow-wrap: anywhere;
+  }
 }

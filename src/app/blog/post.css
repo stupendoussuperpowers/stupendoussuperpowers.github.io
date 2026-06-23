@@ -1,0 +1,25 @@
+.window-post {
+  height: fit-content;
+  min-height: 65vh;
+  margin-bottom: 50px;
+}
+
+.blog-post-title {
+  font-size: 40px;
+}
+
+.blog-post-content {
+  margin-top: var(--line-height);
+}
+
+.blog-cymk {
+  display: flex;
+  margin-top: 50px;
+  flex-direction: row;
+}
+
+@media (max-width: 700px) {
+  .blog-post-title {
+    line-height: 3rem;
+  }
+}

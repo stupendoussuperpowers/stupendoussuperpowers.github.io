@@ -1,5 +1,5 @@
-import './post.css';
-import { ReadIndex, ReadEntry } from '../../../utils';
+import '../post.css';
+import { formatBlogTimestamp, ReadIndex, ReadEntry } from '../../../utils';
 import React from 'react';
 import Image from 'next/image';
 import { Metadata } from 'next';
@@ -40,11 +40,9 @@ export default async function BlogPost({ params }: { params: PageProps }) {
 
 	if (postData.ok) {
 		return <div className='window-post'>
-			<div className={myCustomFont.className}
-				style={{ fontSize: "40px" }}
-			>{postData.value.index.title}</div>
-			<div>{postData.value.index.blurb}</div>
-			<h4>{postData.value.index.date}</h4>
+			<div className={`${myCustomFont.className} blog-post-title`}>{postData.value.index.title}</div>
+			<div className="blog-post-blurb">{postData.value.index.blurb}</div>
+			<h4>{formatBlogTimestamp(postData.value.index.date)}</h4>
 			<div className="header-image">
 				{
 					postData.value.index.headerImage ?
@@ -56,10 +54,10 @@ export default async function BlogPost({ params }: { params: PageProps }) {
 						/> : <> </>
 				}
 			</div>
-			<div dangerouslySetInnerHTML={{ __html: postData.value.content.map(x => x.renderText).join("") }} />
+			<div className="blog-post-content" dangerouslySetInnerHTML={{ __html: postData.value.content.map(x => x.renderText).join("") }} />
 
 			<div className="blog-cymk">
-				<div>Last modified on: {postData.value.index.lastModified}   </div>
+				<div>Last modified on: {formatBlogTimestamp(postData.value.index.lastModified)}   </div>
 				<div className="c box"></div>
 				<div className="m box"></div>
 				<div className="y box"></div>

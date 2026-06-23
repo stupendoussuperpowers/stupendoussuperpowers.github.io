@@ -12,7 +12,7 @@ export default function Header() {
 					<td>
 						<div>
 							<h1 className={myCustomFont.className}>Sanchit Sahay</h1>
-							<span className='subtitle'>Systems, Virtualization, Web, Cloud and More!</span>
+							<span className='subtitle'>Systems, Security, Cloud, Web and More!</span>
 						</div>
 					</td>
 					<td>

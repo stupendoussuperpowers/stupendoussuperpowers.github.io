@@ -1,6 +1,6 @@
 .window {
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
   gap: 10px;
   align-items: start;
 }
@@ -20,6 +20,7 @@
 
 .window-portrait {
   width: 200px;
+  max-width: 100%;
   height: auto;
 }
 
@@ -37,4 +38,29 @@
 
 hr {
   margin: 0px;
+}
+
+.mobile {
+  display: none;
+}
+
+@media screen and (max-width: 640px) {
+  .window {
+    grid-template-columns: 1fr;
+  }
+
+  .full {
+    display: none;
+  }
+
+  .mobile {
+    display: block;
+    margin-top: 0px;
+  }
+
+  .portrait {
+    width: 100%;
+    justify-items: center;
+    margin-bottom: 40px;
+  }
 }

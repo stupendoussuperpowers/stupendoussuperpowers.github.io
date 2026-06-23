@@ -1,10 +1,18 @@
 [
   {
+    "title": "Back Story",
+    "author": "Mitchell, David",
+    "rating": 4,
+    "dateRead": "Jun 19, 2026",
+    "year": "2012",
+    "countryOfOrigin": "United Kingdom",
+    "isoCode": "UK"
+  },
+  {
     "title": "Jerks",
     "author": "Lippmann, Sara",
     "rating": 4,
     "dateRead": "Jun 2, 2026",
-    "reviewLink": "https://www.goodreads.com/review/show/8653028872",
     "year": 2022,
     "countryOfOrigin": "United States",
     "isoCode": "USA"
@@ -14,7 +22,6 @@
     "author": "Xhoga, Ledia",
     "rating": 3,
     "dateRead": "Mar 31, 2026",
-    "reviewLink": "https://www.goodreads.com/review/show/8484322590",
     "year": 2024,
     "countryOfOrigin": "Albania, United States",
     "isoCode": "ALB, USA"
@@ -24,7 +31,6 @@
     "author": "Offill, Jenny",
     "rating": 4,
     "dateRead": "Mar 28, 2026",
-    "reviewLink": "https://www.goodreads.com/review/show/8474226092",
     "year": 2020,
     "countryOfOrigin": "United States",
     "isoCode": "USA"
@@ -44,7 +50,6 @@
     "author": "Veurink, Erika",
     "rating": 3,
     "dateRead": "Feb 27, 2026",
-    "reviewLink": "https://goodreads.com//review/show/8396455393",
     "year": 2025,
     "countryOfOrigin": "United States",
     "isoCode": "USA"
@@ -104,7 +109,6 @@
     "author": "Harris, R.A.",
     "rating": 3,
     "dateRead": "Dec 31, 2025",
-    "reviewLink": "https://goodreads.com//review/show/8198904057",
     "year": 2023,
     "countryOfOrigin": "United States",
     "isoCode": "USA"
@@ -114,7 +118,6 @@
     "author": "Almeida, Germano",
     "rating": 3,
     "dateRead": "Oct 05, 2025",
-    "reviewLink": "https://goodreads.com//review/show/7968631312",
     "year": 1989,
     "countryOfOrigin": "Cape Verde",
     "isoCode": "CPV"
@@ -144,7 +147,6 @@
     "author": "Bialosky, Jill",
     "rating": 3,
     "dateRead": "Feb 11, 2025",
-    "reviewLink": "https://goodreads.com//review/show/7310808944",
     "year": 2024,
     "countryOfOrigin": "United States",
     "isoCode": "USA"
@@ -284,7 +286,6 @@
     "author": "Calvino, Italo",
     "rating": 5,
     "dateRead": "Nov 29, 2022",
-    "reviewLink": "https://goodreads.com//review/show/5131866014",
     "year": 1979,
     "countryOfOrigin": "Italy",
     "isoCode": "ITA"
@@ -360,11 +361,10 @@
     "isoCode": "USA"
   },
   {
-    "title": "Important Artifacts and Personal Property...",
+    "title": "Important Artifacts and Personal Property from the Collection of Lenore Doolan and Harold Morris, Including Books, Street Fashion, and Jewelry",
     "author": "Shapton, Leanne",
     "rating": 5,
     "dateRead": "Mar 2022",
-    "reviewLink": "https://goodreads.com//review/show/4657553973",
     "year": 2009,
     "countryOfOrigin": "Canada",
     "isoCode": "CAN"
@@ -374,7 +374,6 @@
     "author": "Queneau, Raymond",
     "rating": 5,
     "dateRead": "Feb 2022",
-    "reviewLink": "https://goodreads.com//review/show/4657748931",
     "year": 1947,
     "countryOfOrigin": "France",
     "isoCode": "FRA"
@@ -384,7 +383,6 @@
     "author": "Amis, Martin",
     "rating": 2,
     "dateRead": "Feb 2022",
-    "reviewLink": "https://goodreads.com//review/show/4657553112",
     "year": 1991,
     "countryOfOrigin": "United Kingdom",
     "isoCode": "GBR"
@@ -394,7 +392,6 @@
     "author": "Singh, Yuvraj",
     "rating": 4,
     "dateRead": "Feb 2022",
-    "reviewLink": "https://goodreads.com//review/show/4657551398",
     "year": 2013,
     "countryOfOrigin": "India",
     "isoCode": "IND"
@@ -404,7 +401,6 @@
     "author": "Barnes, Julian",
     "rating": 4,
     "dateRead": "Jan 16, 2022",
-    "reviewLink": "https://goodreads.com//review/show/4478473521",
     "year": 2011,
     "countryOfOrigin": "United Kingdom",
     "isoCode": "GBR"
@@ -414,7 +410,6 @@
     "author": "Moshfegh, Ottessa",
     "rating": 3,
     "dateRead": "Jan 2022",
-    "reviewLink": "https://goodreads.com//review/show/4657550582",
     "year": 2015,
     "countryOfOrigin": "United States",
     "isoCode": "USA"
@@ -424,7 +419,6 @@
     "author": "Spiegelman, Art",
     "rating": 4,
     "dateRead": "Sep 26, 2021",
-    "reviewLink": "https://goodreads.com//review/show/5010293973",
     "year": 1991,
     "countryOfOrigin": "United States",
     "isoCode": "USA"
@@ -434,7 +428,6 @@
     "author": "Patil, Amruta",
     "rating": 4,
     "dateRead": "Sep 26, 2021",
-    "reviewLink": "https://goodreads.com//review/show/5010305899",
     "year": 2008,
     "countryOfOrigin": "India",
     "isoCode": "IND"
@@ -444,7 +437,6 @@
     "author": "Satrapi, Marjane",
     "rating": 4,
     "dateRead": "Sep 26, 2021",
-    "reviewLink": "https://goodreads.com//review/show/5010292539",
     "year": 2000,
     "countryOfOrigin": "Iran",
     "isoCode": "IRN"
@@ -454,7 +446,6 @@
     "author": "Satrapi, Marjane",
     "rating": 4,
     "dateRead": "Sep 26, 2021",
-    "reviewLink": "https://goodreads.com//review/show/5010293302",
     "year": 2004,
     "countryOfOrigin": "Iran",
     "isoCode": "IRN"
@@ -464,7 +455,6 @@
     "author": "Orwell, George",
     "rating": 5,
     "dateRead": "Jan 08, 2021",
-    "reviewLink": "https://goodreads.com//review/show/3756954234",
     "year": 1945,
     "countryOfOrigin": "United Kingdom",
     "isoCode": "GBR"
@@ -474,7 +464,6 @@
     "author": "Watson, Mark",
     "rating": 4,
     "dateRead": "Jan 2021",
-    "reviewLink": "https://goodreads.com//review/show/4478463353",
     "year": 2010,
     "countryOfOrigin": "United Kingdom",
     "isoCode": "GBR"
@@ -484,7 +473,6 @@
     "author": "Batuman, Elif",
     "rating": 4,
     "dateRead": "Jan 2021",
-    "reviewLink": "https://goodreads.com//review/show/4478476441",
     "year": 2017,
     "countryOfOrigin": "United States",
     "isoCode": "USA"
@@ -494,7 +482,6 @@
     "author": "Rooney, Sally",
     "rating": 5,
     "dateRead": "Apr 02, 2020",
-    "reviewLink": "https://goodreads.com//review/show/3756952850",
     "year": 2018,
     "countryOfOrigin": "Ireland",
     "isoCode": "IRL"
@@ -504,7 +491,6 @@
     "author": "Green, John",
     "rating": 0,
     "dateRead": "Jan 2019",
-    "reviewLink": "https://goodreads.com//review/show/4506097080",
     "year": 2008,
     "countryOfOrigin": "United States",
     "isoCode": "USA"
@@ -514,7 +500,6 @@
     "author": "LaCour, Nina",
     "rating": 4,
     "dateRead": "Jan 2019",
-    "reviewLink": "https://goodreads.com//review/show/2658417122",
     "year": 2017,
     "countryOfOrigin": "United States",
     "isoCode": "USA"
@@ -524,7 +509,6 @@
     "author": "Green, Hank",
     "rating": 5,
     "dateRead": "Nov 03, 2018",
-    "reviewLink": "https://goodreads.com//review/show/2582988404",
     "year": 2018,
     "countryOfOrigin": "United States",
     "isoCode": "USA"

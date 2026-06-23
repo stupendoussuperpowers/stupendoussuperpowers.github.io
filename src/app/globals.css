@@ -36,6 +36,10 @@
   box-sizing: border-box;
 }
 
+* {
+  min-width: 0;
+}
+
 * + * {
   margin-top: var(--line-height);
 }
@@ -126,6 +130,7 @@ hr:after {
 
 a {
   text-decoration-thickness: var(--border-thickness);
+  overflow-wrap: anywhere;
 }
 
 a:link,
@@ -166,6 +171,7 @@ table {
   width: calc(round(down, 100%, 1ch));
   border-collapse: collapse;
   margin: 0 0 calc(var(--line-height) * 2);
+  max-width: 100%;
 }
 
 th,

@@ -1,9 +1,9 @@
 textarea {
   width: 100%;
   height: fit-content;
-  overflow-y: 'hidden';
-  resize: 'vertical';
-  font-size: 15px;
+  overflow-y: hidden;
+  resize: vertical;
+  font: inherit;
 }
 
 .ctrlpanel {
@@ -37,7 +37,6 @@ textarea {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-		  border: 1px solid black;
 padding: 1rem;
 		  z-index: 1000;
 		  
@@ -45,6 +44,51 @@ padding: 1rem;
 
 .titlebutton {
   margin-left: 5px;
+}
+
+.writepad-actions {
+  background-color: var(--background-color);
+  border-bottom: var(--border-thickness) solid var(--text-color);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1ch;
+  position: sticky;
+  top: 50px;
+  z-index: 1000;
+  padding: calc(var(--line-height) / 2) 0;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.writepad-actions label {
+  width: auto;
+}
+
+.writepad-checkbox {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.5ch;
+  margin-left: 10px;
+}
+
+.writepad-checkbox > * {
+  margin-top: 0;
+}
+
+.writepad-editable-text {
+  cursor: text;
+  outline: none;
+}
+
+.writepad-block {
+  position: relative;
+  width: 100%;
+}
+
+.writepad-block,
+.writepad-rendered-block {
+  margin-top: 0;
 }
 
 .gap {

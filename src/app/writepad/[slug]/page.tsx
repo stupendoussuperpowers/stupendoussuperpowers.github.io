@@ -8,6 +8,7 @@ import {
 	useRef,
 } from "react";
 import "../custom.css";
+import "../../blog/post.css";
 import MarkdownIt from "markdown-it";
 import React from "react";
 import { RiDeleteBin6Fill } from "react-icons/ri";
@@ -95,8 +96,10 @@ export default function WritePad({ params }: { params: PageProps }) {
 	});
 
 	const headerImage = watch("headerImage");
+	const date = watch("date");
 
 	const onSubmit: SubmitHandler<BlogEntry> = async (data) => {
+		console.log({ data });
 		const result = await fetch("/api/addentry", {
 			method: "post",
 			body: JSON.stringify({
@@ -122,52 +125,55 @@ export default function WritePad({ params }: { params: PageProps }) {
 	return (
 		<>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<div className="window-post">
-					<div className="titlebar">
-						<div>
-							<Controller
-								control={control}
-								name="title"
-								render={({ field: { onChange, value } }) => {
-									if (titleRef.current && !titleRef.current.textContent)
-										titleRef.current.textContent = value;
-									return (
-										<div className={myCustomFont.className}
-											style={{ fontSize: "40px" }}
-											contentEditable
-											onInput={(e) => onChange(e.currentTarget.textContent)}
-											ref={titleRef}
-										></div>
-									);
-								}}
-							/>
-							<Controller
-								control={control}
-								name="blurb"
-								render={({ field: { onChange, value } }) => {
-									if (blurbRef.current && !blurbRef.current.textContent)
-										blurbRef.current.textContent = value;
-									return (
-										<div
-											contentEditable
-											onInput={(e) => onChange(e.currentTarget.textContent)}
-											ref={blurbRef}
-										></div>
-									);
-								}}
-							/>
-						</div>
-
-					</div>
+				<div className="writepad-actions">
 					<div>
-						<input type="checkbox" {...register("publish")} />{" "}
-						<span> Publish? </span>
-						<input type="checkbox" {...register("pinned")} />{" "}
-						<span> Pin? </span>
-						<button type="submit" className="titlebutton">
-							{isSubmitting ? "Saving..." : isSubmitted ? "Saved" : "Save"}
-						</button>
+						<label className="writepad-checkbox">
+							<input type="checkbox" {...register("publish")} />{" "}
+							<span>Publish?</span>
+						</label>
+						<label className="writepad-checkbox">
+							<input type="checkbox" {...register("pinned")} />{" "}
+							<span>Pin?</span>
+						</label>
 					</div>
+					<button type="submit" className="titlebutton">
+						{isSubmitting ? "Saving..." : isSubmitted ? "Saved" : "Save"}
+					</button>
+				</div>
+				<div className="window-post">
+					<Controller
+						control={control}
+						name="title"
+						render={({ field: { onChange, value } }) => {
+							if (titleRef.current && !titleRef.current.textContent)
+								titleRef.current.textContent = value;
+							return (
+								<div
+									className={`${myCustomFont.className} blog-post-title writepad-editable-text`}
+									contentEditable
+									onInput={(e) => onChange(e.currentTarget.textContent)}
+									ref={titleRef}
+								></div>
+							);
+						}}
+					/>
+					<Controller
+						control={control}
+						name="blurb"
+						render={({ field: { onChange, value } }) => {
+							if (blurbRef.current && !blurbRef.current.textContent)
+								blurbRef.current.textContent = value;
+							return (
+								<div
+									className="blog-post-blurb writepad-editable-text"
+									contentEditable
+									onInput={(e) => onChange(e.currentTarget.textContent)}
+									ref={blurbRef}
+								></div>
+							);
+						}}
+					/>
+					<h4>{date}</h4>
 					<div className='header-image'>
 						<input type="hidden" {...reset} name="headerImage" />
 
@@ -201,7 +207,7 @@ export default function WritePad({ params }: { params: PageProps }) {
 							}}
 						/>
 					</div>
-					<div className="prosebox">
+					<div className="prosebox blog-post-content">
 						{controlledFields.map((field, index) => {
 							return (
 								<Controller
@@ -310,7 +316,7 @@ const NewBlockDisplay: React.FC<NewBlockDisplayProps> = ({
 	};
 
 	return (
-		<div style={{ width: "100%" }}>
+		<div className="writepad-block">
 			{isEditing ? (
 				<div
 					style={{
@@ -335,7 +341,7 @@ const NewBlockDisplay: React.FC<NewBlockDisplayProps> = ({
 				</div>
 			) : (
 				<div
-					className="gap"
+					className="gap writepad-rendered-block"
 					onClick={handleClick}
 					dangerouslySetInnerHTML={{
 						__html: renderText.length == 0 ? "Start typing..." : renderText,
