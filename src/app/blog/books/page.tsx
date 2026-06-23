@@ -110,7 +110,7 @@ function groupBooks(books: BookWithCover[]) {
 }
 
 export default async function Blog() {
-	const { groupedBooks: _books, coverUrls } = await getStaticProps(); // assume returns { books: Book[] }
+	const { groupedBooks: _books } = await getStaticProps(); // assume returns { books: Book[] }
 
 	/*
 	 {
