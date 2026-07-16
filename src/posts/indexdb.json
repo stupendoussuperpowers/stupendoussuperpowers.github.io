@@ -1,6 +1,18 @@
 [
   {
-    "title": "Books Timeline",
+    "title": "CS-GY 9223 Software Supply Chain Security",
+    "blurb": "CS-GY 9223 course website",
+    "slug": "scss2026",
+    "href": "/blog/sscs2026",
+    "entryType": "Course Page",
+    "publish": true,
+    "date": "2026",
+    "lastModified": "2026",
+    "headerImage": null,
+    "pinned": false
+  },
+  {
+    "title": "(Book) Stack Trace",
     "blurb": "A timeline of the books I have been reading.",
     "slug": "books",
     "href": "/blog/books",

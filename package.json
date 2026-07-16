@@ -16,7 +16,7 @@
     "fs": "^0.0.1-security",
     "gray-matter": "^4.0.3",
     "markdown-it": "^14.1.0",
-    "next": "15.1.7",
+    "next": "^15.5.20",
     "null-loader": "^4.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

@@ -3,17 +3,19 @@
     "title": "Bilbao-New York-Bilbao",
     "author": "Uribe, Kirmen",
     "rating": 5,
-    "isoCode": "",
     "dateRead": "Jul 10, 2026",
     "year": "2008",
-    "countryOfOrigin": "Basque",
-    "reviewLink": "https://www.goodreads.com/review/show/8758377790"
+    "countryOfOrigin": "Spain (Basque)",
+    "reviewLink": "https://www.goodreads.com/review/show/8758377790",
+    "boty": true,
+    "recList": true,
+    "isoCode": "ES"
   },
   {
     "title": "Temper",
     "author": "Walker, Phoebe",
     "rating": 3,
-    "isoCode": "UK",
+    "isoCode": "GB",
     "dateRead": "Jun 23, 2026",
     "year": "2023",
     "countryOfOrigin": "United Kingdom"
@@ -25,7 +27,8 @@
     "dateRead": "Jun 19, 2026",
     "year": "2012",
     "countryOfOrigin": "United Kingdom",
-    "isoCode": "UK"
+    "isoCode": "GB",
+    "botm": true
   },
   {
     "title": "Jerks",
@@ -34,7 +37,7 @@
     "dateRead": "Jun 2, 2026",
     "year": 2022,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US"
   },
   {
     "title": "Misinterpretation",
@@ -43,7 +46,7 @@
     "dateRead": "Mar 31, 2026",
     "year": 2024,
     "countryOfOrigin": "Albania, United States",
-    "isoCode": "ALB, USA"
+    "isoCode": "AL, US"
   },
   {
     "title": "Weather",
@@ -52,7 +55,8 @@
     "dateRead": "Mar 28, 2026",
     "year": 2020,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US",
+    "botm": true
   },
   {
     "title": "Days Come and Go",
@@ -62,7 +66,7 @@
     "reviewLink": "https://goodreads.com//review/show/8418683054",
     "year": 2019,
     "countryOfOrigin": "Cameroon",
-    "isoCode": "CMR"
+    "isoCode": "CM"
   },
   {
     "title": "Exit Lane",
@@ -71,7 +75,7 @@
     "dateRead": "Feb 27, 2026",
     "year": 2025,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US"
   },
   {
     "title": "Escape!",
@@ -81,7 +85,7 @@
     "reviewLink": "https://goodreads.com//review/show/8369199986",
     "year": 2026,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US"
   },
   {
     "title": "The Soul of a New Machine",
@@ -91,7 +95,9 @@
     "reviewLink": "https://goodreads.com//review/show/8346886561",
     "year": 1981,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US",
+    "botm": true,
+    "recList": true
   },
   {
     "title": "The Employees",
@@ -101,7 +107,7 @@
     "reviewLink": "https://goodreads.com//review/show/8319757456",
     "year": 2018,
     "countryOfOrigin": "Denmark",
-    "isoCode": "DNK"
+    "isoCode": "DK"
   },
   {
     "title": "City of Glass",
@@ -111,7 +117,7 @@
     "reviewLink": "https://goodreads.com//review/show/8299906381",
     "year": 1985,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US"
   },
   {
     "title": "Porterhouse Blue",
@@ -121,7 +127,7 @@
     "reviewLink": "https://goodreads.com//review/show/8299897099",
     "year": 1974,
     "countryOfOrigin": "United Kingdom",
-    "isoCode": "GBR"
+    "isoCode": "GB"
   },
   {
     "title": "All Art is Junk",
@@ -130,7 +136,7 @@
     "dateRead": "Dec 31, 2025",
     "year": 2023,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US"
   },
   {
     "title": "The Last Will & Testament of Senhor da Silva Araújo",
@@ -139,7 +145,7 @@
     "dateRead": "Oct 05, 2025",
     "year": 1989,
     "countryOfOrigin": "Cape Verde",
-    "isoCode": "CPV"
+    "isoCode": "CV"
   },
   {
     "title": "Ignorance",
@@ -149,7 +155,7 @@
     "reviewLink": "https://goodreads.com//review/show/7519067473",
     "year": 2000,
     "countryOfOrigin": "Czech Republic",
-    "isoCode": "CZE"
+    "isoCode": "CZ"
   },
   {
     "title": "My Brilliant Friend",
@@ -159,7 +165,9 @@
     "reviewLink": "https://goodreads.com//review/show/7500419135",
     "year": 2011,
     "countryOfOrigin": "Italy",
-    "isoCode": "ITA"
+    "isoCode": "IT",
+    "boty": true,
+    "recList": true
   },
   {
     "title": "House Under Snow",
@@ -168,7 +176,7 @@
     "dateRead": "Feb 11, 2025",
     "year": 2024,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US"
   },
   {
     "title": "Man in the Dark",
@@ -178,7 +186,7 @@
     "reviewLink": "https://goodreads.com//review/show/7303813285",
     "year": 2008,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US"
   },
   {
     "title": "New York State DMV Driver's Manual",
@@ -188,7 +196,8 @@
     "reviewLink": "https://goodreads.com//review/show/7247370717",
     "year": 2024,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US",
+    "recList": true
   },
   {
     "title": "Ladies and Gentlemen, the Bronx is Burning",
@@ -198,7 +207,9 @@
     "reviewLink": "https://goodreads.com//review/show/7011884187",
     "year": 2005,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US",
+    "boty": true,
+    "recList": true
   },
   {
     "title": "Held",
@@ -208,7 +219,7 @@
     "reviewLink": "https://goodreads.com//review/show/6841511425",
     "year": 2023,
     "countryOfOrigin": "Canada",
-    "isoCode": "CAN"
+    "isoCode": "CA"
   },
   {
     "title": "Roman Stories",
@@ -218,7 +229,7 @@
     "reviewLink": "https://goodreads.com//review/show/6819708115",
     "year": 2023,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US"
   },
   {
     "title": "The Book of Laughter and Forgetting",
@@ -228,7 +239,16 @@
     "reviewLink": "https://goodreads.com//review/show/6436220938",
     "year": 1979,
     "countryOfOrigin": "Czech Republic",
-    "isoCode": "CZE"
+    "isoCode": "CZ"
+  },
+  {
+    "title": "Solaris",
+    "author": "Stanisław Lem",
+    "rating": 4,
+    "dateRead": "Dec 31, 2024",
+    "year": 1961,
+    "countryOfOrigin": "Poland",
+    "isoCode": "PL"
   },
   {
     "title": "The Moustache",
@@ -238,7 +258,7 @@
     "reviewLink": "https://goodreads.com//review/show/6322422150",
     "year": 1986,
     "countryOfOrigin": "France",
-    "isoCode": "FRA"
+    "isoCode": "FR"
   },
   {
     "title": "The Unbearable Lightness of Being",
@@ -248,7 +268,8 @@
     "reviewLink": "https://goodreads.com//review/show/6203174153",
     "year": 1984,
     "countryOfOrigin": "Czech Republic",
-    "isoCode": "CZE"
+    "isoCode": "CZ",
+    "recList": true
   },
   {
     "title": "Bluets",
@@ -258,7 +279,7 @@
     "reviewLink": "https://goodreads.com//review/show/6310781203",
     "year": 2009,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US"
   },
   {
     "title": "Acts of God",
@@ -268,7 +289,7 @@
     "reviewLink": "https://goodreads.com//review/show/6197632989",
     "year": 2022,
     "countryOfOrigin": "India",
-    "isoCode": "IND"
+    "isoCode": "IN"
   },
   {
     "title": "Devil's Advocate",
@@ -278,7 +299,7 @@
     "reviewLink": "https://goodreads.com//review/show/6197591383",
     "year": 2018,
     "countryOfOrigin": "India",
-    "isoCode": "IND"
+    "isoCode": "IN"
   },
   {
     "title": "Ghachar Ghochar",
@@ -288,7 +309,8 @@
     "reviewLink": "https://goodreads.com//review/show/6186948043",
     "year": 2013,
     "countryOfOrigin": "India",
-    "isoCode": "IND"
+    "isoCode": "IN",
+    "botm": true
   },
   {
     "title": "Nine Stories",
@@ -298,7 +320,7 @@
     "reviewLink": "https://goodreads.com//review/show/5671594486",
     "year": 1953,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US"
   },
   {
     "title": "If on a Winter's Night a Traveler",
@@ -307,7 +329,8 @@
     "dateRead": "Nov 29, 2022",
     "year": 1979,
     "countryOfOrigin": "Italy",
-    "isoCode": "ITA"
+    "isoCode": "IT",
+    "recList": true
   },
   {
     "title": "Airframe",
@@ -317,7 +340,7 @@
     "reviewLink": "https://goodreads.com//review/show/5096549063",
     "year": 1996,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US"
   },
   {
     "title": "Twenty Love Poems and a Song of Despair",
@@ -327,7 +350,8 @@
     "reviewLink": "https://goodreads.com//review/show/5062056264",
     "year": 1924,
     "countryOfOrigin": "Chile",
-    "isoCode": "CHL"
+    "isoCode": "CL",
+    "botm": true
   },
   {
     "title": "Tomorrow, and Tomorrow, and Tomorrow",
@@ -337,7 +361,7 @@
     "reviewLink": "https://goodreads.com//review/show/5055264509",
     "year": 2022,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US"
   },
   {
     "title": "Who's Afraid of Virginia Woolf?",
@@ -347,7 +371,7 @@
     "reviewLink": "https://goodreads.com//review/show/5047425848",
     "year": 1962,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US"
   },
   {
     "title": "Whereabouts",
@@ -357,7 +381,7 @@
     "reviewLink": "https://goodreads.com//review/show/5043761078",
     "year": 2018,
     "countryOfOrigin": "Italy",
-    "isoCode": "ITA"
+    "isoCode": "IT"
   },
   {
     "title": "A Streetcar Named Desire",
@@ -367,7 +391,7 @@
     "reviewLink": "https://goodreads.com//review/show/5010234845",
     "year": 1947,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US"
   },
   {
     "title": "Either/Or",
@@ -377,7 +401,9 @@
     "reviewLink": "https://goodreads.com//review/show/5007467509",
     "year": 2022,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US",
+    "boty": true,
+    "recList": true
   },
   {
     "title": "Important Artifacts and Personal Property from the Collection of Lenore Doolan and Harold Morris, Including Books, Street Fashion, and Jewelry",
@@ -386,7 +412,8 @@
     "dateRead": "Mar 2022",
     "year": 2009,
     "countryOfOrigin": "Canada",
-    "isoCode": "CAN"
+    "isoCode": "CA",
+    "recList": true
   },
   {
     "title": "Exercises in Style",
@@ -395,7 +422,9 @@
     "dateRead": "Feb 2022",
     "year": 1947,
     "countryOfOrigin": "France",
-    "isoCode": "FRA"
+    "isoCode": "FR",
+    "botm": true,
+    "recList": true
   },
   {
     "title": "Time's Arrow",
@@ -404,7 +433,7 @@
     "dateRead": "Feb 2022",
     "year": 1991,
     "countryOfOrigin": "United Kingdom",
-    "isoCode": "GBR"
+    "isoCode": "GB"
   },
   {
     "title": "The Test of My Life",
@@ -413,7 +442,7 @@
     "dateRead": "Feb 2022",
     "year": 2013,
     "countryOfOrigin": "India",
-    "isoCode": "IND"
+    "isoCode": "IN"
   },
   {
     "title": "The Sense of an Ending",
@@ -422,7 +451,7 @@
     "dateRead": "Jan 16, 2022",
     "year": 2011,
     "countryOfOrigin": "United Kingdom",
-    "isoCode": "GBR"
+    "isoCode": "GB"
   },
   {
     "title": "Eileen",
@@ -431,7 +460,7 @@
     "dateRead": "Jan 2022",
     "year": 2015,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US"
   },
   {
     "title": "The Complete Maus",
@@ -440,7 +469,7 @@
     "dateRead": "Sep 26, 2021",
     "year": 1991,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US"
   },
   {
     "title": "Kari",
@@ -449,7 +478,8 @@
     "dateRead": "Sep 26, 2021",
     "year": 2008,
     "countryOfOrigin": "India",
-    "isoCode": "IND"
+    "isoCode": "IN",
+    "botm": true
   },
   {
     "title": "Persepolis: The Story of a Childhood",
@@ -458,7 +488,7 @@
     "dateRead": "Sep 26, 2021",
     "year": 2000,
     "countryOfOrigin": "Iran",
-    "isoCode": "IRN"
+    "isoCode": "IR"
   },
   {
     "title": "Persepolis 2: The Story of a Return",
@@ -467,7 +497,7 @@
     "dateRead": "Sep 26, 2021",
     "year": 2004,
     "countryOfOrigin": "Iran",
-    "isoCode": "IRN"
+    "isoCode": "IR"
   },
   {
     "title": "Animal Farm",
@@ -476,7 +506,10 @@
     "dateRead": "Jan 08, 2021",
     "year": 1945,
     "countryOfOrigin": "United Kingdom",
-    "isoCode": "GBR"
+    "isoCode": "GB",
+    "botm": true,
+    "boty": true,
+    "recList": true
   },
   {
     "title": "Eleven",
@@ -485,7 +518,7 @@
     "dateRead": "Jan 2021",
     "year": 2010,
     "countryOfOrigin": "United Kingdom",
-    "isoCode": "GBR"
+    "isoCode": "GB"
   },
   {
     "title": "The Idiot",
@@ -494,7 +527,7 @@
     "dateRead": "Jan 2021",
     "year": 2017,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US"
   },
   {
     "title": "Normal People",
@@ -503,7 +536,8 @@
     "dateRead": "Apr 02, 2020",
     "year": 2018,
     "countryOfOrigin": "Ireland",
-    "isoCode": "IRL"
+    "isoCode": "IE",
+    "recList": true
   },
   {
     "title": "Let It Snow",
@@ -512,7 +546,7 @@
     "dateRead": "Jan 2019",
     "year": 2008,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US"
   },
   {
     "title": "We Are Okay",
@@ -521,7 +555,7 @@
     "dateRead": "Jan 2019",
     "year": 2017,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US"
   },
   {
     "title": "An Absolutely Remarkable Thing",
@@ -530,6 +564,7 @@
     "dateRead": "Nov 03, 2018",
     "year": 2018,
     "countryOfOrigin": "United States",
-    "isoCode": "USA"
+    "isoCode": "US",
+    "recList": true
   }
 ]

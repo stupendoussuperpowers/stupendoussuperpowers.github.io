@@ -42,7 +42,13 @@ declare global {
 		author: string;
 		rating?: number | undefined;
 		dateRead: string;
-		reviewLink: string;
+		reviewLink?: string;
+		year?: number | string;
+		countryOfOrigin?: string;
+		isoCode?: string;
+		botm?: boolean;
+		boty?: boolean;
+		recList?: boolean;
 	};
 }
 
