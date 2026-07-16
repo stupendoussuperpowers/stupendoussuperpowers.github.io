@@ -44,9 +44,19 @@ hr {
   display: none;
 }
 
+.news {
+  display: "flex";
+  flex-direction: "row";
+  justify-content: "space-between";
+}
+
 @media screen and (max-width: 640px) {
   .window {
     grid-template-columns: 1fr;
+  }
+
+  .news {
+    display: "block";
   }
 
   .full {

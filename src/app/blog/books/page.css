@@ -258,6 +258,17 @@
 }
 
 @media screen and (max-width: 820px) {
+  .title {
+    line-height: 3rem;
+    flex-direction: column;
+    margin-bottom: 0px;
+  }
+
+  .books-country-stats {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
   .book-entry {
     grid-template-columns: 1fr;
     gap: calc(var(--line-height) * 0.25);

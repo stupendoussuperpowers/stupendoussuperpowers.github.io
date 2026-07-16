@@ -454,7 +454,7 @@ export default async function Blog() {
               <b>{bookStats.currentYearAverage}/5</b>
             </div>
             <div>
-              Overall Avg <b>{bookStats.averageRating}/5</b>
+              Overall <b>{bookStats.averageRating}/5</b>
             </div>
           </dl>
           <div className="books-country-stats">

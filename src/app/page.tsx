@@ -133,17 +133,12 @@ export default async function Home() {
                   <></>
                 )}
               </td>
-              <td
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-              >
+              <td className="news">
                 <span
                   style={{ margin: "0px", padding: "0px" }}
                   dangerouslySetInnerHTML={{ __html: x[0] }}
                 ></span>
+                <br className="mobile" />
                 <span
                   style={{
                     margin: "0px",
