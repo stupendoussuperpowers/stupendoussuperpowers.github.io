@@ -32,6 +32,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const stars = (rating: number | undefined) => {
   if (!rating) return <></>;
+  const full = Math.floor(rating);
+  const half = rating - full >= 0.5;
+  const empty = 5 - full - (half ? 1 : 0);
+
   return (
     <>
       {" "}
@@ -42,13 +46,27 @@ const stars = (rating: number | undefined) => {
           marginTop: "0px",
         }}
       >
-        {Array(rating).fill("*").join(" ")}
+        {Array(full).fill("*").join(" ")}
+        {half && (
+          <>
+            {full > 0 && " "}
+            <span style={{ position: "relative", display: "inline-block" }}>
+              <span style={{ color: "#aeaeae" }}>*</span>
+              <span
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "50%",
+                  overflow: "hidden",
+                }}
+              >
+                *
+              </span>
+            </span>
+          </>
+        )}
         <span style={{ color: "#aeaeae" }}>
-          {rating < 5
-            ? ` ${Array(5 - rating)
-                .fill("*")
-                .join(" ")}`
-            : ""}
+          {empty > 0 ? ` ${Array(empty).fill("*").join(" ")}` : ""}
         </span>
       </span>
     </>

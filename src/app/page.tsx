@@ -119,39 +119,33 @@ export default async function Home() {
           </table>
         </div>
       </div>
-      <hr />
-      <table className="news-box">
-        <tbody>
-          {news.map((x, idx) => (
-            <tr key={idx}>
-              <td>
-                {idx == 0 ? (
-                  <b>
-                    <u>NEWS</u>
-                  </b>
-                ) : (
-                  <></>
-                )}
-              </td>
-              <td className="news">
-                <span
-                  style={{ margin: "0px", padding: "0px" }}
-                  dangerouslySetInnerHTML={{ __html: x[0] }}
-                ></span>
-                <br className="mobile" />
-                <span
-                  style={{
-                    margin: "0px",
-                    padding: "0px",
-                    color: "var(--text-color-alt)",
-                  }}
-                  dangerouslySetInnerHTML={{ __html: x[1] }}
-                ></span>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
+      <div className="news-title">
+        <b>
+          <u>NEWS</u>
+        </b>
+        <hr />
+      </div>
+
+      <div style={{ marginTop: "5px", marginBottom: "40px" }}>
+        {news.map((x, idx) => (
+          <div key={idx} className="news">
+            <span
+              style={{ margin: "0px", padding: "0px" }}
+              dangerouslySetInnerHTML={{ __html: x[0] }}
+            ></span>
+            <br className="mobile" />
+            <span
+              style={{
+                margin: "0px",
+                padding: "0px",
+                color: "var(--text-color-alt)",
+              }}
+              dangerouslySetInnerHTML={{ __html: x[1] }}
+            ></span>
+          </div>
+        ))}
+      </div>
     </>
   );
 }

@@ -1,8 +1,20 @@
 [
   {
+    "title": "Somebody Who Will Love You in All Your Damaged Glory",
+    "author": "Bob-Waksberg, Raphael",
+    "rating": 3.5,
+    "dateRead": "Aug 3, 2026",
+    "year": "2019",
+    "countryOfOrigin": "United States",
+    "reviewLink": "https://www.goodreads.com/review/show/8829446768",
+    "boty": false,
+    "recList": false,
+    "isoCode": "US"
+  },
+  {
     "title": "Half of a Yellow Sun",
     "author": "Adichie, Chimamanda Ngozi",
-    "rating": 3,
+    "rating": 3.5,
     "dateRead": "Jul 28, 2026",
     "year": "2006",
     "countryOfOrigin": "Nigeria",
@@ -19,7 +31,7 @@
     "year": "2008",
     "countryOfOrigin": "Spain (Basque)",
     "reviewLink": "https://www.goodreads.com/review/show/8758377790",
-    "boty": true,
+    "boty": false,
     "recList": true,
     "isoCode": "ES"
   },
@@ -109,6 +121,7 @@
     "countryOfOrigin": "United States",
     "isoCode": "US",
     "botm": true,
+    "boty": true,
     "recList": true
   },
   {
