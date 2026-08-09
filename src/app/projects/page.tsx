@@ -11,7 +11,6 @@ export default async function ProjectsPage() {
 	const projects = await getStaticProps();
 
 	const tags = [...new Set(projects.map(p => p.tag))].filter(x => x);
-	console.log({ tags });
 
 	return <div style={{ marginBottom: '80px', width: '100%' }}>
 		<div className={myCustomFont.className}
@@ -19,8 +18,8 @@ export default async function ProjectsPage() {
 		>Projects</div>
 		{
 			tags.map((t: string) => {
-				return <>
-					<div key={t} className="p-tag">{t.toUpperCase()}</div>
+				return <React.Fragment key={t}>
+					<div className="p-tag">{t.toUpperCase()}</div>
 					{
 						projects.filter((x: ProjectData) => x.tag === t)
 							.map((element: ProjectData) => {
@@ -28,7 +27,7 @@ export default async function ProjectsPage() {
 									<Project {...element} />
 								</li>
 							})}
-				</>
+				</React.Fragment>
 			})
 		}
 	</div>;
@@ -50,7 +49,6 @@ const getStaticProps = async () => {
 		.filter(x => x != "")
 		.map(async (line: string) => {
 			const [title, link, content, report, tag] = line.split("===");
-			console.log(line.split("==="));
 
 			const project: ProjectData = {
 				title, link, content, report, tag
@@ -59,7 +57,6 @@ const getStaticProps = async () => {
 			if (!project.link.includes("https://")) {
 				const language = await fetch(`https://api.github.com/repos/${project.link}/languages`);
 				const l_json = await language.json();
-				console.log({ l_json });
 				const filter = ["Objective-C", "Makefile", "Rich Text Format", "Roff", "Objective-C++"];
 
 				//				const l_json = { "C": 100, "Rust": 100, "Whatever": 100, "Third": 100 };
@@ -71,7 +68,6 @@ const getStaticProps = async () => {
 				project.report = null
 			}
 
-			console.log(project);
 			return project;
 
 		}));

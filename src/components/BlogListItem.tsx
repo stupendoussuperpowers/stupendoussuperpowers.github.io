@@ -1,7 +1,7 @@
 import './project.css';
 import React from 'react';
 import Link from 'next/link';
-import { formatBlogTimestamp } from '@/utils';
+import { formatBlogTimestamp } from '@/utils/format';
 
 type BlogListProps = IndexEntry & {
 	writepad?: boolean;
