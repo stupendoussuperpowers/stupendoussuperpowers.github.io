@@ -3,6 +3,7 @@ import "./globals.css";
 import HeaderGate from "../components/HeaderGate";
 import Footer from "../components/Footer";
 import React from "react";
+import { jetbrainsMono } from "@/ui/font";
 
 export const metadata: Metadata = {
   title: "Sanchit Sahay",
@@ -17,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={jetbrainsMono.variable}>
       <body className="debug">
         <div className="actualbody">
           <HeaderGate />

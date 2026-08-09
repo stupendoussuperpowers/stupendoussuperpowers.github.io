@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { AddEntry } from "../../utils";
+import { AddEntry } from "@/utils";
 
 type Message = {
 	success: boolean

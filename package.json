@@ -4,9 +4,11 @@
   "private": true,
   "homepage": "https://stupendoussuperpowers.github.io/",
   "scripts": {
+    "predev": "node scripts/link-writer.mjs",
     "dev": "next dev",
-    "prebuild": "zip -r public/writepad.zip src/app/writepad && rm -rf src/app/writepad",
-    "postbuild": "unzip public/writepad.zip -d . && rm public/writepad.zip",
+    "build:report": "node scripts/build-course-reports.mjs",
+    "build:reports": "node scripts/build-course-reports.mjs",
+    "prebuild": "rm -rf src/app/writepad src/pages/api",
     "build": "next build",
     "start": "next start"
   },

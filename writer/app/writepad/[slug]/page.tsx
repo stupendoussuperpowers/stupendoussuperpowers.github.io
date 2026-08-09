@@ -8,7 +8,7 @@ import {
 	useRef,
 } from "react";
 import "../custom.css";
-import "../../blog/post.css";
+import "../../../../src/app/blog/post.css";
 import MarkdownIt from "markdown-it";
 import React from "react";
 import { RiDeleteBin6Fill } from "react-icons/ri";
@@ -86,6 +86,7 @@ export default function WritePad({ params }: { params: PageProps }) {
 	}, [isSubmitted, slug, reset]);
 
 	const [editingIndex, setEditingIndex] = useState<number>(-1);
+	const [isUploadingHeader, setIsUploadingHeader] = useState(false);
 
 	const watchFieldArray = watch("blocks");
 	const controlledFields = fields.map((field, index) => {
@@ -198,14 +199,33 @@ export default function WritePad({ params }: { params: PageProps }) {
 									<input
 										type="file"
 										accept="image/*"
+										disabled={isUploadingHeader}
 										{...fieldProps}
-										onChange={(e) => {
+										onChange={async (e) => {
 											const file = e.target.files?.[0];
-											field.onChange(file ? file.name : "");
+											if (!file) {
+												field.onChange("");
+												return;
+											}
+
+											setIsUploadingHeader(true);
+											try {
+												const body = new FormData();
+												body.append("file", file);
+												const res = await fetch("/api/upload-header", {
+													method: "POST",
+													body,
+												});
+												const { filename } = await res.json();
+												field.onChange(filename);
+											} finally {
+												setIsUploadingHeader(false);
+											}
 										}} />
 								);
 							}}
 						/>
+						{isUploadingHeader ? <span>Compressing...</span> : <></>}
 					</div>
 					<div className="prosebox blog-post-content">
 						{controlledFields.map((field, index) => {

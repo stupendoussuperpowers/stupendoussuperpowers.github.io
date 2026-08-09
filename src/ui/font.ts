@@ -1,4 +1,6 @@
 import localFont from 'next/font/local';
+import { JetBrains_Mono } from 'next/font/google';
+
 export const myCustomFont = localFont({
 	src: [
 		{
@@ -9,5 +11,12 @@ export const myCustomFont = localFont({
 	],
 	display: 'swap', // Optional: controls font display behavior
 	variable: '--font-my-custom-font', // Optional: for use with Tailwind CSS
+});
+
+export const jetbrainsMono = JetBrains_Mono({
+	subsets: ['latin'],
+	weight: ['500', '600', '800'],
+	display: 'swap',
+	variable: '--font-jetbrains-mono',
 });
 

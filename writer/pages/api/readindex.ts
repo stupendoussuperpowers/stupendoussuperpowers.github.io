@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { ReadIndex } from "../../utils";
+import { ReadIndex } from "@/utils";
 
 type Message = {
 	posts: IndexEntry[]

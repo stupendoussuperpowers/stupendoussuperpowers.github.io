@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import './custom.css';
-import { BlogListItem } from '../../components/BlogListItem';
+import { BlogListItem } from '@/components/BlogListItem';
 import React from 'react';
 
 const randomUUID = () => {

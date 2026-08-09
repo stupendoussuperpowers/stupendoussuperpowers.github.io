@@ -1,5 +1,9 @@
 out/
 
+# symlinked in by scripts/link-writer.mjs (predev), canonical source is writer/
+/src/app/writepad
+/src/pages/api
+
 .DS_Store
 # Logs
 logs
