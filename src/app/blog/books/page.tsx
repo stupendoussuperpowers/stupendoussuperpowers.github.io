@@ -211,13 +211,6 @@ function getBookHighlights(groupedBooks: GroupedBooks) {
       const monthBooks: Book[] = groupedBooks[year]?.[month] ?? [];
 
       for (const book of monthBooks) {
-        if (book.botm) {
-          addAnnotation(annotations, book, {
-            label: `BOTM / ${getMonth(month)} ${year}`,
-            tone: "month-pick",
-          });
-        }
-
         if (book.boty) {
           yearWinners.set(bookKey(book), year);
         }

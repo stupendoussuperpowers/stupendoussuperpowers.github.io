@@ -230,9 +230,10 @@
   height: fit-content;
 }
 
-.book-note-month-pick {
+.book-note-recommendation {
   background: var(--text-color);
   color: var(--background-color);
+  padding: 0 5px 0px 5px;
 }
 
 .book-note-recommendation {
