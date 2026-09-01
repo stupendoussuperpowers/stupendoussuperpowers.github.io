@@ -47,8 +47,7 @@ export default async function Home() {
         <div className="scrollable">
           It was the best of webpages, it was the worst of webpages.
           <p>
-            I&apos;m an incoming Computer Science PhD student at NYU starting
-            Fall 2026, and a current member of the{" "}
+            I&apos;m a Computer Science PhD student at NYU&apos;s{" "}
             <Link href="https://ssl.engineering.nyu.edu/">
               Secure Systems Lab
             </Link>{" "}
@@ -74,19 +73,21 @@ export default async function Home() {
           <table>
             <tbody className="timeline">
               <tr>
+                <td>[2026-Pres]</td>
+                <td>
+                  <b>New York University</b>
+                  <div className="mobile">Ph.D. Computer Science</div>
+                </td>
+                <td className="full">Ph.D. Computer Science</td>
+              </tr>
+
+              <tr>
                 <td>[2024-2026]</td>
                 <td>
-                  <b>New York University </b>
-                  <div className="mobile">
-                    {" "}
-                    {/*Ph.D. Computer Science<br />*/}
-                    M.S. Computer Science{" "}
-                  </div>
+                  <b></b>
+                  <div className="mobile">M.S.</div>
                 </td>
-                <td className="full">
-                  {/*Ph.D. Computer Science<br />*/}
-                  M.S. Computer Science
-                </td>
+                <td className="full">M.S.</td>
               </tr>
 
               <tr>
