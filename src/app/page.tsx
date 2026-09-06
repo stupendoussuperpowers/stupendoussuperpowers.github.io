@@ -76,9 +76,19 @@ export default async function Home() {
                 <td>[2026-Pres]</td>
                 <td>
                   <b>New York University</b>
-                  <div className="mobile">Ph.D. Computer Science</div>
+                  <div className="mobile">
+                    Ph.D.{" "}
+                    <span style={{ color: "var(--text-color-alt)" }}>
+                      Computer Science
+                    </span>
+                  </div>
                 </td>
-                <td className="full">Ph.D. Computer Science</td>
+                <td className="full">
+                  Ph.D.{" "}
+                  <span style={{ color: "var(--text-color-alt)" }}>
+                    Computer Science
+                  </span>
+                </td>
               </tr>
 
               <tr>
@@ -112,9 +122,16 @@ export default async function Home() {
                 <td>[2018-2022]</td>
                 <td>
                   <b>Manipal Institute of Technology </b>
-                  <div className="mobile">B.Tech (IT)</div>
+                  <div className="mobile">
+                    B.Tech{" "}
+                    <span style={{ color: "var(--text-color-alt)" }}>(IT)</span>
+                  </div>
                 </td>
-                <td className="full">B.Tech (IT)</td>
+                <td className="full">
+                  {" "}
+                  B.Tech{" "}
+                  <span style={{ color: "var(--text-color-alt)" }}>(IT)</span>
+                </td>
               </tr>
             </tbody>
           </table>
