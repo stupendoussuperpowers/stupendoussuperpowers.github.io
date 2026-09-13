@@ -37,6 +37,17 @@ declare global {
 		tag: string;
 	}
 
+	type PublicationData = {
+		authors: string;
+		year: string;
+		title: string;
+		venue: string;
+		date: string;
+		location: string;
+		pages: string;
+		doi: string;
+	}
+
 	type Book = {
 		title: string;
 		author: string;

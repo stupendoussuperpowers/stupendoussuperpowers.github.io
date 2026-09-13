@@ -22,7 +22,7 @@ export default function Header() {
               <Link href="/">Home</Link>
             </td>
             <td>
-              <Link href="/projects">Projects</Link>
+              <Link href="/projects">Projects & Publications</Link>
             </td>
             <td>
               <Link href="/blog">Pocket Litter</Link>

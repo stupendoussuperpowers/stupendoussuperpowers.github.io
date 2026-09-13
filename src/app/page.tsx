@@ -10,6 +10,10 @@ const getStaticProps = async () => {
 
   const news = [
     [
+      '"Over the Shoulder: Improving SBOM Accuracy by Watching the Build" <br/> was accepted to ACM SCORED 2026, Prague',
+      "To Appear Oct 06, 2026",
+    ],
+    [
       '<a href="https://youtu.be/VYY3HnRtV6U?si=yOaUd6htQnPzMJnE">Asleep at the Wheel (PyCon US 2026)</a> is now on YouTube.',
       "Uploaded Jul 02, 2026",
     ],
