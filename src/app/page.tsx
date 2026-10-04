@@ -4,26 +4,17 @@ import React from "react";
 import { ReadIndex } from "@/utils";
 import { Metadata } from "next";
 import Image from "next/image";
+import { news } from "../../resumaker/ledger";
+import { siteTimeline } from "../../resumaker/render/site";
 
 const getStaticProps = async () => {
   const indexEntries: IndexEntry[] = await ReadIndex(true);
 
-  const news = [
-    [
-      '"Over the Shoulder: Improving SBOM Accuracy by Watching the Build" <br/> was accepted to ACM SCORED 2026, Prague',
-      "To Appear Oct 06, 2026",
-    ],
-    [
-      '<a href="https://youtu.be/VYY3HnRtV6U?si=yOaUd6htQnPzMJnE">Asleep at the Wheel (PyCon US 2026)</a> is now on YouTube.',
-      "Uploaded Jul 02, 2026",
-    ],
-    [
-      'Catch our talk, <a href="https://us.pycon.org/2026/schedule/presentation/116">Asleep at the Wheel @ PyCon US 2026!</a>',
-      "Presented May 16, 2026",
-    ],
-  ];
-
-  return { articles: indexEntries.filter((x) => x.pinned), news };
+  return {
+    articles: indexEntries.filter((x) => x.pinned),
+    news,
+    timeline: siteTimeline(),
+  };
 };
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -32,8 +23,10 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+const grey = { color: "var(--text-color-alt)" };
+
 export default async function Home() {
-  const { articles, news } = await getStaticProps();
+  const { articles, news, timeline } = await getStaticProps();
 
   return (
     <>
@@ -59,9 +52,8 @@ export default async function Home() {
             research.
           </p>
           <p>
-            In my previous roles, I&apos;ve worked closely on building systems
-            that enhance virtualization and cloud infrastructure, and on
-            improving developer tooling.
+            In previous roles I built systems for virtualization and cloud
+            infrastructure, and spent a good deal of time on developer tooling.
           </p>
           <p>
             Check out some of my <Link href="/blog">Pocket Litter</Link> here:
@@ -76,67 +68,25 @@ export default async function Home() {
           </ul>
           <table>
             <tbody className="timeline">
-              <tr>
-                <td>[2026-Pres]</td>
-                <td>
-                  <b>New York University</b>
-                  <div className="mobile">
-                    Ph.D.{" "}
-                    <span style={{ color: "var(--text-color-alt)" }}>
-                      Computer Science
-                    </span>
-                  </div>
-                </td>
-                <td className="full">
-                  Ph.D.{" "}
-                  <span style={{ color: "var(--text-color-alt)" }}>
-                    Computer Science
-                  </span>
-                </td>
-              </tr>
+              {timeline.map((row) => {
+                const label = (
+                  <>
+                    {row.label}{" "}
+                    {row.suffix ? <span style={grey}>{row.suffix}</span> : null}
+                  </>
+                );
 
-              <tr>
-                <td>[2024-2026]</td>
-                <td>
-                  <b></b>
-                  <div className="mobile">M.S.</div>
-                </td>
-                <td className="full">M.S.</td>
-              </tr>
-
-              <tr>
-                <td>[2022-2024]</td>
-                <td>
-                  <b>Commvault Systems </b>
-                  <div className="mobile">Virtualization</div>
-                </td>
-                <td className="full">Virtualization</td>
-              </tr>
-
-              <tr>
-                <td>[2021-2021]</td>
-                <td>
-                  <b>LegalAI </b>
-                  <div className="mobile">Web & DevOps Intern</div>
-                </td>
-                <td className="full">Web & DevOps Intern</td>
-              </tr>
-
-              <tr>
-                <td>[2018-2022]</td>
-                <td>
-                  <b>Manipal Institute of Technology </b>
-                  <div className="mobile">
-                    B.Tech{" "}
-                    <span style={{ color: "var(--text-color-alt)" }}>(IT)</span>
-                  </div>
-                </td>
-                <td className="full">
-                  {" "}
-                  B.Tech{" "}
-                  <span style={{ color: "var(--text-color-alt)" }}>(IT)</span>
-                </td>
-              </tr>
+                return (
+                  <tr key={row.id}>
+                    <td>[{row.years}]</td>
+                    <td>
+                      <b>{row.org}</b>
+                      <div className="mobile">{label}</div>
+                    </td>
+                    <td className="full">{label}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

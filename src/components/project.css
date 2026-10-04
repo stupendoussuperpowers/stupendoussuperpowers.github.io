@@ -6,10 +6,10 @@
 }
 
 .p-tag {
- font-size: 20px;
- margin-bottom: 20px;
- text-decoration: underline;
- font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 20px;
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 .slug {
@@ -17,6 +17,13 @@
   margin-left: 10px;
   margin-right: 0px;
   opacity: 70%;
+}
+
+.role-tag {
+  font-style: italic;
+  opacity: 70%;
+  font-size: small;
+  margin-top: 2px;
 }
 
 .content {

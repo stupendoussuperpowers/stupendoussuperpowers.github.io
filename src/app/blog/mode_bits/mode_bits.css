@@ -46,7 +46,9 @@
   margin-top: 0;
   text-align: center;
   font-weight: var(--font-weight-bold);
-  transition: opacity 120ms ease, background-color 120ms ease;
+  transition:
+    opacity 120ms ease,
+    background-color 120ms ease;
 }
 
 .mode-bit-group-label {

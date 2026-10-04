@@ -1,43 +1,40 @@
 import Link from "next/link";
 import React from "react";
+import { type Paper, me, when } from "../../resumaker/ledger";
 
-const AUTHOR_NAME = "Sanchit Sahay";
-
-const renderAuthors = (authors: string) => {
-  const parts = authors.split(",").map((a) => a.trim());
-
-  return parts.map((author, idx) => (
+const authorList = (authors: string[] = []) =>
+  authors.map((author, idx) => (
     <React.Fragment key={author}>
-      {author === AUTHOR_NAME || author === `and ${AUTHOR_NAME}` ? (
-        <b>{author}</b>
-      ) : (
-        author
-      )}
-      {idx < parts.length - 1 ? ", " : ""}
+      {author === "@me" ? <b>{me.name}</b> : author}
+      {idx < authors.length - 1 ? ", " : ""}
     </React.Fragment>
   ));
-};
 
-export const Publication: React.FC<PublicationData> = ({
-  authors,
-  year,
-  title,
-  venue,
-  date,
-  location,
-  pages,
-  doi,
-}) => {
-  const link = `https://doi.org/${doi}`;
+export const Publication: React.FC<{ entry: Paper }> = ({ entry }) => {
+  const at = when(entry.when)!;
+  const doi = `https://doi.org/${entry.doi}`;
 
   return (
     <div style={{ marginBottom: "28px" }}>
       <div style={{ fontWeight: "bold", marginBottom: "4px" }}>
-        &quot;{title}&quot;
+        &quot;{entry.title}&quot;{" "}
+        {entry.pdf ? (
+          <>
+            &middot;{" "}
+            <Link href={entry.pdf} target="_blank">
+              PDF
+            </Link>
+          </>
+        ) : null}
       </div>
-      <span>{renderAuthors(authors)}</span>
+      <span>{authorList(entry.authors)}</span>
       <span style={{ color: "var(--text-color-alt)", marginLeft: "5px" }}>
-        <i>{venue}</i>, {date}, {location}
+        <i>
+          {entry.status === "to-appear" ? "To appear in " : ""}
+          {entry.venue}
+          {entry.short ? ` (${entry.short})` : ""}
+        </i>
+        , {at.long}, {entry.where}
       </span>
       <div
         style={{
@@ -46,8 +43,11 @@ export const Publication: React.FC<PublicationData> = ({
           marginTop: "0px",
         }}
       >
-        ACM, New York, NY, USA &middot; {pages} Pages &middot; {year} &middot;{" "}
-        <Link href={link}>{link}</Link>
+        {entry.publisher} &middot; {entry.pages} Pages &middot;{" "}
+        {at.key.slice(0, 4)} &middot;{" "}
+        <Link href={doi} target="_blank">
+          {doi}
+        </Link>
       </div>
     </div>
   );

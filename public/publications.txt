@@ -1,1 +1,0 @@
-Sanchit Sahay, Vyom Yadav, Abhishek Reddypalle, Uk Jang, Marco De Vincenzi, Santiago Torres-Arias, and Justin Cappos===2026===Over the Shoulder: Improving SBOM Accuracy by Watching the Build===To appear in Conference on Software Supply Chain Offensive Research and Ecosystem Defenses (SCORED '26)===October 06, 2026===Prague, Czech Republic===11===10.1145/3848003.3848006

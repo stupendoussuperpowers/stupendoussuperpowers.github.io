@@ -3,68 +3,69 @@ import fs from "fs/promises";
 import path from "path";
 
 function getYearMonth(dateStr: string) {
-	if (!dateStr) return null;
+  if (!dateStr) return null;
 
-	const date = new Date(dateStr);
+  const date = new Date(dateStr);
 
-	return {
-		year: date.getFullYear(),
-		month: date.getMonth()
-	}
+  return {
+    year: date.getFullYear(),
+    month: date.getMonth(),
+  };
 }
 
 function groupBooks(books: Book[]) {
-	const grouped: Record<number, Record<number, Book[]>> = {};
+  const grouped: Record<number, Record<number, Book[]>> = {};
 
-	for (const book of books) {
-		if (!book.dateRead) continue;
+  for (const book of books) {
+    if (!book.dateRead) continue;
 
-		const ym = getYearMonth(book.dateRead);
-		if (!ym) continue;
+    const ym = getYearMonth(book.dateRead);
+    if (!ym) continue;
 
-		const { year, month } = ym;
+    const { year, month } = ym;
 
+    if (!grouped[year]) grouped[year] = {};
+    if (!grouped[year][month]) grouped[year][month] = [];
 
-		if (!grouped[year]) grouped[year] = {};
-		if (!grouped[year][month]) grouped[year][month] = [];
+    grouped[year][month].push(book);
+  }
 
-		grouped[year][month].push(book);
-	}
-
-	return grouped;
+  return grouped;
 }
 
 export async function scrapeBooks(url: string) {
-	console.log({ url });
-	const filePath = path.join(process.cwd(), "assets", "Books.html");
-	const html = await fs.readFile(filePath, "utf8");
-	// const html = await res.text();
-	const $ = cheerio.load(html);
+  console.log({ url });
+  const filePath = path.join(process.cwd(), "assets", "Books.html");
+  const html = await fs.readFile(filePath, "utf8");
+  // const html = await res.text();
+  const $ = cheerio.load(html);
 
-	const books: Book[] = [];
+  const books: Book[] = [];
 
-	$("#books tbody tr").each((_, row) => {
-		const title = $(row).find("td.title a").first().text().trim();
-		const author = $(row).find("td.author a").first().text().trim();
+  $("#books tbody tr").each((_, row) => {
+    const title = $(row).find("td.title a").first().text().trim();
+    const author = $(row).find("td.author a").first().text().trim();
 
-		if (!title) return;
+    if (!title) return;
 
-		const ratingText = $(row).find("td.rating .value .stars").attr("data-rating") ?? "0";
+    const ratingText =
+      $(row).find("td.rating .value .stars").attr("data-rating") ?? "0";
 
-		const dateRead = $(row).find("td.date_read .date_read_value").text();
+    const dateRead = $(row).find("td.date_read .date_read_value").text();
 
-		const reviewLink = $(row).find("td.actions .value .viewLinkWrapper a").attr("href");
-		console.log({ reviewLink });
+    const reviewLink = $(row)
+      .find("td.actions .value .viewLinkWrapper a")
+      .attr("href");
+    console.log({ reviewLink });
 
-		books.push({
-			title,
-			author,
-			rating: parseInt(ratingText) ?? 0,
-			dateRead,
-			reviewLink: `https://goodreads.com/${reviewLink}`
-		});
-	});
+    books.push({
+      title,
+      author,
+      rating: parseInt(ratingText) ?? 0,
+      dateRead,
+      reviewLink: `https://goodreads.com/${reviewLink}`,
+    });
+  });
 
-	return groupBooks(books);
+  return groupBooks(books);
 }
-

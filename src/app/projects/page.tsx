@@ -2,17 +2,22 @@ import { Project } from "../../components/Project";
 import { Publication } from "../../components/Publication";
 
 import React from "react";
-import fs from "fs";
-import path from "path";
 import { Metadata } from "next";
 
 import { myCustomFont } from "@/ui/font";
+import {
+  siteProjects,
+  siteResearch,
+  sitePapers,
+} from "../../../resumaker/render/site";
 
 export default async function ProjectsPage() {
-  const publications = await getPublications();
-  const projects = await getStaticProps();
+  const publications = sitePapers();
+  const research = siteResearch();
+  const projects = siteProjects();
+  // const languages = await languagesByRepo([...research, ...projects]);
 
-  const tags = [...new Set(projects.map((p) => p.tag))].filter((x) => x);
+  const tags = [...new Set(projects.map((p) => p.tag))];
 
   return (
     <div style={{ marginBottom: "80px", width: "100%" }}>
@@ -22,25 +27,38 @@ export default async function ProjectsPage() {
       >
         Publications
       </div>
-      {publications.map((element: PublicationData, idx: number) => {
-        return <Publication key={element.doi ?? idx} {...element} />;
+      {publications.map((entry) => {
+        return <Publication key={entry.id} entry={entry} />;
       })}
       <div
         className={myCustomFont.className}
         style={{ fontSize: "30px", marginBottom: "30px", marginTop: "30px" }}
       >
-        Projects
+        Research
       </div>
-      {tags.map((t: string) => {
+      {research.map((entry) => {
+        return (
+          <li key={entry.id}>
+            <Project entry={entry} />
+          </li>
+        );
+      })}
+      <div
+        className={myCustomFont.className}
+        style={{ fontSize: "30px", marginBottom: "30px", marginTop: "30px" }}
+      >
+        Open Source &amp; Course Projects
+      </div>
+      {tags.map((t) => {
         return (
           <React.Fragment key={t}>
-            <div className="p-tag">{t.toUpperCase()}</div>
+            <div className="p-tag">{t!.toUpperCase()}</div>
             {projects
-              .filter((x: ProjectData) => x.tag === t)
-              .map((element: ProjectData) => {
+              .filter((x) => x.tag === t)
+              .map((entry) => {
                 return (
-                  <li key={element.link}>
-                    <Project {...element} />
+                  <li key={entry.id}>
+                    <Project entry={entry} />
                   </li>
                 );
               })}
@@ -57,81 +75,36 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const getPublications = async () => {
-  const filePath = path.join(process.cwd(), "public", "publications.txt");
-  const publicationFile = await fs.promises.readFile(filePath, "utf-8");
+/*
+const IGNORED = [
+  "Objective-C",
+  "Makefile",
+  "Rich Text Format",
+  "Roff",
+  "Objective-C++",
+];
 
-  const publicationLists = publicationFile
-    .split("\n")
-    .filter((x) => x != "")
-    .map((line: string) => {
-      const [authors, year, title, venue, date, location, pages, doi] =
-        line.split("===");
+ Top languages per repo, straight from GitHub, keyed by entry id.
+const languagesByRepo = async (entries: { id: string; repo?: string }[]) => {
+  const pairs = await Promise.all(
+    entries
+      .filter((e) => e.repo)
+      .map(async (e) => {
+        const res = await fetch(
+          `https://api.github.com/repos/${e.repo}/languages`,
+        );
+        const langs = await res.json();
 
-      const publication: PublicationData = {
-        authors,
-        year,
-        title,
-        venue,
-        date,
-        location,
-        pages,
-        doi,
-      };
-
-      return publication;
-    });
-
-  return publicationLists.filter((x) => x != null);
-};
-
-const getStaticProps = async () => {
-  const filePath = path.join(process.cwd(), "public", "projects.txt");
-  const projectFile = await fs.promises.readFile(filePath, "utf-8");
-
-  const projectLists = await Promise.all(
-    projectFile
-      .split("\n")
-      .filter((x) => x != "")
-      .map(async (line: string) => {
-        const [title, link, content, report, tag] = line.split("===");
-
-        const project: ProjectData = {
-          title,
-          link,
-          content,
-          report,
-          tag,
-        };
-
-        if (!project.link.includes("https://")) {
-          const language = await fetch(
-            `https://api.github.com/repos/${project.link}/languages`,
-          );
-          const l_json = await language.json();
-          const filter = [
-            "Objective-C",
-            "Makefile",
-            "Rich Text Format",
-            "Roff",
-            "Objective-C++",
-          ];
-
-          // const l_json = { "C": 100, "Rust": 100, "Whatever": 100, "Third": 100 };
-          project.languages = Object.keys(l_json)
-            .filter((a) => !filter.includes(a))
+        return [
+          e.id,
+          Object.keys(langs)
+            .filter((l) => !IGNORED.includes(l))
             .splice(0, 5)
-            .join(",");
-          project.link = `https://github.com/${project.link}`;
-        }
-
-        if (report == ".") {
-          project.report = null;
-        }
-
-        return project;
+            .join(","),
+        ] as const;
       }),
   );
 
-  return projectLists.filter((x) => x != null);
+  return Object.fromEntries(pairs);
 };
+*/

@@ -6,6 +6,7 @@
   "scripts": {
     "predev": "node scripts/link-writer.mjs",
     "dev": "next dev",
+    "resume": "tsx resumaker/build.ts",
     "build:report": "node scripts/build-course-reports.mjs",
     "build:reports": "node scripts/build-course-reports.mjs",
     "prebuild": "rm -rf src/app/writepad src/pages/api",
