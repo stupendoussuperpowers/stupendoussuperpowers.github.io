@@ -14,7 +14,7 @@ export { when, byRecency } from "../when";
 
 /** "url | label" -> { url, label }; label defaults to the bare url. */
 export const link = (v?: string) => {
-	if (!v) return null;
-	const [url, label] = v.split("|").map((s) => s.trim());
-	return { url, label: label || url.replace(/^https?:\/\//, "") };
+  if (!v) return null;
+  const [url, label] = v.split("|").map((s) => s.trim());
+  return { url, label: label || url.replace(/^https?:\/\//, "") };
 };

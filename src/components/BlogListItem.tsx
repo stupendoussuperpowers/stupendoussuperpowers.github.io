@@ -1,26 +1,42 @@
-import './project.css';
-import React from 'react';
-import Link from 'next/link';
-import { formatBlogTimestamp } from '@/utils/format';
+import "./project.css";
+import React from "react";
+import Link from "next/link";
+import { formatBlogTimestamp } from "@/utils/format";
 
 type BlogListProps = IndexEntry & {
-	writepad?: boolean;
-	href?: string;
-	entryType?: string;
-}
+  writepad?: boolean;
+  href?: string;
+  entryType?: string;
+};
 
-export const BlogListItem: React.FC<BlogListProps> = ({ publish, title, blurb, date, slug, writepad, href, entryType }) => {
-	const linkHref = href ?? `/${writepad ? 'writepad' : 'blog'}/${slug.replace(/\.md$/, '')}`;
+export const BlogListItem: React.FC<BlogListProps> = ({
+  publish,
+  title,
+  blurb,
+  date,
+  slug,
+  writepad,
+  href,
+  entryType,
+}) => {
+  const linkHref =
+    href ?? `/${writepad ? "writepad" : "blog"}/${slug.replace(/\.md$/, "")}`;
 
-	return (<div className='p-card'>
-		<div className='p-title'>
-			<Link href={linkHref}>
-				<b>{!publish ? '[DRAFT] ' : ''}{title}</b>
-			</Link>
-			<div className='slug'>
-				{entryType ? `${entryType} / ` : ''}{formatBlogTimestamp(date)}
-			</div>
-		</div>
-		<div style={{ marginTop: "calc(var(--line-height) / 2)" }}>{blurb}</div>
-	</div >);
-}
+  return (
+    <div className="p-card">
+      <div className="p-title">
+        <Link href={linkHref}>
+          <b>
+            {!publish ? "[DRAFT] " : ""}
+            {title}
+          </b>
+        </Link>
+        <div className="slug">
+          {entryType ? `${entryType} / ` : ""}
+          {formatBlogTimestamp(date)}
+        </div>
+      </div>
+      <div style={{ marginTop: "calc(var(--line-height) / 2)" }}>{blurb}</div>
+    </div>
+  );
+};

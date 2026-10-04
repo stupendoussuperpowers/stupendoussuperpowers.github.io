@@ -1,178 +1,185 @@
 // Renders the ledger as a LaTeX resume. Section order is the order of the
 // section() calls in resume() at the bottom.
 import {
-	degrees,
-	employment,
-	link,
-	me,
-	papers,
-	projects,
-	research,
-	talks,
-	teaching,
-	when,
-	type Degree,
-	type Job,
-	type Research,
+  degrees,
+  employment,
+  link,
+  me,
+  papers,
+  projects,
+  research,
+  talks,
+  teaching,
+  when,
+  type Degree,
+  type Job,
+  type Research,
 } from "../ledger";
 
 // The ledger holds plain text only. All LaTeX lives here.
 const tex = (s: unknown) =>
-	String(s ?? "")
-		.replace(/\\/g, "\\textbackslash{}")
-		.replace(/([&%$#_{}])/g, "\\$1")
-		.replace(/~/g, "\\textasciitilde{}")
-		.replace(/\^/g, "\\textasciicircum{}");
+  String(s ?? "")
+    .replace(/\\/g, "\\textbackslash{}")
+    .replace(/([&%$#_{}])/g, "\\$1")
+    .replace(/~/g, "\\textasciitilde{}")
+    .replace(/\^/g, "\\textasciicircum{}");
 
 const url = (s: string) => s.replace(/([#%&])/g, "\\$1");
 
 const href = (v: string) => {
-	const l = link(v)!;
-	return `\\href{${url(l.url)}}{\\underline{${tex(l.label)}}}`;
+  const l = link(v)!;
+  return `\\href{${url(l.url)}}{\\underline{${tex(l.label)}}}`;
 };
 
 /** "[@scored26]" -> "[1]", by position in Publications. */
 const cite = (text: string) =>
-	text.replace(/\[@([\w-]+)\]/g, (_, id) => {
-		const n = papers.findIndex((p) => p.id === id);
-		if (n < 0) throw new Error(`resume: "${text}" cites "${id}", which is not a paper`);
-		return `[${n + 1}]`;
-	});
+  text.replace(/\[@([\w-]+)\]/g, (_, id) => {
+    const n = papers.findIndex((p) => p.id === id);
+    if (n < 0)
+      throw new Error(`resume: "${text}" cites "${id}", which is not a paper`);
+    return `[${n + 1}]`;
+  });
 
 /** Bullet text -> LaTeX: resolves citations and "[label](url)" links. */
 const inline = (text: string) =>
-	cite(text)
-		.split(/(\[[^\]]+\]\([^)]+\))/)
-		.map((part) => {
-			const m = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
-			return m ? `\\href{${url(m[2])}}{${tex(m[1])}}` : tex(part);
-		})
-		.join("");
+  cite(text)
+    .split(/(\[[^\]]+\]\([^)]+\))/)
+    .map((part) => {
+      const m = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+      return m ? `\\href{${url(m[2])}}{${tex(m[1])}}` : tex(part);
+    })
+    .join("");
 
 const span = (w: string) => when(w)!.span;
 
 // ---- sections ------------------------------------------------------------
 
 const education = () =>
-	[...new Set(degrees.map((d) => d.school))].flatMap((school) => {
-		const of: Degree[] = degrees.filter((d) => d.school === school);
-		return [
-			`{\\bf ${tex(school)}}, ${tex(of[0].where)}`,
-			`\\begin{itemize}[leftmargin=0.4cm]`,
-			...of.flatMap((d) => [
-				`    \\item[] \\textbf{${tex(d.degree)}}, ${tex(d.field)} \\hfill {${span(d.when)}} \\\\`,
-				`    ${tex(d.detail)}${d.aside ? ` \\hfill ${tex(d.aside)}` : ""}${d.advisor ? " \\\\" : ""}`,
-				...(d.advisor ? [`    Advisor: ${tex(d.advisor)}`] : []),
-			]),
-			`\\end{itemize}`,
-			``,
-		];
-	});
+  [...new Set(degrees.map((d) => d.school))].flatMap((school) => {
+    const of: Degree[] = degrees.filter((d) => d.school === school);
+    return [
+      `{\\bf ${tex(school)}}, ${tex(of[0].where)}`,
+      `\\begin{itemize}[leftmargin=0.4cm]`,
+      ...of.flatMap((d) => [
+        `    \\item[] \\textbf{${tex(d.degree)}}, ${tex(d.field)} \\hfill {${span(d.when)}} \\\\`,
+        `    ${tex(d.detail)}${d.aside ? ` \\hfill ${tex(d.aside)}` : ""}${d.advisor ? " \\\\" : ""}`,
+        ...(d.advisor ? [`    Advisor: ${tex(d.advisor)}`] : []),
+      ]),
+      `\\end{itemize}`,
+      ``,
+    ];
+  });
 
 // A job's subhead is its role; a research project's is its one-line blurb.
 const roles = (entries: (Job | Research)[]) => [
-	``,
-	...entries.flatMap((e) => [
-		`\\begin{rSubsection}{${"where" in e ? `${tex(e.org)}, \\normalfont ${tex(e.where)}` : tex(e.org)}}{${span(e.when)}}`,
-		"role" in e
-			? `{\\textbf{${tex(e.role)}}${e.team ? `, ${tex(e.team)}` : ""}}{${tex(e.tech)}}`
-			: `{${tex(e.blurb)}}{}`,
-		...("role" in e ? [`\\vspace{1mm}`] : []),
-		...e.bullets.map((b) => `\\item ${inline(b)}`),
-		`\\end{rSubsection}`,
-		``,
-	]),
+  ``,
+  ...entries.flatMap((e) => [
+    `\\begin{rSubsection}{${"where" in e ? `${tex(e.org)}, \\normalfont ${tex(e.where)}` : tex(e.org)}}{${span(e.when)}}`,
+    "role" in e
+      ? `{\\textbf{${tex(e.role)}}${e.team ? `, ${tex(e.team)}` : ""}}{${tex(e.tech)}}`
+      : `{${tex(e.blurb)}}{}`,
+    ...("role" in e ? [`\\vspace{1mm}`] : []),
+    ...e.bullets.map((b) => `\\item ${inline(b)}`),
+    `\\end{rSubsection}`,
+    ``,
+  ]),
 ];
 
 const publications = () => [
-	`\\begin{enumerate}[leftmargin=0cm]`,
-	...papers.map((p) => {
-		const authors = p.authors.map((a) => (a === "@me" ? `\\textbf{${tex(me.name)}}` : tex(a)));
-		const at = when(p.when)!;
-		return `    \\item ${[
-			`${authors.slice(0, -1).join(", ")}, and ${authors.at(-1)}.`,
-			`${at.key.slice(0, 4)}.`,
-			`\\textit{${tex(p.title)}}.`,
-			`In ${tex(p.venue)} (${tex(p.short)}), ${at.long}, ${tex(p.where)}.`,
-			p.doi ? `https://doi.org/${url(p.doi)}` : "",
-		]
-			.filter(Boolean)
-			.join(" ")}`;
-	}),
-	`\\end{enumerate}`,
-	``,
+  `\\begin{enumerate}[leftmargin=0cm]`,
+  ...papers.map((p) => {
+    const authors = p.authors.map((a) =>
+      a === "@me" ? `\\textbf{${tex(me.name)}}` : tex(a),
+    );
+    const at = when(p.when)!;
+    return `    \\item ${[
+      `${authors.slice(0, -1).join(", ")}, and ${authors.at(-1)}.`,
+      `${at.key.slice(0, 4)}.`,
+      `\\textit{${tex(p.title)}}.`,
+      `In ${tex(p.venue)} (${tex(p.short)}), ${at.long}, ${tex(p.where)}.`,
+      p.doi ? `https://doi.org/${url(p.doi)}` : "",
+    ]
+      .filter(Boolean)
+      .join(" ")}`;
+  }),
+  `\\end{enumerate}`,
+  ``,
 ];
 
 const invitedTalks = () =>
-	talks.flatMap((t) => [
-		`\\textbf{${tex(t.venue)}}, ${tex(t.where)} - ${tex(t.title)}. (${span(t.when)})`,
-		``,
-	]);
+  talks.flatMap((t) => [
+    `\\textbf{${tex(t.venue)}}, ${tex(t.where)} - ${tex(t.title)}. (${span(t.when)})`,
+    ``,
+  ]);
 
 // Projects without bullets are site-only.
 const openSource = () => [
-	`\\vspace{1mm}`,
-	...projects
-		.filter((p) => p.bullets)
-		.flatMap((p) => [
-			`\\textbf{${p.tech ? `${tex(p.title)}: ${tex(p.tech)}` : tex(p.title)}}${p.link ? `\\hfill ${href(p.link)}` : ""}`,
-			`\\\\ ${p.bullets!.map(inline).join(" ")}`,
-			``,
-		]),
+  `\\vspace{1mm}`,
+  ...projects
+    .filter((p) => p.bullets)
+    .flatMap((p) => [
+      `\\textbf{${p.tech ? `${tex(p.title)}: ${tex(p.tech)}` : tex(p.title)}}${p.link ? `\\hfill ${href(p.link)}` : ""}`,
+      `\\\\ ${p.bullets!.map(inline).join(" ")}`,
+      ``,
+    ]),
 ];
 
 const teachingRoles = () =>
-	teaching.flatMap((t, i) => [
-		`\\textbf{${tex(t.role)}}, ${tex(t.org)}${t.code ? ` ${tex(t.code)}` : ""}: ${tex(t.title)} (${span(t.when)})`,
-		...(i < teaching.length - 1 ? [``] : []),
-	]);
+  teaching.flatMap((t, i) => [
+    `\\textbf{${tex(t.role)}}, ${tex(t.org)}${t.code ? ` ${tex(t.code)}` : ""}: ${tex(t.title)} (${span(t.when)})`,
+    ...(i < teaching.length - 1 ? [``] : []),
+  ]);
 
 const skills = () =>
-	me.skills.map(
-		([label, rest], i) =>
-			`\\textbf{${tex(label)}:} ${tex(rest)}${i < me.skills.length - 1 ? " \\\\" : ""}`,
-	);
+  me.skills.map(
+    ([label, rest], i) =>
+      `\\textbf{${tex(label)}:} ${tex(rest)}${i < me.skills.length - 1 ? " \\\\" : ""}`,
+  );
 
 // ---- document ------------------------------------------------------------
 
 const section = (title: string, body: string[]) => [
-	`\\begin{rSection}{${title}}`,
-	...body,
-	`\\end{rSection}`,
-	``,
+  `\\begin{rSection}{${title}}`,
+  ...body,
+  `\\end{rSection}`,
+  ``,
 ];
 
 export function resume() {
-	return [
-		`% Generated by resumaker. Edit resumaker/ledger/*.ts, not this file.`,
-		`\\documentclass{resume}`,
-		`\\usepackage{hyperref}`,
-		`\\usepackage{setspace}`,
-		`\\usepackage{enumitem}`,
-		`\\tolerance=1`,
-		`\\emergencystretch=\\maxdimen`,
-		`\\hyphenpenalty=10000`,
-		`\\hbadness=10000`,
-		``,
-		`\\usepackage[left=0.8in,top=0.8in,right=0.8in,bottom=0.8in]{geometry}`,
-		``,
-		`\\name{${tex(me.name)}}`,
-		`\\address{${me.address
-			.map((a) => (a.includes("|") ? `\\href{${url(link(a)!.url)}}{${tex(link(a)!.label)}}` : tex(a)))
-			.join(" \\\\ ")}}`,
-		``,
-		`\\begin{document}`,
-		``,
-		...section("Research Interests", [tex(me.interests)]),
-		...section("Education", education()),
-		...section("Employment", roles(employment)),
-		...section("Research", roles(research)),
-		...section("Publications", publications()),
-		...section("Invited Talks", invitedTalks()),
-		...section("Open Source and Course Projects", openSource()),
-		...section("Teaching", teachingRoles()),
-		...section("Technical Skills", skills()),
-		`\\end{document}`,
-		``,
-	].join("\n");
+  return [
+    `% Generated by resumaker. Edit resumaker/ledger/*.ts, not this file.`,
+    `\\documentclass{resume}`,
+    `\\usepackage{hyperref}`,
+    `\\usepackage{setspace}`,
+    `\\usepackage{enumitem}`,
+    `\\tolerance=1`,
+    `\\emergencystretch=\\maxdimen`,
+    `\\hyphenpenalty=10000`,
+    `\\hbadness=10000`,
+    ``,
+    `\\usepackage[left=0.8in,top=0.8in,right=0.8in,bottom=0.8in]{geometry}`,
+    ``,
+    `\\name{${tex(me.name)}}`,
+    `\\address{${me.address
+      .map((a) =>
+        a.includes("|")
+          ? `\\href{${url(link(a)!.url)}}{${tex(link(a)!.label)}}`
+          : tex(a),
+      )
+      .join(" \\\\ ")}}`,
+    ``,
+    `\\begin{document}`,
+    ``,
+    ...section("Research Interests", [tex(me.interests)]),
+    ...section("Education", education()),
+    ...section("Employment", roles(employment)),
+    ...section("Research", roles(research)),
+    ...section("Publications", publications()),
+    ...section("Invited Talks", invitedTalks()),
+    ...section("Open Source and Course Projects", openSource()),
+    ...section("Teaching", teachingRoles()),
+    ...section("Technical Skills", skills()),
+    `\\end{document}`,
+    ``,
+  ].join("\n");
 }
