@@ -10,6 +10,9 @@ export const projects: Project[] = [
     role: "Maintainer",
     blurb:
       "Witness is a pluggable framework for software supply chain risk management. It automates, normalizes, and verifies software artifact provenance.",
+    bullets: [
+      "Maintainer, witness and go-witness. Worked on integrating eBPF support for low-overhead build tracing.",
+    ],
   },
   {
     id: "hfs-freebsd",
