@@ -11,7 +11,14 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const out = path.join(here, "out");
 fs.mkdirSync(out, { recursive: true });
 fs.writeFileSync(path.join(out, "resume.tex"), resume());
-fs.copyFileSync(path.join(here, "style", "resume.cls"), path.join(out, "resume.cls"));
-if (fs.existsSync(path.join(out, "resume.pdf"))) fs.copyFileSync(path.join(out, "resume.pdf"), path.join(here, "..", "public", "sanchit_sahay.pdf"));
+fs.copyFileSync(
+  path.join(here, "style", "resume.cls"),
+  path.join(out, "resume.cls"),
+);
+if (fs.existsSync(path.join(out, "resume.pdf")))
+  fs.copyFileSync(
+    path.join(out, "resume.pdf"),
+    path.join(here, "..", "public", "sanchit_sahay.pdf"),
+  );
 
 console.log("resumaker -> out/resume.tex");
