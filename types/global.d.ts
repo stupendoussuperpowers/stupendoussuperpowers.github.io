@@ -1,66 +1,45 @@
 declare global {
-	type BlockNode = {
-		rawText: string;
-		renderText: string;
-		id: string;
-	};
+  type BlockNode = {
+    rawText: string;
+    renderText: string;
+    id: string;
+  };
 
-	type IndexEntry = {
-		slug: string;
-		date: string;
-		lastModified: string;
-		title: string;
-		publish: boolean;
-		blurb: string;
-		headerImage: string | null;
-		pinned: boolean;
-		href?: string;
-		entryType?: string;
-	};
+  type IndexEntry = {
+    slug: string;
+    date: string;
+    lastModified: string;
+    title: string;
+    publish: boolean;
+    blurb: string;
+    headerImage: string | null;
+    pinned: boolean;
+    href?: string;
+    entryType?: string;
+  };
 
-	type PostEntry = {
-		index: IndexEntry;
-		content: BlockNode[];
-	};
+  type PostEntry = {
+    index: IndexEntry;
+    content: BlockNode[];
+  };
 
-	type Ok<T> = { ok: true; value: T };
-	type Err<T> = { ok: false; error: T };
-	type Result<T, E> = Ok<T> | Err<E>;
+  type Ok<T> = { ok: true; value: T };
+  type Err<T> = { ok: false; error: T };
+  type Result<T, E> = Ok<T> | Err<E>;
 
-
-	type ProjectData = {
-		title: string;
-		link: string;
-		content: string;
-		report: string | null;
-		languages?: string | null;
-		tag: string;
-	}
-
-	type PublicationData = {
-		authors: string;
-		year: string;
-		title: string;
-		venue: string;
-		date: string;
-		location: string;
-		pages: string;
-		doi: string;
-	}
-
-	type Book = {
-		title: string;
-		author: string;
-		rating?: number | undefined;
-		dateRead: string;
-		reviewLink?: string;
-		year?: number | string;
-		countryOfOrigin?: string;
-		isoCode?: string;
-		botm?: boolean;
-		boty?: boolean;
-		recList?: boolean;
-	};
+  type Book = {
+    title: string;
+    author: string;
+    rating?: number | undefined;
+    dateRead: string;
+    reviewLink?: string;
+    year?: number | string;
+    countryOfOrigin?: string;
+    isoCode?: string;
+    botm?: boolean;
+    boty?: boolean;
+    recList?: boolean;
+  };
 }
 
-export { };
+export {};

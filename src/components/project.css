@@ -19,6 +19,13 @@
   opacity: 70%;
 }
 
+.role-tag {
+  font-style: italic;
+  opacity: 70%;
+  font-size: small;
+  margin-top: 2px;
+}
+
 .content {
   margin-top: 5px;
 }
