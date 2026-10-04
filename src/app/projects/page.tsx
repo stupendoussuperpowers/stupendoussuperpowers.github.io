@@ -75,6 +75,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+/*
 const IGNORED = [
   "Objective-C",
   "Makefile",
@@ -83,7 +84,7 @@ const IGNORED = [
   "Objective-C++",
 ];
 
-/** Top languages per repo, straight from GitHub, keyed by entry id. */
+ Top languages per repo, straight from GitHub, keyed by entry id.
 const languagesByRepo = async (entries: { id: string; repo?: string }[]) => {
   const pairs = await Promise.all(
     entries
@@ -106,3 +107,4 @@ const languagesByRepo = async (entries: { id: string; repo?: string }[]) => {
 
   return Object.fromEntries(pairs);
 };
+*/
